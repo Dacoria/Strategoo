@@ -26,7 +26,7 @@ public class HexNeighbours
         }
         if (withUnitOnTile.HasValue)
         {
-            neighbours = neighbours.Where(neighbour => neighbour.GetHex().HasUnit(isAlive: true) == withUnitOnTile.Value).ToList();
+            neighbours = neighbours.Where(neighbour => neighbour.GetHex().HasPiece(isAlive: true) == withUnitOnTile.Value).ToList();
         }
         if(includeStartHex)
         {

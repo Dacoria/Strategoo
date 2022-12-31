@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class GridHighlight : HexaEventCallback
+public class GridHighlight : BaseEventCallback
 {
     protected override void OnNewPlayerTurn(PlayerScript playersTurn) => ClearAllHighlightsOnGrid();
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currPlayer) => ClearAllHighlightsOnGrid();

@@ -7,7 +7,7 @@ public static partial class Rsc
 {
     private static List<string> goEnemiesOrObjList = new List<string>
     {
-        Statics.RESOURCE_PATH_GO_ENEMIES,
+        Statics.RESOURCE_PATH_GO_PIECES,
         Statics.RESOURCE_PATH_GO_OBJ_ON_TILE,
         Statics.RESOURCE_PATH_GO_PLAYER_UTIL,
     };

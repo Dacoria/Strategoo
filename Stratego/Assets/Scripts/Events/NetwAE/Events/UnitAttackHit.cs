@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class NetworkAE : MonoBehaviour
 {
-    public void UnitAttackHit(IUnit unit, Hex hexTile, int damage)
+    public void UnitAttackHit(Piece unit, Hex hexTile, int damage)
     {
         photonView.RPC("RPC_AE_UnitAttackHit", RpcTarget.All, unit.Id, (Vector3)hexTile.HexCoordinates, damage);
     }
@@ -11,6 +11,6 @@ public partial class NetworkAE : MonoBehaviour
     [PunRPC]
     public void RPC_AE_UnitAttackHit(int unitId, Vector3 hexTile, int damage)
     {
-        ActionEvents.UnitAttackHit?.Invoke(unitId.GetUnit(), hexTile.GetHex(), damage);
+        ActionEvents.UnitAttackHit?.Invoke(unitId.GetPiece(), hexTile.GetHex(), damage);
     }
 }

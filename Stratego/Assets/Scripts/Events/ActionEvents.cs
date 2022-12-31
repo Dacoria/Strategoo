@@ -10,26 +10,21 @@ public static class ActionEvents
     public static Action<List<PlayerScript>, PlayerScript> NewRoundStarted;
     public static Action<PlayerScript> NewPlayerTurn;
     public static Action AllPlayersFinishedTurn;
-    public static Action<bool, PlayerScript> EndRound;
+    public static Action<PlayerScript> EndRound;
     public static Action EndGame;
-    public static Action<EnemyScript, Hex> EnemyMove;
-    public static Action<EnemyScript, PlayerScript> EnemyAttack;
-    public static Action<PlayerScript> PlayerDied;
-    public static Action<IUnit, Hex> UnitMovingFinished;
 
+    public static Action<Piece, Hex> UnitMove;
+    public static Action<Piece, PlayerScript> UnitAttack;
+    public static Action<Piece, Hex> UnitMovingFinished;
 
-    // afgeleiden
-    public static Action<PlayerScript, Hex> PlayerMovingFinished;
-    public static Action<EnemyScript, Hex> EnemyMovingFinished;
 
     // local
     public static Action GridLoaded;
 
-    public static Action<IUnit, Hex, int> UnitAttackHit;
-    public static Action<PlayerScript, Hex> PlayerHasTeleported;
-
+    public static Action<Piece, Hex, int> UnitAttackHit;
     public static Action<Animator> DieAnimationFinished;
     public static Action<GameObject> AttackAnimationFinished;
 
-    public static Action<EnemyScript, Hex, int> EnemyAttackHit;
+    public static Action<Vector3Int> NewHexSelected;
+    public static Action HexDeselected;
 }

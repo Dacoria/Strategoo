@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public partial class HexStructureScript: HexaEventCallback
+public partial class HexStructureScript: BaseEventCallback
 {
     [ComponentInject] private Hex hex;
 

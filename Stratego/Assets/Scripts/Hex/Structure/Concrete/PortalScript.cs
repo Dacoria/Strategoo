@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class PortalScript : HexaEventCallback, IStructure
+public class PortalScript : BaseEventCallback, IStructure
 {
     private PortalScript ConnectedPortal;
     [HideInInspector] [ComponentInject] private Hex hex;

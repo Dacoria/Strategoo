@@ -34,56 +34,6 @@ public class MonoHelper : MonoBehaviour
         return highlightScripts[0];
     }
 
-    public void SetSpriteDirectionOnImage(Image directionImage, AbilityType abilityType, Vector3Int from, Vector3Int to)
-    {
-        var targetIsRelativeToPlayer = abilityType.GetTargetHexIsRelativeToPlayer();
-        if (targetIsRelativeToPlayer)
-        {
-            var directionsToLocation = from.DeriveDirections(to);
-            SetSpriteDirectionOnImage(directionImage, directionsToLocation.First(), Mathf.Min(2, directionsToLocation.Count));
-        }
-    }
-
-    private void SetSpriteDirectionOnImage(Image directionImage, DirectionType direction, int spriteDirectionRange)
-    {
-        switch (direction)
-        {
-            case DirectionType.West:
-            case DirectionType.East:
-                directionImage.sprite = Rsc.SpriteMap.Get("ArrowUp" + spriteDirectionRange);
-                break;
-            case DirectionType.NorthEast:
-            case DirectionType.NorthWest:
-            case DirectionType.SouthEast:
-            case DirectionType.SouthWest:
-                directionImage.sprite = Rsc.SpriteMap.Get("ArrowRightUpCorner" + spriteDirectionRange);
-                break;
-            default:
-                throw new System.Exception("MonoHelper -> SetSpriteDirectionOnImage -> Exception");
-        }
-
-        switch (direction)
-        {                
-            case DirectionType.West:
-            case DirectionType.NorthWest:
-                directionImage.transform.rotation = Quaternion.Euler(0, 0, 90);
-                break;
-            case DirectionType.East:
-            case DirectionType.SouthEast:
-                directionImage.transform.rotation = Quaternion.Euler(0, 0, -90);
-                break;
-            case DirectionType.NorthEast:
-                directionImage.transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;              
-            case DirectionType.SouthWest:
-                directionImage.transform.rotation = Quaternion.Euler(0, 0, 180);
-                break;
-            default:
-                throw new System.Exception("MonoHelper -> SetSpriteDirectionOnImage -> Exception");
-        }
-        
-    }
-
     public bool FindTile(Vector3 mousePosition, out List<Hex> result)
     {
         var layermask = 1 << LayerMask.NameToLayer(Statics.LAYER_MASK_HEXTILE);
@@ -104,14 +54,6 @@ public class MonoHelper : MonoBehaviour
         return false;
     }
 
-    public void DestroyGoAfterXSeconds(GameObject go, float seconds) => StartCoroutine(CR_DestroyGoAfterXSeconds(go, seconds));
-
-    private IEnumerator CR_DestroyGoAfterXSeconds(GameObject go, float seconds)
-    {
-        yield return Wait4Seconds.Get(seconds);
-        Destroy(go);
-    }
-
     public int GenerateNewId() => Random.Range(int.MinValue, int.MaxValue);
 
     public void DestroyChildrenOfGo(GameObject go)
@@ -122,18 +64,23 @@ public class MonoHelper : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    
 
-    public Vector3Int GetClosestFreeNeighbour(Vector3Int target1, Vector3Int referenceTarget2)
+    public void FadeIn(CanvasGroup canvasGroup, float aTime) => FadeTo(canvasGroup, 1, aTime);
+    public void FadeOut(CanvasGroup canvasGroup, float aTime) => FadeTo(canvasGroup, 0, aTime);
+
+    public void FadeTo(CanvasGroup canvasGroup, float aValue, float aTime)
     {
-        // deterministisch!
-        var neighbourClosest = HexGrid.instance.GetNeighboursFor(target1, range: 3, withUnitOnTile: false)
-            .OrderBy(neighbourTile => Vector3Int.Distance(target1, neighbourTile))
-            .ThenByDescending(neighbourTile => Vector3Int.Distance(referenceTarget2, neighbourTile))
-            .ThenBy(neighbourTile => neighbourTile.x)
-            .ThenBy(neighbourTile => neighbourTile.z)
-            .First();
+        StartCoroutine(CR_FadeTo(canvasGroup, aValue, aTime));
+    }
 
-        return neighbourClosest;
+    private IEnumerator CR_FadeTo(CanvasGroup canvasGroup, float aValue, float aTime)
+    {
+        float alpha = canvasGroup.alpha;
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
+        {
+            canvasGroup.alpha = Mathf.Lerp(alpha, aValue, t);
+            yield return null;
+        }
+        canvasGroup.alpha = aValue;
     }
 }

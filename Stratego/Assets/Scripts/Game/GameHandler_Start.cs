@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public partial class GameHandler : HexaEventCallback
+public partial class GameHandler : BaseEventCallback
 {
     public List<PlayerScript> AllPlayers;
     private int MAX_PLAYERS = 2;

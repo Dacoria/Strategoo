@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class ResetCameraPosition : HexaEventCallback
+public class ResetCameraPosition : BaseEventCallback
 {
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;

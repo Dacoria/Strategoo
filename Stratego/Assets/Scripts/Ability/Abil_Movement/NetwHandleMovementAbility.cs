@@ -1,5 +1,5 @@
 
-public class NetwHandleMovementAbility : HexaEventCallback, IAbilityNetworkHandler
+public class NetwHandleMovementAbility : BaseEventCallback, IAbilityNetworkHandler
 {
     public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target, Hex target2)
     {
@@ -8,13 +8,13 @@ public class NetwHandleMovementAbility : HexaEventCallback, IAbilityNetworkHandl
 
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target, Hex target2)
     {
-        if (target.HasUnit(isAlive: true))
+        if (target.HasPiece(isAlive: true))
         {
-            gameObject.GetAdd<UnitAttack>().AttackUnitOnHex(target);
+            gameObject.GetAdd<UnitAttackAction>().AttackUnitOnHex(target);
         }
         else
         {
-            gameObject.GetAdd<UnitMovement>().GoToDestination(target, 1.3f);
+            gameObject.GetAdd<UnitMovementAction>().GoToDestination(target, 1.3f);
         }
     }   
 }

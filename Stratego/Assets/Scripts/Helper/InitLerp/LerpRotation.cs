@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class LerpRotation: HexaEventCallback
+public class LerpRotation: BaseEventCallback
 {
     private float previousAngleDiff = 0;
 

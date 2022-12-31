@@ -142,7 +142,7 @@ public class EditorGuiAddRowColHex : UnityEditor.EditorWindow
     private static GameObject GetForestGoFromHex(Hex hex)
     {
         var main = Utils.GetChildGoByName(hex.gameObject, "Main");
-        return Utils.GetChildGoByName(main.gameObject, "hex_forest", containMatch: true);
+        return Utils.GetChildGoByName(main.gameObject, "hex_forest");
     }
 
     private static GameObject GetPropsFromHex(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "Props");

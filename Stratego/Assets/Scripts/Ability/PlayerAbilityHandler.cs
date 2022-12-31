@@ -1,24 +1,24 @@
 using System.Linq;
 using System.Collections.Generic;
 
-public partial class PlayerAbilityHandler : HexaEventCallback
+public partial class PlayerAbilityHandler : BaseEventCallback
 {
     [ComponentInject] private PlayerScript playerScript;
 
     private Dictionary<AbilityType, IAbilityNetworkHandler> dictAbilityHandlers = new Dictionary<AbilityType,IAbilityNetworkHandler>();
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, Hex hex2, AbilityType abilityType, int queueId)
-    {
-        if (player == playerScript)
-        {
-            if(!dictAbilityHandlers.ContainsKey(abilityType))
-            {
-                CreateAbilityHandler(abilityType);
-            }
-
-            dictAbilityHandlers[abilityType].NetworkHandle(player, hex, hex2);
-        }
-    }
+    //protected override void OnPlayerAbility(PlayerScript player, Hex hex, Hex hex2, AbilityType abilityType, int queueId)
+    //{
+    //    if (player == playerScript)
+    //    {
+    //        if(!dictAbilityHandlers.ContainsKey(abilityType))
+    //        {
+    //            CreateAbilityHandler(abilityType);
+    //        }
+    //
+    //        dictAbilityHandlers[abilityType].NetworkHandle(player, hex, hex2);
+    //    }
+    //}
 
     private void CreateAbilityHandler(AbilityType abilityType)
     {

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class PlayerTextScript : HexaEventCallback
+public class PlayerTextScript : BaseEventCallback
 {
     [ComponentInject] private PlayerScript playerScript;
     [ComponentInject] private TMP_Text playerNameText;     

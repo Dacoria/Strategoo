@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MountainScript : HexaEventCallback
+public class MountainScript : BaseEventCallback
 {
     [ComponentInject(Required.OPTIONAL)] private Hex hex; // verwijderde mountain (animatie door grond) heeft dit niet
 

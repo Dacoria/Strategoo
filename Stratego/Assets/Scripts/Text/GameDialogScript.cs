@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 
-public class GameDialogScript : HexaEventCallback
+public class GameDialogScript : BaseEventCallback
 {
     public TMP_Text TextDialogLines;
     public static GameDialogScript instance;

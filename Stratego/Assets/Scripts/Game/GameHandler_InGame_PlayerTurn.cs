@@ -2,7 +2,7 @@ using Photon.Pun;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class GameHandler : HexaEventCallback
+public partial class GameHandler : BaseEventCallback
 {    
     protected override void OnAllPlayersFinishedTurn()
     {

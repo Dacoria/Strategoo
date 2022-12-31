@@ -42,26 +42,7 @@ public static class HexEditorUtil
         EditorUtility.SetDirty(hex);
         EditorSceneManager.MarkSceneDirty(hex.gameObject.scene);
     }
-
-    public static void HexPlayerStartChanged(Hex hex, HexStartPlayerType startPlayerType)
-    {
-        var playerStartGo = GetPlayerStartGo(hex);
-        if(playerStartGo != null)
-        {
-            Object.DestroyImmediate(playerStartGo);
-        }
-        
-        if(startPlayerType != HexStartPlayerType.None)
-        {
-            var startPlayerPrefab = Rsc.GoGuiMap.First(x => x.Key == "PlayerSpawnVisualizer").Value;
-            var go = PrefabUtility.InstantiatePrefab(startPlayerPrefab, hex.transform) as GameObject;
-            go.GetComponentInChildren<TMPro.TMP_Text>().text = startPlayerType.GetText();
-        }
-
-        EditorUtility.SetDirty(hex);
-        EditorSceneManager.MarkSceneDirty(hex.gameObject.scene);
-    }
-
+  
     public static void HexObjectOnTileTypeChanged(Hex hex, HexObjectOnTileType to)
     {
         var structureGo = GetStructuresGo(hex);
@@ -72,7 +53,7 @@ public static class HexEditorUtil
             {
                 var go = PrefabUtility.InstantiatePrefab(result, structureGo.transform) as GameObject;
                 go.transform.rotation = new Quaternion(0, 180, 0, 0);
-                var enemyScript = go.GetComponent<EnemyScript>();
+                var enemyScript = go.GetComponent<Piece>();
                 if(enemyScript != null)
                 {
                     enemyScript.SetCurrentHexTile(hex);

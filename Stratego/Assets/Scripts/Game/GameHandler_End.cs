@@ -1,6 +1,6 @@
-public partial class GameHandler : HexaEventCallback
+public partial class GameHandler : BaseEventCallback
 {
-    protected override void OnEndRound(bool reachedMiddle, PlayerScript pWinner)
+    protected override void OnEndRound(PlayerScript pWinner)
     {
         GameStatus = GameStatus.RoundEnded;
         Textt.GameLocal("Game has ended! " + pWinner.PlayerName + " wins!!!");
@@ -9,13 +9,5 @@ public partial class GameHandler : HexaEventCallback
     protected override void OnEndGame()
     {
         GameStatus = GameStatus.GameEnded;
-    }
-
-    public void CheckEndOfRound()
-    {
-        if(NetworkHelper.instance.GetAllPlayers(isAlive: true).Count == 1)
-        {
-            NetworkAE.instance.RoundEnded(achievedTarget: false, NetworkHelper.instance.GetAllPlayers(isAlive: true)[0]);
-        }
-    }
+    }   
 }

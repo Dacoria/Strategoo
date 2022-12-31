@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameTextManager : HexaEventCallback
+public class GameTextManager : BaseEventCallback
 {
     protected override void OnNewRoundStarted(List<PlayerScript> players, PlayerScript currentPlayer)
     {      

@@ -11,7 +11,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     private List<PlayerScript> allPlayers;
 
-    public List<PlayerScript> GetAllPlayers(bool? isAlive = null, bool? isAi = null, bool? myNetwork = null)
+    public List<PlayerScript> GetAllPlayers(bool? isAi = null, bool? myNetwork = null)
     {
         var result = allPlayers;        
         if (isAi.HasValue)
@@ -52,7 +52,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         
         if(GameHandler.instance.GameStatus == GameStatus.PlayerFase)
         {
-            if(GetAllPlayers(isAlive: true).Any(x => x.Id == otherPlayer.ActorNumber))
+            if(GetAllPlayers().Any(x => x.Id == otherPlayer.ActorNumber))
             {
                 Textt.GameLocal("An active player has left the game! Reset the current game?");
             }
@@ -75,19 +75,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
     {
         yield return Wait4Seconds.Get(seconds);
         RefreshPlayerGos();
-    }
-
-    public PlayerScript ClosestPlayer(Vector3 positionToCompareDistance, PlayerScript playerToExclude = null)
-    {
-        return GetAllPlayers(isAlive: true).Where(x => playerToExclude == null ? true : x != playerToExclude)
-            .OrderBy(x => Vector3.Distance(x.transform.position, positionToCompareDistance))
-            .FirstOrDefault();
-    }
-
-    public PlayerScript OtherPlayerClosest(PlayerScript me)
-    {
-        return ClosestPlayer(me.transform.position, playerToExclude: me);
-    }    
+    }      
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -96,7 +84,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         RefreshPlayerGos();
     }
 
-    public List<PlayerScript> GetMyPlayers(bool? isAlive = null, bool? isAi = null) => GetAllPlayers(isAlive:isAlive, isAi:isAi, myNetwork: true);
+    public List<PlayerScript> GetMyPlayers(bool? isAi = null) => GetAllPlayers(isAi:isAi, myNetwork: true);
 
     public PlayerScript GetMyPlayer() => GetMyPlayers(isAi: false).FirstOrDefault();    
 }

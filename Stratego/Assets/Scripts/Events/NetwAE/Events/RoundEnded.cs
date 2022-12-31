@@ -3,14 +3,14 @@ using UnityEngine;
 
 public partial class NetworkAE : MonoBehaviour
 {
-    public void RoundEnded(bool achievedTarget, PlayerScript pWinner)
+    public void RoundEnded(PlayerScript pWinner)
     {
-        photonView.RPC("RPC_AE_RoundEnded", RpcTarget.All, achievedTarget, pWinner.Id);
+        photonView.RPC("RPC_AE_RoundEnded", RpcTarget.All, pWinner.Id);
     }
 
     [PunRPC]
-    public void RPC_AE_RoundEnded(bool achievedTarget, int pWinnerId)
+    public void RPC_AE_RoundEnded(int pWinnerId)
     {
-        ActionEvents.EndRound?.Invoke(achievedTarget, pWinnerId.GetPlayer());
+        ActionEvents.EndRound?.Invoke(pWinnerId.GetPlayer());
     }
 }

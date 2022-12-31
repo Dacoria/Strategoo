@@ -52,7 +52,6 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
 
     private void StopHighlightingMovementAbility()
     {
-        ButtonUpdater.instance.SetToUnselected(AbilityType.Movement);
         DeselectHighlightedNeighbours();
     }
 

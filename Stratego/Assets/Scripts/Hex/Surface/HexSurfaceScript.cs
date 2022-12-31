@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public partial class HexSurfaceScript : HexaEventCallback
+public partial class HexSurfaceScript : BaseEventCallback
 {
     [ComponentInject] private Hex hex;
 

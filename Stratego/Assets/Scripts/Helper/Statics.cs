@@ -26,7 +26,7 @@
     public static string ANIMATION_TRIGGER_DEACTIVATE = "DEACTIVATE";
 
     public static string RESOURCE_PATH_GO_TILE_STRUCTURES = "Hex/TileStructures";
-    public static string RESOURCE_PATH_GO_ENEMIES = "Enemies";
+    public static string RESOURCE_PATH_GO_PIECES = "Pieces";
     public static string RESOURCE_PATH_GO_OBJ_ON_TILE = "ObjectsOnTile";
     public static string RESOURCE_PATH_GO_PLAYER_UTIL = "UtilsForPlayer";
     public static string RESOURCE_PATH_GO_GUI = "GUI";

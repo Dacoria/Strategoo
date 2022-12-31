@@ -1,4 +1,4 @@
-public class TemperaryMountainScript : HexaEventCallback, ITurnsLeft
+public class TemperaryMountainScript : BaseEventCallback, ITurnsLeft
 {
     private int TurnActivated;
 

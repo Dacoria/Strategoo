@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public partial class GameHandler : HexaEventCallback
+public partial class GameHandler : BaseEventCallback
 {
     private HexGrid HexGrid;
     public static GameHandler instance;

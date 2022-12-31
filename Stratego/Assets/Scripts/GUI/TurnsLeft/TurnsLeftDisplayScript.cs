@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class TurnsLeftDisplayScript : HexaEventCallback
+public class TurnsLeftDisplayScript : BaseEventCallback
 {
     [ComponentInject] private ITurnsLeft TurnsLeftComponent;
     [ComponentInject] private TMP_Text Text;
