@@ -1,16 +1,17 @@
 using System;
 using UnityEngine;
 
-public class UnitMovementAction : BaseEventCallback
+public class PieceMovementAction : BaseEventCallback
 {
     [ComponentInject] private Animator animator;
-    [ComponentInject] private Piece unit;
+    [ComponentInject] private Piece piece;
 
     private Hex originalDestinationHex;
 
     public void GoToDestination(Hex hex, float duration)
     {
-        var endPos = hex.transform.position;
+        var unitBoostFactor = new Vector3(0, 1, 0); // UNIT STAAT 1 HOGER ALTIJD
+        var endPos = hex.transform.position + unitBoostFactor;
         originalDestinationHex = hex;
 
         RotateTowardsDestination(endPos, callbackOnFinished: () => MoveToDestination(endPos, duration, callbackOnFinished: OnDestinationReached));
@@ -18,8 +19,8 @@ public class UnitMovementAction : BaseEventCallback
 
     private void OnDestinationReached()
     {
-        unit.SetCurrentHexTile(originalDestinationHex);
-        ActionEvents.UnitMovingFinished?.Invoke(unit, originalDestinationHex);
+        piece.SetCurrentHexTile(originalDestinationHex);
+        ActionEvents.PieceMovingFinished?.Invoke(piece, originalDestinationHex);
     }
 
     public void RotateTowardsDestination(Vector3 endPosition, Action callbackOnFinished = null)

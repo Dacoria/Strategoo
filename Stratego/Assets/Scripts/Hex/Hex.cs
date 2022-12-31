@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 [SelectionBase]
 public class Hex : BaseEventCallback
@@ -49,7 +50,7 @@ public class Hex : BaseEventCallback
 
     private IEnumerator Start()
     {
-        while(fogOnHex == null)
+        while (fogOnHex == null)
         {
             yield return Wait4Seconds.Get(0.2f);
             fogOnHex = GetComponentInChildren<FogOnHex>();
@@ -61,7 +62,7 @@ public class Hex : BaseEventCallback
     public void DisableHighlight() => highlightMove.CurrentColorHighlight = HighlightColorType.None;
     public void DisableHighlight(HighlightColorType type)
     {
-        if(highlightMove.CurrentColorHighlight == type)
+        if (highlightMove.CurrentColorHighlight == type)
         {
             highlightMove.CurrentColorHighlight = HighlightColorType.None;
         }
@@ -70,14 +71,14 @@ public class Hex : BaseEventCallback
     public void SetFogOnHex(bool fogEnabled)
     {
         fogOnHex.SetFog(fogEnabled);
-        
+
         ChangeHexSurfaceType(HexSurfaceType, alsoChangeType: false);
         ChangeHexStructureType(HexStructureType, alsoChangeType: false);
     }
 
     public bool IsObstacle() => HexSurfaceType.IsObstacle() || HexStructureType.IsObstacle();
     public void ChangeHexSurfaceType(HexSurfaceType changeToType, bool alsoChangeType = true)
-    {        
+    {
         hexSurfaceScript.HexSurfaceTypeChanged(changeToType);
 
         if (alsoChangeType)
@@ -88,7 +89,7 @@ public class Hex : BaseEventCallback
 
     public void DestroyStructure()
     {
-        if(HexStructureType == HexStructureType.Mountain)
+        if (HexStructureType == HexStructureType.Mountain)
         {
             var structureGo = Utils.GetStructureGoFromHex(this);
             if (structureGo != null)
@@ -121,11 +122,11 @@ public class Hex : BaseEventCallback
                 structureGoModel?.SetActive(changeToType != HexStructureType.None);
             }
         }
-    }   
+    }
 
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)
     {
-        if(HexStructureType != initHexStructureType)
+        if (HexStructureType != initHexStructureType)
         {
             ChangeHexStructureType(initHexStructureType);
         }

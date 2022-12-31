@@ -12,67 +12,60 @@ public class UiActionSelection : MonoBehaviour
         instance = this;
     }
 
-    public UnitSelected UnitSelected;        
+    public UnitSelected PieceSelected;        
 
-    public void ClickOnTile(Hex tile)
+    public void ClickOnHex(Hex hex)
     {
-        if (UnitSelected != null && !UnitSelected.HexSelectionDate.EnoughTimeForNewEvent())
+        if (PieceSelected != null && !PieceSelected.HexSelectionDate.EnoughTimeForNewEvent())
         {
             return; // 1 click per 100 ms registeren
         }
 
-        if(UnitSelected == null || UnitSelected.ActionSelectionState.In(ActionSelectionState.HexSelected))
+        if(PieceSelected == null || PieceSelected.ActionSelectionState.In(ActionSelectionState.HexSelected))
         {
-            TrySelectNewTile(tile);
+            TrySelectNewHex(hex);
         }
-        else if (UnitSelected.ActionSelectionState.In(ActionSelectionState.AbilitySelected))
+        else if (PieceSelected.ActionSelectionState.In(ActionSelectionState.AbilitySelected))
         {
-            TryConfirmAbilityTile(tile);
+            TryConfirmAbilityTile(hex);
         }
     }
 
     private void TryConfirmAbilityTile(Hex hex)
     {
-        var tileIsConfirmable = UnitSelected.HexIdAbilityOptions?.Any(x => x == hex.HexCoordinates);
-        if (tileIsConfirmable == true)
+        var hexIsConfirmable = PieceSelected.HexIdAbilityOptions?.Any(x => x == hex.HexCoordinates);
+        if (hexIsConfirmable == true)
         {
-            // DO ACTION            
-            ClearTileSelection();
+            var pieceOnHex = PieceSelected.HexId.GetPiece();
+            ActionEvents.PieceAbility?.Invoke(pieceOnHex, hex, PieceSelected.Ability);
+            ClearHexSelection();
         }
         else
         {
-            ClearTileSelection();
+            ClearHexSelection();
         }
     }
 
-    public void TrySelectNewTile(Hex hex)
+    public void TrySelectNewHex(Hex hexSelected)
     {
-        if (UnitSelected == null || UnitSelected.HexId != hex.HexCoordinates)
+        if (PieceSelected == null || PieceSelected.HexId != hexSelected.HexCoordinates)
         {
-            // HIGHLIGHT
-            var selectedTiles = HexGrid.instance.GetTiles(HighlightColorType.White);
-            foreach (var tile in selectedTiles)
-            {
-                tile.DisableHighlight();
-            }
-            hex.EnableHighlight(HighlightColorType.White);
-
-            UnitSelected = new UnitSelected(hex.HexCoordinates);
-            ActionEvents.NewHexSelected?.Invoke(hex.HexCoordinates);
+            PieceSelected = new UnitSelected(hexSelected.HexCoordinates);
+            ActionEvents.NewHexSelected?.Invoke(hexSelected.HexCoordinates);
         }
     }
 
     public void ClickOnNothing()
     {
-        if (UnitSelected != null)
+        if (PieceSelected != null)
         {
-            ClearTileSelection();
+            ClearHexSelection();
         }
     }
 
-    public void ClearTileSelection()
+    public void ClearHexSelection()
     {
-        UnitSelected = null;
+        PieceSelected = null;
         ActionEvents.HexDeselected?.Invoke();
     }    
 }

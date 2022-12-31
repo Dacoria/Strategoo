@@ -16,8 +16,9 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn += OnNewPlayerTurn;
         if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn += OnAllPlayersFinishedTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound += OnEndRound;
-        if (IsOverwritten("OnEndGame")) ActionEvents.EndGame += OnEndGame;        
-    }
+        if (IsOverwritten("OnEndGame")) ActionEvents.EndGame += OnEndGame;
+        if (IsOverwritten("OnPieceAbility")) ActionEvents.PieceAbility += OnPieceAbility;
+    }    
 
     protected void OnDisable()
     {
@@ -26,15 +27,18 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn -= OnNewPlayerTurn;
         if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn -= OnAllPlayersFinishedTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound -= OnEndRound;
-        if (IsOverwritten("OnEndGame")) ActionEvents.EndGame -= OnEndGame;  
+        if (IsOverwritten("OnEndGame")) ActionEvents.EndGame -= OnEndGame;
+        if (IsOverwritten("OnPieceAbility")) ActionEvents.PieceAbility -= OnPieceAbility;
+
     }
-    
+
     protected virtual void OnGridLoaded() { }    
     protected virtual void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) { }
     protected virtual void OnNewPlayerTurn(PlayerScript player) { }
     protected virtual void OnAllPlayersFinishedTurn() { }
     protected virtual void OnEndRound(PlayerScript pWinner) { }
-    protected virtual void OnEndGame() { }   
+    protected virtual void OnEndGame() { }
+    protected virtual void OnPieceAbility(Piece piece, Hex hex, AbilityType abilType) { }
 
 
     // GEEN ABSTRACTE CLASSES!

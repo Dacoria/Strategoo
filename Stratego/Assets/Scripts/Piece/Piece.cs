@@ -4,6 +4,7 @@ public abstract class Piece : BaseEventCallback
 {
     private GameObject modelGo;
     public GameObject GameObject => gameObject;
+    public PlayerScript Owner;
 
     public abstract PieceType PieceType { get; }
 
@@ -15,12 +16,12 @@ public abstract class Piece : BaseEventCallback
     {
         Id = MonoHelper.instance.GenerateNewId();
         SetCurrentHexTile(GetComponentInParent<Hex>());
+        gameObject.AddComponent<PieceAttackMovementHandler>();
     }
 
     public int Id;
     public Hex CurrentHexTile { get; private set; }
     public bool IsAlive => true;        
     public void SetCurrentHexTile(Hex hex) => CurrentHexTile = hex;
-
     public void SetVisible(bool isVisible) => modelGo.SetActive(isVisible);
 }

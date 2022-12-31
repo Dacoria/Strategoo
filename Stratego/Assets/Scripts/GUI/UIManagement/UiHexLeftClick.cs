@@ -1,20 +1,23 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UiTileLeftClick : MonoBehaviour
+public class UiHexLeftClick : MonoBehaviour
 {
     void Update()
     {  
         if(Settings.UserInterfaceIsLocked)
         {
             return;
-        }        
-
+        }
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
-            if(UiHoverOverHex.Instance.HexHoveredOver != null)
+            if (UiHoverOverHex.Instance.HexHoveredOver != null)
             {
-                UiActionSelection.instance.ClickOnTile(UiHoverOverHex.Instance.HexHoveredOver);
+                UiActionSelection.instance.ClickOnHex(UiHoverOverHex.Instance.HexHoveredOver);
             }
             else
             {

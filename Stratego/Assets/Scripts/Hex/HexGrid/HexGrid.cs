@@ -83,7 +83,7 @@ public class HexGrid : BaseEventCallback
 
     public List<Hex> GetAllTiles() => hexTileDict.Values.ToList();
 
-    public List<Hex> GetTiles(HighlightColorType type) => hexTileDict.Values.Where(x => x.GetHighlight().HasValue && x.GetHighlight().Value == type).ToList();
+    public List<Hex> GetHexes(HighlightColorType type) => hexTileDict.Values.Where(x => x.GetHighlight().HasValue && x.GetHighlight().Value == type).ToList();
 
     public Hex GetTileAt(Vector3Int hexCoordinates)
     {

@@ -13,6 +13,7 @@ public class AbilityDisplayScript : MonoBehaviour
     private void Awake()
     {
         this.ComponentInject();
+        SetAbility(AbilityType.Movement, new Vector3Int());
     }
 
     public void SetAbility(AbilityType abilityType, Vector3Int hexId)
@@ -31,19 +32,17 @@ public class AbilityDisplayScript : MonoBehaviour
 
         if(!AbilityType.GetProperties().NeedsTileTarget)
         {
-            UiActionSelection.instance.ClearTileSelection();
+            UiActionSelection.instance.ClearHexSelection();
+            Debug.Log("NO NeedsTileTarget --> TODO ACTION");
             // TODO ACTION?!
         }
         else
         {
             // bevestig tile om te targeten
 
-
             // TODO wijkt af per unit/abil combi! (wss abil)
             var hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId);
-
-
-            UiActionSelection.instance.UnitSelected.SetAbilitySelected(AbilityType, hexesToSelect);
+            UiActionSelection.instance.PieceSelected?.SetAbilitySelected(AbilityType, hexesToSelect);
         }
     }
 }

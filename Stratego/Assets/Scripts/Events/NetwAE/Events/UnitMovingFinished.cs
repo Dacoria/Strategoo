@@ -11,6 +11,6 @@ public partial class NetworkAE : MonoBehaviour
     [PunRPC]
     public void RPC_AE_UnitMovingFinished(int unitId, Vector3 hexTile)
     {
-        ActionEvents.UnitMovingFinished?.Invoke(unitId.GetPiece(), hexTile.GetHex());
+        ActionEvents.PieceMovingFinished?.Invoke(unitId.GetPiece(), hexTile.GetHex());
     }
 }

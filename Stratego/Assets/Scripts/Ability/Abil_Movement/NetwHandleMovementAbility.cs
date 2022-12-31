@@ -14,7 +14,7 @@ public class NetwHandleMovementAbility : BaseEventCallback, IAbilityNetworkHandl
         }
         else
         {
-            gameObject.GetAdd<UnitMovementAction>().GoToDestination(target, 1.3f);
+            gameObject.GetAdd<PieceMovementAction>().GoToDestination(target, 1.3f);
         }
     }   
 }

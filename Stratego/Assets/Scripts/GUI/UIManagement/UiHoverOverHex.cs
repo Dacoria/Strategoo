@@ -18,14 +18,19 @@ public class UiHoverOverHex : MonoBehaviourSlowUpdate
     //protected override int TicksToUpdate => 1000;
 
     protected override void SlowUpdate()
-    {        
+    {
         if (Settings.UserInterfaceIsLocked)
+        {
+            return;
+        }
+        if(EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
 
         var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        var hits = Physics.RaycastAll(ray); 
+        var hexLayermask = 1 << LayerMask.NameToLayer(Statics.LAYER_MASK_HEXTILE);
+        var hits = Physics.RaycastAll(ray, hexLayermask);
 
         HexHoveredOver = GetFirstHexHit(hits);
     }

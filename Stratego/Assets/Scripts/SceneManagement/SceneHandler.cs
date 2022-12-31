@@ -20,20 +20,7 @@ public class SceneHandler : MonoBehaviour
     {
         Settings.DefaultLevelName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(Statics.SCENE_LOADING);
-    }
-
-    public void LoadNextScene()
-    {
-        var currentSceneName = SceneManager.GetActiveScene().name;
-        if (currentSceneName == Statics.SCENE_LEVEL1)
-        {
-            PhotonNetwork.LoadLevel(Statics.SCENE_LEVEL2);
-        }
-        else if (currentSceneName == Statics.SCENE_LEVEL2)
-        {
-            PhotonNetwork.LoadLevel(Statics.SCENE_LEVEL3);
-        }
-    }
+    }    
 
     public void LoadSameScene()
     {

@@ -3,27 +3,17 @@
     public static string TAG_PLAYER = "Player";
 
     public const string SCENE_LEVEL1 = "Level1";
-    public const string SCENE_LEVEL2 = "Level2";
-    public const string SCENE_LEVEL3 = "Level3";
     public const string SCENE_LOADING = "Loading";
 
     public static string LAYER_MASK_HEXTILE = "HexTile";
+    public static string LAYER_MASK_UI = "UI";
 
     public static string ANIMATION_TRIGGER_START_ANIMATION_SCENE = "Start"; // voor starten van scene
 
     public static string ANIMATION_BOOL_RUN = "RUN";
-    public static string ANIMATION_BOOL_WALK = "WALK";
-    public static string ANIMATION_BOOL_HOP = "HOP";
-    public static string ANIMATION_BOOL_DANCE = "DANCE";
 
     public static string ANIMATION_TRIGGER_DIE = "DIE";
-    public static string ANIMATION_TRIGGER_PICKUP = "PICKUP";
     public static string ANIMATION_TRIGGER_ATTACK = "ATTACK";
-    public static string ANIMATION_TRIGGER_WAVE = "WAVE";
-    public static string ANIMATION_TRIGGER_SPINNING = "SPINNING";
-
-    public static string ANIMATION_TRIGGER_ACTIVATE = "ACTIVATE";
-    public static string ANIMATION_TRIGGER_DEACTIVATE = "DEACTIVATE";
 
     public static string RESOURCE_PATH_GO_TILE_STRUCTURES = "Hex/TileStructures";
     public static string RESOURCE_PATH_GO_PIECES = "Pieces";

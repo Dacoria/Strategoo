@@ -13,8 +13,6 @@ public class PlayerScript : BaseEventCallback, IPunInstantiateMagicCallback
 
     public int Index;
 
-    [ComponentInject (SearchDirection=SearchDirection.CHILDREN)] public PlayerModel PlayerModel;
-
     [ComponentInject] private PlayerColor playerColor;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
@@ -40,8 +38,5 @@ public class PlayerScript : BaseEventCallback, IPunInstantiateMagicCallback
 
         NetworkHelper.instance.RefreshPlayerGos();
         PlayerName = name;
-        PlayerModel.gameObject.SetActive(false); // begin met onzichtbaar model
-    }
-
-    
+    }    
 }
