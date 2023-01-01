@@ -8,11 +8,6 @@ public static class PieceExtensions
         var pieces = PieceManager.instance.GetPieces(isAlive: isAlive);
         var pieceOnTile = pieces.FirstOrDefault(x => x.CurrentHexTile.HexCoordinates == hex.HexCoordinates);
 
-        if(hex.gameObject.name.Contains("36"))
-        {
-            var x = 1;
-        }
-
         return pieceOnTile;
     }
 

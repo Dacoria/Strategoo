@@ -7,25 +7,21 @@ public class PlayerColor : BaseEventCallback
 
     public Color Color;
 
-    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currentPlayer)
+    protected override void OnUpdatePlayerIndex(int playerId, int playerIndex)
     {
-        // Altijd via deze volgorde; vandaar kloppen de kleuren ook
-        for (int i = 0; i < allPlayers.Count; i++)
+        if(player.Id == playerId)
         {
-            if (allPlayers[i] == player)
-            {
-                Color = GetPlayerColorForIndex(i);
-                return;
-            }
+            Color = GetPlayerColorForIndex(playerIndex);
         }
     }
 
+
     private Color GetPlayerColorForIndex(int i) => i switch
     {
-        0 => Colorr.Orange,
-        1 => Colorr.LightBlue,
-        2 => Colorr.Purple,
-        3 => Colorr.Yellow,
+        1 => Colorr.Orange,
+        2 => Colorr.LightBlue,
+        3 => Colorr.Purple,
+        4 => Colorr.Yellow,
         _ => Colorr.White,
     };
 }

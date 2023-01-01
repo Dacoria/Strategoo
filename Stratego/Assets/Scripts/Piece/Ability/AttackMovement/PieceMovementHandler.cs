@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PieceMovementHandler : BaseEventCallback
@@ -17,12 +18,14 @@ public class PieceMovementHandler : BaseEventCallback
     {
         if(piece == pieceScript && abilType == AbilityType.Movement)
         {
-            DoMovementAbility(hex);            
+            StartCoroutine(DoMovementAbility(hex));
         }
     }
 
-    private void DoMovementAbility(Hex hex)
+    private IEnumerator DoMovementAbility(Hex hex)
     {
+        yield return Wait4Seconds.Get(0.05f); // wacht tot de modellen geactiveerd zijn (ook via dit event)
+
         var isMyPiece = false; // TODO FIXEN
         if(hex.HasPiece())
         {

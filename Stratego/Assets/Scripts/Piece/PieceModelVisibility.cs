@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Collections;
 
 public class PieceModelVisibility : BaseEventCallback
 {
@@ -20,7 +21,8 @@ public class PieceModelVisibility : BaseEventCallback
     {
         var unknownPrefab = PieceManager.instance.UnknownPrefab;
         unknownPieceGo = Instantiate(unknownPrefab, transform);
-        MakePieceModelUnknown();        
+        MakePieceModelUnknown();
+        StartCoroutine(UpdateColors());
     }
 
     public bool IsKnown() => modelGo.activeInHierarchy;
@@ -71,5 +73,43 @@ public class PieceModelVisibility : BaseEventCallback
     {
         modelGo.SetActive(false);
         unknownPieceGo?.SetActive(false);
+    }
+
+    protected override void OnUpdatePlayerIndex(int playerId, int playerIndex) => StartCoroutine(UpdateColors());
+
+    private IEnumerator UpdateColors()
+    {
+        yield return Wait4Seconds.Get(0.05f);
+
+        var pieceColor = piece.Owner != null ? piece.Owner.Color : Color.white;
+
+        unknownPieceGo.GetComponentInChildren<Renderer>().material.color = pieceColor;
+        var pieceColorModel = modelGo.GetComponentInChildren<PieceColorModel>();
+        if(pieceColorModel != null)
+        {
+            var renderers = pieceColorModel.GetComponentsInChildren<Renderer>();
+            foreach(var renderer in renderers)
+            {
+                renderer.material.color = pieceColor;
+            }
+        }
+    }
+
+
+    protected override void OnPieceAbility(Piece pieceDoingAbility, Hex hexTarget, AbilityType abilType)
+    {
+        if(abilType.In(AbilityType.Movement, AbilityType.ScoutMove))
+        {
+            if(pieceDoingAbility == piece)
+            {
+                MakePieceModelKnown();
+            }
+
+            var pieceOnTargetHex = hexTarget.GetPiece();
+            if (pieceOnTargetHex != null && pieceOnTargetHex == piece)
+            {
+                MakePieceModelKnown();
+            }
+        }
     }
 }
