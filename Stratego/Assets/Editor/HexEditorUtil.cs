@@ -25,24 +25,7 @@ public static class HexEditorUtil
         EditorUtility.SetDirty(hex);
         EditorSceneManager.MarkSceneDirty(hex.gameObject.scene);
     }
-
-    public static void HexStructureTypeChanged(Hex hex, HexStructureType to)
-    {
-        var structureGo = GetStructuresGo(hex);
-        DestroyChildrenOfGo(structureGo);
-        if(HasHexTypeStructures(to))
-        {
-            if (Rsc.GoStructureMap.TryGetValue(to.ToString() + "Structure", out GameObject result))
-            {
-                var go = PrefabUtility.InstantiatePrefab(result, structureGo.transform) as GameObject;
-                go.transform.rotation = new Quaternion(0, 180, 0, 0);
-            }
-        }
-
-        EditorUtility.SetDirty(hex);
-        EditorSceneManager.MarkSceneDirty(hex.gameObject.scene);
-    }
-  
+ 
     public static void HexObjectOnTileTypeChanged(Hex hex, HexObjectOnTileType to)
     {
         var structureGo = GetStructuresGo(hex);
@@ -76,23 +59,7 @@ public static class HexEditorUtil
             Object.DestroyImmediate(child.gameObject);
         }
     }
-
-    private static bool HasHexTypeStructures(HexStructureType type)
-    {
-        switch(type)
-        {
-            case HexStructureType.Castle:
-            case HexStructureType.Hill:
-            case HexStructureType.Forest:
-            case HexStructureType.Mountain:
-            case HexStructureType.Portal:    
-                return true;
-            default:
-                return false;
-        }
-    }
-
-
+      
     private static GameObject GetMainGo(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "Main");
     private static GameObject GetStructuresGo(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "Props");
     private static GameObject GetPlayerStartGo(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "PlayerSpawnVisualizer");
@@ -114,9 +81,7 @@ public static class HexEditorUtil
         hex.HexSurfaceType = HexSurfaceType.Simple_Plain;
         HexSurfaceTypeChanged(hex, hex.HexSurfaceType);
 
-        hex.HexStructureType = HexStructureType.None;
         hex.HexObjectOnTileType = HexObjectOnTileType.None;
-        HexStructureTypeChanged(hex, hex.HexStructureType); // dit verwijdert ook de monsters....
 
         EditorUtility.SetDirty(hex);
         EditorSceneManager.MarkSceneDirty(hex.gameObject.scene);

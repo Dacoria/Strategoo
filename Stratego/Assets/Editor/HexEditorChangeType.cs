@@ -10,7 +10,6 @@ using UnityEngine;
 public class HexEditorChangeType : Editor
 {
     private Hex previousSelectedHex;
-    private HexStructureType previousHexStructureType;
     private HexSurfaceType previousHexSurfaceType;
     private HexObjectOnTileType previousHexObjectOnTileType;
 
@@ -30,11 +29,6 @@ public class HexEditorChangeType : Editor
         }
 
         var firstHex = (Hex)target;        
-
-        if(previousSelectedHex == firstHex && previousHexStructureType != firstHex.HexStructureType)
-        {
-            hexes.ForEach(hex => HexEditorUtil.HexStructureTypeChanged(hex, firstHex.HexStructureType));
-        }
         if (previousSelectedHex == firstHex && previousHexSurfaceType != firstHex.HexSurfaceType)
         {
             hexes.ForEach(hex => HexEditorUtil.HexSurfaceTypeChanged(hex, firstHex.HexSurfaceType));
@@ -46,7 +40,6 @@ public class HexEditorChangeType : Editor
         }
 
         previousSelectedHex = firstHex;
-        previousHexStructureType = firstHex.HexStructureType;
         previousHexSurfaceType = firstHex.HexSurfaceType;
         previousHexObjectOnTileType = firstHex.HexObjectOnTileType;
     }

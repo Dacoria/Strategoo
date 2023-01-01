@@ -17,7 +17,6 @@ public class Hex : BaseEventCallback
 
     public Vector3Int HexCoordinates => hexCoordinates.OffSetCoordinates;
 
-    public HexStructureType HexStructureType;
     public HexSurfaceType HexSurfaceType;
 
     public PieceType PieceType;
@@ -28,11 +27,9 @@ public class Hex : BaseEventCallback
     public Vector3 OrigPosition;
 
     private HexSurfaceScript hexSurfaceScript;
-    private HexStructureScript hexStructureScript;
 
     public bool FogIsActive() => fogOnHex?.FogIsActive() == true;
 
-    private HexStructureType initHexStructureType;
     private HexSurfaceType initHexSurfaceType;
     private HexObjectOnTileType initHexObjectOnTileType;
 
@@ -40,9 +37,7 @@ public class Hex : BaseEventCallback
     {
         base.Awake();
         this.hexSurfaceScript = gameObject.AddComponent<HexSurfaceScript>();
-        this.hexStructureScript = gameObject.AddComponent<HexStructureScript>();
 
-        initHexStructureType = HexStructureType;
         initHexSurfaceType = HexSurfaceType;
         initHexObjectOnTileType = HexObjectOnTileType;
         OrigPosition = this.transform.position;
@@ -73,10 +68,9 @@ public class Hex : BaseEventCallback
         fogOnHex.SetFog(fogEnabled);
 
         ChangeHexSurfaceType(HexSurfaceType, alsoChangeType: false);
-        ChangeHexStructureType(HexStructureType, alsoChangeType: false);
     }
 
-    public bool IsObstacle() => HexSurfaceType.IsObstacle() || HexStructureType.IsObstacle();
+    public bool IsObstacle() => HexSurfaceType.IsObstacle();
     public void ChangeHexSurfaceType(HexSurfaceType changeToType, bool alsoChangeType = true)
     {
         hexSurfaceScript.HexSurfaceTypeChanged(changeToType);
@@ -86,33 +80,9 @@ public class Hex : BaseEventCallback
             HexSurfaceType = changeToType;
         }
     }
-
-    public void ChangeHexStructureType(HexStructureType changeToType, bool alsoChangeType = true)
-    {
-        if (alsoChangeType)
-        {
-            // daadwekelijk verwijderen
-            hexStructureScript.HexStructureTypeChanged(changeToType);
-            HexStructureType = changeToType;
-        }
-        else
-        {
-            // alleen hiden/showen van model
-            var structureGo = Utils.GetUnderlyingStructureGoFromHex(this);
-            if (structureGo != null)
-            {
-                var structureGoModel = structureGo.GetComponentInChildren<StructureModel>(true)?.gameObject;
-                structureGoModel?.SetActive(changeToType != HexStructureType.None);
-            }
-        }
-    }
-
+    
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)
-    {
-        if (HexStructureType != initHexStructureType)
-        {
-            ChangeHexStructureType(initHexStructureType);
-        }
+    {       
         if (HexSurfaceType != initHexSurfaceType)
         {
             ChangeHexSurfaceType(initHexSurfaceType);

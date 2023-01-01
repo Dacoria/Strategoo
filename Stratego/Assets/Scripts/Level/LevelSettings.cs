@@ -2,33 +2,66 @@
 
 public static class LevelSettings
 {
-    public static LevelSetting LevelSetting_1 = new LevelSetting
+    public static LevelSetting LevelSetting_1_20pcs = new LevelSetting
     {
-        UnitSettings = new List<UnitsSetting>
+        UnitsSettings = new List<UnitsSetting>
         {
-            new UnitsSetting{ PieceType = PieceType.Castle, NumberOfPieces = 1},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 1, UnitBaseValue = 1},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 2, UnitBaseValue = 2},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 2, UnitBaseValue = 3},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 2, UnitBaseValue = 4},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 2, UnitBaseValue = 5},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 2, UnitBaseValue = 6},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 2, UnitBaseValue = 7},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 2, UnitBaseValue = 8},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 1, UnitBaseValue = 9},
-            new UnitsSetting{ PieceType = PieceType.Unit,   NumberOfPieces = 1, UnitBaseValue = 10},
+            new UnitsSetting(numberOfPieces: 1, PieceType.Castle),
+            new UnitsSetting(numberOfPieces: 2, PieceType.Trap),
+            new UnitsSetting(numberOfPieces: 1, PieceType.Unit, unitBaseValue: 1),
+            new UnitsSetting(numberOfPieces: 2, PieceType.Unit, unitBaseValue: 2),
+            new UnitsSetting(numberOfPieces: 2, PieceType.Unit, unitBaseValue: 3),
+            new UnitsSetting(numberOfPieces: 2, PieceType.Unit, unitBaseValue: 4),
+            new UnitsSetting(numberOfPieces: 2, PieceType.Unit, unitBaseValue: 5),
+            new UnitsSetting(numberOfPieces: 2, PieceType.Unit, unitBaseValue: 6),
+            new UnitsSetting(numberOfPieces: 2, PieceType.Unit, unitBaseValue: 7),
+            new UnitsSetting(numberOfPieces: 2, PieceType.Unit, unitBaseValue: 8),
+            new UnitsSetting(numberOfPieces: 1, PieceType.Unit, unitBaseValue: 9),
+            new UnitsSetting(numberOfPieces: 1, PieceType.Unit, unitBaseValue: 10),
         }
     };
+
+    public static LevelSetting Deepcopy(this LevelSetting levelSetting)
+    {
+        var result = new LevelSetting { UnitsSettings = new List<UnitsSetting> { } };
+        foreach(var unitsSetting in levelSetting.UnitsSettings)
+        {
+            var copyUnitSetting = new UnitsSetting(
+                unitsSetting.NumberOfPieces,
+                unitsSetting.UnitSetting.PieceType,
+                unitsSetting.UnitSetting.UnitBaseValue
+            );
+
+            result.UnitsSettings.Add(copyUnitSetting);
+        }
+
+        return result;
+    }
 }
 
 public class LevelSetting
 {
-    public List<UnitsSetting> UnitSettings;
+    public List<UnitsSetting> UnitsSettings;
 }
 
 public class UnitsSetting
 {
+    public int NumberOfPieces;
+    public UnitSetting UnitSetting;
+
+    public UnitsSetting(int numberOfPieces, PieceType pieceType, int unitBaseValue = 0)
+    {
+        NumberOfPieces = numberOfPieces;
+        UnitSetting = new UnitSetting
+        {
+            PieceType = pieceType,
+            UnitBaseValue = unitBaseValue
+        };
+    }
+}
+
+public class UnitSetting
+{
     public PieceType PieceType;
     public int UnitBaseValue;
-    public int NumberOfPieces;
 }

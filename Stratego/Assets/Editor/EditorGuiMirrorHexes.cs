@@ -121,18 +121,9 @@ public class EditorGuiMirrorHexes : UnityEditor.EditorWindow
         {
             hexToCopyTo.HexSurfaceType = hexToCopyFrom.HexSurfaceType;
             HexEditorUtil.HexSurfaceTypeChanged(hexToCopyTo, hexToCopyTo.HexSurfaceType);
-        }
-
-        if (hexToCopyTo.HexStructureType != hexToCopyFrom.HexStructureType)
-        {
-            hexToCopyTo.HexStructureType = hexToCopyFrom.HexStructureType;
-            hexToCopyTo.HexObjectOnTileType = hexToCopyFrom.HexObjectOnTileType;
-            HexEditorUtil.HexStructureTypeChanged(hexToCopyTo, hexToCopyTo.HexStructureType);
-        }
+        }       
         else if (hexToCopyTo.HexObjectOnTileType != hexToCopyFrom.HexObjectOnTileType)
         {
-            // OF obj, OF structure. Niet beide; vandaar zo
-            hexToCopyTo.HexStructureType = hexToCopyFrom.HexStructureType;
             hexToCopyTo.HexObjectOnTileType = hexToCopyFrom.HexObjectOnTileType;
             HexEditorUtil.HexObjectOnTileTypeChanged(hexToCopyTo, hexToCopyTo.HexObjectOnTileType);
         }

@@ -1,10 +1,15 @@
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 public class PieceManager : BaseEventCallback
 {
     public static PieceManager instance;
+
+    public Unit UnitPrefab;
+    public Castle CastlePrefab;
+    public Trap TrapPrefab;
 
     public new void Awake()
     {
@@ -38,5 +43,36 @@ public class PieceManager : BaseEventCallback
         }
 
         return pieces;
+    }
+
+    private Piece GetPiecePrefab(PieceType pieceType) => pieceType switch
+    {
+        PieceType.Unit => UnitPrefab,
+        PieceType.Castle => CastlePrefab,
+        PieceType.Trap => TrapPrefab,
+        _ => throw new NotImplementedException(),
+    };
+
+    public void CreatePiece(PieceType pieceType, int unitBaseValue, Hex hexToSpawnPiece)
+    {
+        var piecePrefab = GetPiecePrefab(pieceType);
+        var pieceGo = Instantiate(piecePrefab, hexToSpawnPiece.GetGoStructure().transform);
+        pieceGo.transform.rotation = new Quaternion(0, 180, 0, 0);
+
+        if (pieceType == PieceType.Unit)
+        {
+            ((Unit)pieceGo).Value = unitBaseValue;
+        }
+
+        _goPieces.Add(pieceGo);
+    }
+
+    public void RemoveAllPieces()
+    {
+        foreach (var piece in this.GoPieces)
+        {
+            Destroy(piece.gameObject);
+        }
+        _goPieces.Clear();
     }
 }

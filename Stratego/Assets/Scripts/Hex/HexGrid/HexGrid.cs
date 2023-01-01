@@ -105,4 +105,23 @@ public class HexGrid : BaseEventCallback
         piece.SetCurrentHexTile(newHex);
         piece.transform.SetParent(newHex.GetGoStructure().transform);
     }
+
+    public List<Hex> GetPlayerStartTiles(int playerId)
+    {        
+        if(playerId != 1)
+        {
+            throw new Exception();
+        }
+
+        var allTiles = GetAllTiles();
+        var tileRightUpper = GetTileRightUpperCorner();
+        
+        var result = new List<Hex>();
+
+        result = allTiles.Where(hex => 
+        !hex.HexSurfaceType.IsObstacle() && 
+        hex.HexCoordinates.z <= ((tileRightUpper.HexCoordinates.z - 1f) / 2))
+            .ToList();
+        return result;
+    }
 }

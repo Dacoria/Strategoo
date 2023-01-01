@@ -120,7 +120,6 @@ public class EditorGuiAddRowColHex : UnityEditor.EditorWindow
         newHex.transform.position = newPosition;
 
         newHex.HexSurfaceType = HexSurfaceType.Simple_Plain;
-        newHex.HexStructureType = HexStructureType.None;
         newHex.HexObjectOnTileType = HexObjectOnTileType.None;
 
         var prefabForestRoot = PrefabUtility.GetCorrespondingObjectFromSource(GetForestGoFromHex(hexRightUpperCorner));

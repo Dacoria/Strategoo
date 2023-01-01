@@ -17,14 +17,4 @@ public static partial class Utils
         var props = hex.GetGoStructure();
         return props.transform.childCount > 0 ? props.transform.GetChild(0).gameObject : null;
     }
-
-    public static GameObject GetStructurePrefabFromRrc(this HexStructureType hexStructure)
-    {
-        if (hexStructure.HasStructure())
-        {
-            return Rsc.GoStructureMap.First(x => x.Key == hexStructure.ToString() + "Structure").Value;
-        }
-
-        return null;
-    }
 }
