@@ -3,6 +3,13 @@ using UnityEngine.EventSystems;
 
 public class UiHexLeftClick : MonoBehaviour
 {
+    private UiHexPieceSelection uiHexPieceSelection;
+
+    private void Awake()
+    {
+        uiHexPieceSelection = FindObjectOfType<UiHexPieceSelection>();
+    }
+
     void Update()
     {  
         if(Settings.UserInterfaceIsLocked)
@@ -17,11 +24,11 @@ public class UiHexLeftClick : MonoBehaviour
         {
             if (UiHoverOverHex.Instance.HexHoveredOver != null)
             {
-                UiActionSelection.instance.ClickOnHex(UiHoverOverHex.Instance.HexHoveredOver);
+                uiHexPieceSelection.ClickOnHex(UiHoverOverHex.Instance.HexHoveredOver);
             }
             else
             {
-                UiActionSelection.instance.ClickOnNothing();
+                uiHexPieceSelection.ClickOnNothing();
             }
         }
     }

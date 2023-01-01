@@ -11,9 +11,8 @@
     public static string ANIMATION_TRIGGER_START_ANIMATION_SCENE = "Start"; // voor starten van scene
 
     public static string ANIMATION_BOOL_RUN = "RUN";
-
     public static string ANIMATION_TRIGGER_DIE = "DIE";
-    public static string ANIMATION_TRIGGER_ATTACK = "ATTACK";
+    public static string ANIMATION_TRIGGER_JUMP = "JUMP";
 
     public static string RESOURCE_PATH_GO_TILE_STRUCTURES = "Hex/TileStructures";
     public static string RESOURCE_PATH_GO_PIECES = "Pieces";

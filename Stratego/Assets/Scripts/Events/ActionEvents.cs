@@ -5,7 +5,7 @@ using UnityEngine;
 public static class ActionEvents
 {
     // network
-    public static Action<Piece, Hex, AbilityType> PieceAbility;
+    public static Action<Piece, Hex, AbilityType> DoPieceAbility;
 
     public static Action<List<PlayerScript>, PlayerScript> NewRoundStarted;
     public static Action<PlayerScript> NewPlayerTurn;
@@ -25,4 +25,6 @@ public static class ActionEvents
 
     public static Action<Vector3Int> NewHexSelected;
     public static Action HexDeselected;
+
+    public static Action<Vector3Int, AbilityType, List<Vector3Int>> PieceAbilitySelected;
 }

@@ -30,19 +30,8 @@ public class AbilityDisplayScript : MonoBehaviour
             return;
         }        
 
-        if(!AbilityType.GetProperties().NeedsTileTarget)
-        {
-            UiActionSelection.instance.ClearHexSelection();
-            Debug.Log("NO NeedsTileTarget --> TODO ACTION");
-            // TODO ACTION?!
-        }
-        else
-        {
-            // bevestig tile om te targeten
-
-            // TODO wijkt af per unit/abil combi! (wss abil)
-            var hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId);
-            UiActionSelection.instance.PieceSelected?.SetAbilitySelected(AbilityType, hexesToSelect);
-        }
+        // TODO wijkt af per unit/abil combi! (wss abil)
+        var hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId);
+        ActionEvents.PieceAbilitySelected?.Invoke(hexId, AbilityType, hexesToSelect);
     }
 }

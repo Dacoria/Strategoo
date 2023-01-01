@@ -1,18 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System;
 
-public class UiActionSelection : MonoBehaviour
+public class UiHexPieceSelection : BaseEventCallback
 {
-    public static UiActionSelection instance;
+    public PieceSelected PieceSelected;
 
-    private void Awake()
+    private void Start()
     {
-        instance = this;
-    }
+        ActionEvents.PieceAbilitySelected += OnPieceAbilitySelected;
+    }    
 
-    public PieceSelected PieceSelected;        
+    private void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexOptions)
+    {
+        if(PieceSelected.HexId == hexId)
+        {
+            PieceSelected.SetAbilitySelected(ability, hexOptions);
+        }    
+    }
 
     public void ClickOnHex(Hex hex)
     {
@@ -21,11 +26,11 @@ public class UiActionSelection : MonoBehaviour
             return; // 1 click per 100 ms registeren
         }
 
-        if(PieceSelected == null || PieceSelected.ActionSelectionState.In(ActionSelectionState.HexSelected))
+        if(PieceSelected == null || PieceSelected.ActionSelectionState.In(HexPieceSelectionState.HexSelected))
         {
             TrySelectNewHex(hex);
         }
-        else if (PieceSelected.ActionSelectionState.In(ActionSelectionState.AbilitySelected))
+        else if (PieceSelected.ActionSelectionState.In(HexPieceSelectionState.PieceAbilitySelected))
         {
             TryConfirmAbilityTile(hex);
         }
@@ -37,7 +42,7 @@ public class UiActionSelection : MonoBehaviour
         if (hexIsConfirmable == true)
         {
             var pieceOnHex = PieceSelected.HexId.GetPiece();
-            ActionEvents.PieceAbility?.Invoke(pieceOnHex, hex, PieceSelected.Ability);
+            ActionEvents.DoPieceAbility?.Invoke(pieceOnHex, hex, PieceSelected.Ability);
             ClearHexSelection();
         }
         else
@@ -67,30 +72,10 @@ public class UiActionSelection : MonoBehaviour
     {
         PieceSelected = null;
         ActionEvents.HexDeselected?.Invoke();
-    }    
-}
-
-public class PieceSelected
-{
-    public Vector3Int HexId;
-    public DateTime HexSelectionDate;
-
-    public ActionSelectionState ActionSelectionState;
-
-    public AbilityType Ability;
-    public List<Vector3Int> HexIdAbilityOptions;
-
-    public PieceSelected(Vector3Int hexId)
-    {
-        HexId = hexId;
-        HexSelectionDate = DateTime.Now;
-        ActionSelectionState = ActionSelectionState.HexSelected;
     }
 
-    public void SetAbilitySelected(AbilityType ability, List<Vector3Int> hexIdAbilityOptions)
+    private void OnDestroy()
     {
-        Ability = ability;
-        HexIdAbilityOptions = hexIdAbilityOptions;
-        ActionSelectionState = ActionSelectionState.AbilitySelected;
+        ActionEvents.PieceAbilitySelected -= OnPieceAbilitySelected;
     }
 }

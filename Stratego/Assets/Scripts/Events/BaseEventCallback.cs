@@ -17,7 +17,7 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn += OnAllPlayersFinishedTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound += OnEndRound;
         if (IsOverwritten("OnEndGame")) ActionEvents.EndGame += OnEndGame;
-        if (IsOverwritten("OnPieceAbility")) ActionEvents.PieceAbility += OnPieceAbility;
+        if (IsOverwritten("OnPieceAbility")) ActionEvents.DoPieceAbility += OnPieceAbility;
         if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished += OnPieceMovingFinished;
     }
 
@@ -29,7 +29,7 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn -= OnAllPlayersFinishedTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound -= OnEndRound;
         if (IsOverwritten("OnEndGame")) ActionEvents.EndGame -= OnEndGame;
-        if (IsOverwritten("OnPieceAbility")) ActionEvents.PieceAbility -= OnPieceAbility;
+        if (IsOverwritten("OnPieceAbility")) ActionEvents.DoPieceAbility -= OnPieceAbility;
         if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished -= OnPieceMovingFinished;
 
 
