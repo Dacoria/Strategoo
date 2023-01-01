@@ -16,6 +16,9 @@ public static class ActionEvents
     public static Action<Piece, Hex> PieceMovingFinished;
 
 
+    public static Action<int, int> UpdatePlayerIndex;
+
+
     // local
     public static Action GridLoaded;
 
@@ -27,4 +30,5 @@ public static class ActionEvents
     public static Action HexDeselected;
 
     public static Action<Vector3Int, AbilityType, List<Vector3Int>> PieceAbilitySelected;
+
 }

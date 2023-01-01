@@ -5,6 +5,7 @@ public enum HexObjectOnTileType
     Boximon,
     Castle,
     Trap,
+    UnknownPiece
     //Bat,
     //EarthElemental,
     //FireElemental,

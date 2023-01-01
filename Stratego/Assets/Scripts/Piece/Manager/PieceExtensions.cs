@@ -18,7 +18,7 @@ public static class PieceExtensions
 
     public static Piece GetPiece(this Vector3Int tileV3, bool? isAlive = true)
     {
-        var hex = HexGrid.instance.GetTileAt(tileV3);
+        var hex = HexGrid.instance.GetHexAt(tileV3);
         if (hex != null)
         {
             return hex.GetPiece(isAlive: isAlive);

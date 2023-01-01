@@ -53,18 +53,7 @@ public partial class GameHandler : BaseEventCallback
         }
         AllPlayers = playersRes;
 
-        // reset local
-        ResetGameLocal();
-
         SetCurrentPlayer(currPlayer);
         CurrentTurn = 1;
-    }
-
-    private void ResetGameLocal()
-    {
-        for (int i = 0; i < AllPlayers.Count; i++)
-        {
-            AllPlayers[i].Index = i;
-        }
-    }
+    }    
 }

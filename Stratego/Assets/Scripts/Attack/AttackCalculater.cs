@@ -1,4 +1,6 @@
-﻿public static class AttackCalculater
+﻿using System.Linq;
+
+public static class AttackCalculater
 {
     public static AttackResult CalculateAttackResult(Piece attacker, Piece defender)
     {
@@ -13,8 +15,14 @@
 
         if(defender.PieceType == PieceType.Trap)
         {
+            if(attacker.Skills.Any(x => x == SkillType.DiffuseTrap))
+            {
+                return AttackResult.AttackerWins;
+            }
+
             return AttackResult.Draw;
         }
+
         if (defender.PieceType == PieceType.Castle)
         {
             return AttackResult.AttackerWins;
@@ -22,6 +30,11 @@
 
         var valueAttacker = ((Unit)attacker).Value;
         var valueDefender = ((Unit)defender).Value;
+
+        if(valueDefender == 10 && attacker.Skills.Any(x => x == SkillType.AttackKillsTenPiece))
+        {
+            return AttackResult.AttackerWins;
+        }
 
         if (valueAttacker > valueDefender)
         {

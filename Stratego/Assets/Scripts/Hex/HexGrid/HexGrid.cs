@@ -61,14 +61,14 @@ public class HexGrid : BaseEventCallback
 
     public bool IsLoaded() => HexGridLoaded;
 
-    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnTile = null, bool onlyMoveInOneDirection = false, bool showOnlyFurthestRange = false, bool includeStartHex = false, bool excludeWater = false)
+    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnHex = null, bool onlyMoveInOneDirection = false, bool showOnlyFurthestRange = false, bool includeStartHex = false, bool excludeWater = false)
     {
         return hexNeighbours.GetNeighboursFor(
             hexTileDict: hexTileDict,
             hexCoordinates: hexCoordinates,
             range: range,
             excludeObstacles: excludeObstacles,
-            withUnitOnTile: withUnitOnTile,
+            withPieceOnHex: withUnitOnHex,
             onlyMoveInOneDirection: onlyMoveInOneDirection,
             showOnlyFurthestRange: showOnlyFurthestRange,
             includeStartHex: includeStartHex,
@@ -79,18 +79,18 @@ public class HexGrid : BaseEventCallback
     // voor A*
     public float Cost(Vector3Int current, Vector3Int directNeighbor) => 1;
 
-    public List<Hex> GetAllTiles() => hexTileDict.Values.ToList();
+    public List<Hex> GetAllHexes() => hexTileDict.Values.ToList();
 
     public List<Hex> GetHexes(HighlightColorType type) => hexTileDict.Values.Where(x => x.GetHighlight().HasValue && x.GetHighlight().Value == type).ToList();
 
-    public Hex GetTileAt(Vector3Int hexCoordinates)
+    public Hex GetHexAt(Vector3Int hexCoordinates)
     {
         Hex result = null;
         hexTileDict.TryGetValue(hexCoordinates, out result);
         return result;
     }
 
-    public Hex GetTileRightUpperCorner()
+    public Hex GetHexRightUpperCorner()
     {
         var hexRightUpperCornerCoordinate = hexTileDict.OrderByDescending(z => z.Key.z)
             .ThenByDescending(x => x.Key.x)
@@ -106,22 +106,41 @@ public class HexGrid : BaseEventCallback
         piece.transform.SetParent(newHex.GetGoStructure().transform);
     }
 
-    public List<Hex> GetPlayerStartTiles(int playerId)
-    {        
-        if(playerId != 1)
+    public List<Hex> GetPlayerStartTiles(int playerIndex)
+    {
+        var allHexes = GetAllHexes();
+        var hexRightUpper = GetHexRightUpperCorner();
+        
+        List<Hex> result;
+        if (playerIndex == 1)
+        {
+            result = GetBottomHalfOfHexes(allHexes, hexRightUpper);
+        }
+        else if(playerIndex == 2)
+        {
+            result = GetUpperHalfOfHexes(allHexes, hexRightUpper);
+        }
+        else
         {
             throw new Exception();
         }
-
-        var allTiles = GetAllTiles();
-        var tileRightUpper = GetTileRightUpperCorner();
         
-        var result = new List<Hex>();
-
-        result = allTiles.Where(hex => 
-        !hex.HexSurfaceType.IsObstacle() && 
-        hex.HexCoordinates.z <= ((tileRightUpper.HexCoordinates.z - 1f) / 2))
-            .ToList();
         return result;
+    }
+
+    private static List<Hex> GetBottomHalfOfHexes(List<Hex> allTiles, Hex tileRightUpper)
+    {
+        return allTiles.Where(hex =>
+            !hex.HexSurfaceType.IsObstacle() &&
+            hex.HexCoordinates.z <= ((tileRightUpper.HexCoordinates.z - 1f) / 2)
+        ).ToList();
+    }
+
+    private static List<Hex> GetUpperHalfOfHexes(List<Hex> allTiles, Hex tileRightUpper)
+    {
+        return allTiles.Where(hex =>
+            !hex.HexSurfaceType.IsObstacle() &&
+            hex.HexCoordinates.z > ((tileRightUpper.HexCoordinates.z - 1f) / 2)
+        ).ToList();
     }
 }

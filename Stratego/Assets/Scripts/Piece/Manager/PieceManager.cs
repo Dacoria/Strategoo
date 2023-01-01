@@ -10,6 +10,7 @@ public class PieceManager : BaseEventCallback
     public Unit UnitPrefab;
     public Castle CastlePrefab;
     public Trap TrapPrefab;
+    public GameObject UnknownPrefab;
 
     public new void Awake()
     {
@@ -53,10 +54,11 @@ public class PieceManager : BaseEventCallback
         _ => throw new NotImplementedException(),
     };
 
-    public void CreatePiece(PieceType pieceType, int unitBaseValue, Hex hexToSpawnPiece)
+    public void CreatePiece(PieceType pieceType, int unitBaseValue, Hex hexToSpawnPiece, int playerIndex)
     {
         var piecePrefab = GetPiecePrefab(pieceType);
         var pieceGo = Instantiate(piecePrefab, hexToSpawnPiece.GetGoStructure().transform);
+        pieceGo.Owner = playerIndex.GetPlayerById();
         pieceGo.transform.rotation = new Quaternion(0, 180, 0, 0);
 
         if (pieceType == PieceType.Unit)

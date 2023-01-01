@@ -56,7 +56,7 @@ public class AbilitiesForPieceDisplayHandler : MonoBehaviour
         canvasGroup.alpha = 0;
 
         var piece = hex.GetPiece();
-        var abilities = PieceStatsHelper.GetAbilities(piece.PieceType);
+        var abilities = piece.GetAbilities();
 
         foreach (var ability in abilities)
         {

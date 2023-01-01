@@ -59,9 +59,9 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
     {
         foreach (var neightbour in validNeighboursHightlighted)
         {
-            HexGrid.GetTileAt(neightbour).DisableHighlight(HighlightActionType.SelectTile.GetColor());
-            HexGrid.GetTileAt(neightbour).DisableHighlight(HighlightActionType.MoveOption.GetColor());
-            HexGrid.GetTileAt(neightbour).DisableHighlight(HighlightActionType.EnemyOption.GetColor());
+            HexGrid.GetHexAt(neightbour).DisableHighlight(HighlightActionType.SelectTile.GetColor());
+            HexGrid.GetHexAt(neightbour).DisableHighlight(HighlightActionType.MoveOption.GetColor());
+            HexGrid.GetHexAt(neightbour).DisableHighlight(HighlightActionType.EnemyOption.GetColor());
         }
     }
 
@@ -73,7 +73,7 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         foreach (var neightbour in neighboursToTryToHightlight)
         {
             validNeighboursHightlighted.Add(neightbour);
-            HexGrid.GetTileAt(neightbour).EnableHighlight(HighlightActionType.SelectTile.GetColor());
+            HexGrid.GetHexAt(neightbour).EnableHighlight(HighlightActionType.SelectTile.GetColor());
         }
     }
 }

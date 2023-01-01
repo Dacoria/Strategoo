@@ -3,30 +3,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
-public class NewSetupPieceButtonScript : MonoBehaviour
+public class NewSetupPieceButtonScript : BaseEventCallback
 {
-    public void OnClick()
+    [ComponentInject] private Button button;
+
+    private void Start()
     {
-        CreateNewLevelSetup();
+        button.interactable = false;
     }
 
-    private void CreateNewLevelSetup()
+    protected override void OnGridLoaded() => button.interactable = true ;
+    
+
+    public void OnClick()
+    {
+        PieceManager.instance.RemoveAllPieces();
+
+        var allPlayers = NetworkHelper.instance.GetAllPlayers();
+        foreach (var player in allPlayers)
+        {
+            CreateNewLevelSetup(player.Index);
+        }
+    }
+
+    private void CreateNewLevelSetup(int playerIndex)
     {
         var level1Setup = LevelSetupManager.GetBasicSetup(1);
 
-        PieceManager.instance.RemoveAllPieces();
-
-        var playerStartTiles = HexGrid.instance.GetPlayerStartTiles(1);
+        var playerStartTiles = HexGrid.instance.GetPlayerStartTiles(playerIndex);
         if(playerStartTiles.Count != level1Setup.UnitPlacementSetting.Count)
         {
-            throw new Exception("Hoort niet voor nu");
+            throw new Exception("Hoort niet");
         }
 
-        var playerStartTilesOrdered = playerStartTiles
+        List<Hex> playerStartTilesOrdered;
+        if (playerIndex == 1)
+        {
+            playerStartTilesOrdered = playerStartTiles
             .OrderByDescending(hex => hex.HexCoordinates.z)
             .ThenBy(hex => hex.HexCoordinates.x)
             .ToList();
+        }
+        else if (playerIndex == 2)
+        {
+            playerStartTilesOrdered = playerStartTiles
+            .OrderBy(hex => hex.HexCoordinates.z)
+            .ThenByDescending(hex => hex.HexCoordinates.x)
+            .ToList();
+        }
+        else
+        {
+            throw new Exception();
+        }
 
 
         for (int i = 0; i < level1Setup.UnitPlacementSetting.Count; i ++)
@@ -34,7 +64,8 @@ public class NewSetupPieceButtonScript : MonoBehaviour
             var newUnitSetting = level1Setup.UnitPlacementSetting[i].UnitSetting;
             var relatedHex = playerStartTilesOrdered[i];
 
-            PieceManager.instance.CreatePiece(newUnitSetting.PieceType, newUnitSetting.UnitBaseValue, relatedHex);
+            var player = playerIndex.GetPlayerByIndex();
+            PieceManager.instance.CreatePiece(newUnitSetting.PieceType, newUnitSetting.UnitBaseValue, relatedHex, player.Id);
         }
     }
 }

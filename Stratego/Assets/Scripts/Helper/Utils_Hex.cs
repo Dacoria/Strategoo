@@ -7,8 +7,8 @@ using UnityEngine;
 
 public static partial class Utils
 {
-    public static Hex GetHex(this Vector3Int coordinates) => HexGrid.instance.GetTileAt(coordinates);
-    public static Hex GetHex(this Vector3 coordinates) => HexGrid.instance.GetTileAt(new Vector3Int((int)coordinates.x, (int)coordinates.y, (int)coordinates.z));
+    public static Hex GetHex(this Vector3Int coordinates) => HexGrid.instance.GetHexAt(coordinates);
+    public static Hex GetHex(this Vector3 coordinates) => HexGrid.instance.GetHexAt(new Vector3Int((int)coordinates.x, (int)coordinates.y, (int)coordinates.z));
 
     public static GameObject GetGoStructure(this Hex hex) => GetChildGoByName(hex.gameObject, "Props");
 

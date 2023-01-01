@@ -8,7 +8,7 @@ public class HexNeighbours
     // cache
     private Dictionary<Vector3Int, List<Vector3Int>> hexTileNeightboursDict = new Dictionary<Vector3Int, List<Vector3Int>>();
 
-    public List<Vector3Int> GetNeighboursFor(Dictionary<Vector3Int, Hex> hexTileDict, Vector3Int hexCoordinates, int range, bool excludeObstacles, bool? withUnitOnTile, bool onlyMoveInOneDirection, bool showOnlyFurthestRange, bool includeStartHex, bool excludeWater = false)
+    public List<Vector3Int> GetNeighboursFor(Dictionary<Vector3Int, Hex> hexTileDict, Vector3Int hexCoordinates, int range, bool excludeObstacles, bool? withPieceOnHex, bool onlyMoveInOneDirection, bool showOnlyFurthestRange, bool includeStartHex, bool excludeWater = false)
     {
         var neighbours = GetNeighboursForWithDirection(hexTileDict, hexCoordinates, range, onlyMoveInOneDirection);
 
@@ -24,9 +24,9 @@ public class HexNeighbours
         {
             neighbours = neighbours.Where(neighbour => !neighbour.GetHex().HexSurfaceType.IsWater()).ToList();
         }
-        if (withUnitOnTile.HasValue)
+        if (withPieceOnHex.HasValue)
         {
-            neighbours = neighbours.Where(neighbour => neighbour.GetHex().HasPiece(isAlive: true) == withUnitOnTile.Value).ToList();
+            neighbours = neighbours.Where(neighbour => neighbour.GetHex().HasPiece(isAlive: true) == withPieceOnHex.Value).ToList();
         }
         if(includeStartHex)
         {

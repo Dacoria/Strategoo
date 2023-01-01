@@ -52,6 +52,12 @@ public static class HierarchyMonitor
         yield return new EditorWaitForSeconds(seconds);
         isRunning = false;
 
+        //var selectedHexx = Selection.activeGameObject?.GetComponentInParent<Hex>();
+        //if(selectedHexx != null)
+        //{
+        //    Selection.activeGameObject = selectedHexx.gameObject;
+        //}        
+
         var currentSelectedItem = Selection.activeGameObject;
 
         if(currentSelectedItem?.GetComponent<Hex>() != null)

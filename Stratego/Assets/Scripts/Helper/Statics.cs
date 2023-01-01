@@ -14,7 +14,6 @@
     public static string ANIMATION_TRIGGER_DIE = "DIE";
     public static string ANIMATION_TRIGGER_JUMP = "JUMP";
 
-    public static string RESOURCE_PATH_GO_TILE_STRUCTURES = "Hex/TileStructures";
     public static string RESOURCE_PATH_GO_PIECES = "Pieces";
     public static string RESOURCE_PATH_GO_OBJ_ON_TILE = "ObjectsOnTile";
     public static string RESOURCE_PATH_GO_PLAYER_UTIL = "UtilsForPlayer";

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PieceAttackMovementHandler : BaseEventCallback
+public class PieceMovementHandler : BaseEventCallback
 {
     [ComponentInject] private Piece pieceScript;
 
@@ -17,11 +17,11 @@ public class PieceAttackMovementHandler : BaseEventCallback
     {
         if(piece == pieceScript && abilType == AbilityType.Movement)
         {
-            DoPieceAbility(hex);            
+            DoMovementAbility(hex);            
         }
     }
 
-    private void DoPieceAbility(Hex hex)
+    private void DoMovementAbility(Hex hex)
     {
         var isMyPiece = false; // TODO FIXEN
         if(hex.HasPiece())

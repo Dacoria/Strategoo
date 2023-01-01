@@ -62,7 +62,6 @@ public static class HexEditorUtil
       
     private static GameObject GetMainGo(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "Main");
     private static GameObject GetStructuresGo(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "Props");
-    private static GameObject GetPlayerStartGo(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "PlayerSpawnVisualizer");
 
     public static Hex GetHexRightUpperCorner()
     {

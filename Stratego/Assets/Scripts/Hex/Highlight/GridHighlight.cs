@@ -7,7 +7,7 @@ public class GridHighlight : BaseEventCallback
 
     private void ClearAllHighlightsOnGrid()
     {
-        var allTiles = HexGrid.instance.GetAllTiles();
+        var allTiles = HexGrid.instance.GetAllHexes();
         foreach (var tile in allTiles)
         {
             tile.DisableHighlight();

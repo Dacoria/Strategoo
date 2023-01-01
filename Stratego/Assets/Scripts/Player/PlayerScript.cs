@@ -8,12 +8,13 @@ public class PlayerScript : BaseEventCallback, IPunInstantiateMagicCallback
     public string PlayerName;
 
     public GameObject GameObject => gameObject;
-    public Color Color => playerColor.Color;
     public int Id { get; private set; }
 
-    public int Index;
-
+    [ComponentInject] private PlayerIndex playerIndex;
     [ComponentInject] private PlayerColor playerColor;
+
+    public Color Color => playerColor.Color;
+    public int Index => playerIndex.Index;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {

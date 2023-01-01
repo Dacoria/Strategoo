@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
     public void RefreshPlayerGos()
     {
         this.allPlayers = GameObject.FindGameObjectsWithTag(Statics.TAG_PLAYER).Select(x => x.GetComponent<PlayerScript>()).ToList();
+        SyncPlayerIndex();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -81,7 +83,33 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
     {
         base.OnPlayerEnteredRoom(newPlayer);
         PlayerList = PhotonNetwork.PlayerList;
-        RefreshPlayerGos();
+        RefreshPlayerGos();        
+    }
+
+    private void SyncPlayerIndex()
+    {
+        if(!PhotonNetwork.IsMasterClient) { return; }
+        if(allPlayers.Count == 0) { return; }
+
+        var masterclientPlayer = GetMyPlayer();
+        ActionEvents.UpdatePlayerIndex(masterclientPlayer.Id, 1); // MC == 1 --> NIET SWITCHEN!
+
+        var allPlayersWithIndexes = allPlayers.Where(x => x.Index > 1).ToList();
+        for (int i = 0; i < allPlayersWithIndexes.Count; i++)
+        {
+            var playerWithIndex = allPlayersWithIndexes[i];
+            ActionEvents.UpdatePlayerIndex(playerWithIndex.Id, i + 2);
+        }
+
+        var allPlayersWithoutIndexes = allPlayers.Where(x => x.Index == 0).ToList();
+        var highestIndex = allPlayersWithIndexes.Any() ? allPlayersWithIndexes.Max(x => x.Index) : 1;
+
+        for (int i = 0; i < allPlayersWithoutIndexes.Count; i++)
+        {
+            var playerWithoutIndex = allPlayersWithoutIndexes[i];
+            highestIndex = highestIndex + 1;
+            ActionEvents.UpdatePlayerIndex(playerWithoutIndex.Id, highestIndex);
+        }        
     }
 
     public List<PlayerScript> GetMyPlayers(bool? isAi = null) => GetAllPlayers(isAi:isAi, myNetwork: true);

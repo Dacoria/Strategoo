@@ -19,6 +19,7 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnEndGame")) ActionEvents.EndGame += OnEndGame;
         if (IsOverwritten("OnPieceAbility")) ActionEvents.DoPieceAbility += OnPieceAbility;
         if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished += OnPieceMovingFinished;
+        if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex += OnUpdatePlayerIndex;
     }
 
     protected void OnDisable()
@@ -31,8 +32,7 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnEndGame")) ActionEvents.EndGame -= OnEndGame;
         if (IsOverwritten("OnPieceAbility")) ActionEvents.DoPieceAbility -= OnPieceAbility;
         if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished -= OnPieceMovingFinished;
-
-
+        if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex -= OnUpdatePlayerIndex;
     }
 
     protected virtual void OnGridLoaded() { }    
@@ -43,6 +43,7 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected virtual void OnEndGame() { }
     protected virtual void OnPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType) { }
     protected virtual void OnPieceMovingFinished(Piece piece, Hex newHex) { }
+    protected virtual void OnUpdatePlayerIndex(int playerId, int playerIndex) { }
 
 
     // GEEN ABSTRACTE CLASSES!

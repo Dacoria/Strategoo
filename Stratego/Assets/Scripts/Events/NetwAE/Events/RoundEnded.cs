@@ -11,6 +11,6 @@ public partial class NetworkAE : MonoBehaviour
     [PunRPC]
     public void RPC_AE_RoundEnded(int pWinnerId)
     {
-        ActionEvents.EndRound?.Invoke(pWinnerId.GetPlayer());
+        ActionEvents.EndRound?.Invoke(pWinnerId.GetPlayerById());
     }
 }

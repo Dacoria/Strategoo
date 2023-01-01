@@ -29,26 +29,7 @@ public static partial class Rsc
 
             return __goEnemiesOrObjMap;
         }
-    }
-
-    private static List<string> goTileStructureList = new List<string>        
-    { 
-        Statics.RESOURCE_PATH_GO_TILE_STRUCTURES,
-    };    
-
-    private static Dictionary<string, GameObject> __goStructureMap;
-    public static Dictionary<string, GameObject> GoStructureMap
-    {
-        get
-        {
-            if (__goStructureMap == null)
-            {
-                __goStructureMap = RscHelper.CreateGoDict(goTileStructureList);
-            }
-            
-            return __goStructureMap;
-        }
-    }
+    }          
 
     private static List<string> goGuiList = new List<string>
     {

@@ -9,8 +9,6 @@ using System.Collections.Generic;
 [CustomEditor(typeof(GameObject)), CanEditMultipleObjects]
 public class HexEditorSelectionBase : Editor
 {
-    
-
     void OnSceneGUI()
     {
         if (!EditorGUILayoutToggle.UseEditorGuiScripts)

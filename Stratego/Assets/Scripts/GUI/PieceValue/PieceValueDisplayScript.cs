@@ -10,6 +10,12 @@ public class PieceValueDisplayScript : MonoBehaviourSlowUpdate
 
     [ComponentInject] private Piece piece;
     [ComponentInject] private TMP_Text Text;
+    [ComponentInject] private Renderer renderer;
+
+    private void Start()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
 
     protected override void SlowUpdate()
     {
@@ -19,7 +25,13 @@ public class PieceValueDisplayScript : MonoBehaviourSlowUpdate
             return;
         }
 
-        gameObject.SetActive(true);
+        if(!piece.IsKnown())
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+            return;
+        }
+
+        transform.GetChild(0).gameObject.SetActive(true);
 
         var value = "";
         switch(piece.PieceType)
