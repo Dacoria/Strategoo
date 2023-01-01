@@ -65,6 +65,17 @@ public class MonoHelper : MonoBehaviour
         }
     }
 
+    public void DestroyInXSeconds(float seconds, GameObject go)
+    {
+        StartCoroutine(CR_DestroyInXSeconds(seconds, go));
+    }
+
+    private IEnumerator CR_DestroyInXSeconds(float seconds, GameObject go)
+    {
+        yield return Wait4Seconds.Get(seconds);
+        Destroy(go);
+    }
+
     public void FadeIn(CanvasGroup canvasGroup, float aTime) => FadeTo(canvasGroup, 1, aTime);
     public void FadeOut(CanvasGroup canvasGroup, float aTime) => FadeTo(canvasGroup, 0, aTime);
 

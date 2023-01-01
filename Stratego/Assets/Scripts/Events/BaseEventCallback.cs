@@ -18,7 +18,8 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound += OnEndRound;
         if (IsOverwritten("OnEndGame")) ActionEvents.EndGame += OnEndGame;
         if (IsOverwritten("OnPieceAbility")) ActionEvents.PieceAbility += OnPieceAbility;
-    }    
+        if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished += OnPieceMovingFinished;
+    }
 
     protected void OnDisable()
     {
@@ -29,6 +30,8 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound -= OnEndRound;
         if (IsOverwritten("OnEndGame")) ActionEvents.EndGame -= OnEndGame;
         if (IsOverwritten("OnPieceAbility")) ActionEvents.PieceAbility -= OnPieceAbility;
+        if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished -= OnPieceMovingFinished;
+
 
     }
 
@@ -38,7 +41,8 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected virtual void OnAllPlayersFinishedTurn() { }
     protected virtual void OnEndRound(PlayerScript pWinner) { }
     protected virtual void OnEndGame() { }
-    protected virtual void OnPieceAbility(Piece piece, Hex hex, AbilityType abilType) { }
+    protected virtual void OnPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType) { }
+    protected virtual void OnPieceMovingFinished(Piece piece, Hex newHex) { }
 
 
     // GEEN ABSTRACTE CLASSES!

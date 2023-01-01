@@ -6,13 +6,13 @@ public class LerpRotation: BaseEventCallback
 {
     private float previousAngleDiff = 0;
 
-    public void RotateTowardsDestination(Vector3 endPosition, float delayedStart = 0, Action callbackOnFinished = null, bool destroyGoOnFinished = false)
+    public void RotateTowardsDestination(Vector3 endPosition, float delayedStart = 0, float rotationSpeed = 1, bool onlyRotateOnYAs = true, Action callbackOnFinished = null, bool destroyGoOnFinished = false)
     {
         StopAllCoroutines();
-        StartCoroutine(RotateTowardsDestinationLerp(endPosition, delayedStart, callbackOnFinished, destroyGoOnFinished));
+        StartCoroutine(RotateTowardsDestinationLerp(endPosition, delayedStart, rotationSpeed, onlyRotateOnYAs, callbackOnFinished, destroyGoOnFinished));
     }
 
-    private IEnumerator RotateTowardsDestinationLerp(Vector3 endPosition, float delayedStart, Action callbackOnFinished, bool destroyGoOnFinished)
+    private IEnumerator RotateTowardsDestinationLerp(Vector3 endPosition, float delayedStart, float rotationSpeed, bool onlyRotateOnYAs, Action callbackOnFinished, bool destroyGoOnFinished)
     {
         float elapsedTime = 0f;
         var targetDirection = endPosition - transform.position;
@@ -22,7 +22,7 @@ public class LerpRotation: BaseEventCallback
         while (elapsedTime < 3)
         {
             elapsedTime += Time.deltaTime;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 4 * Time.deltaTime, 0.0f);
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 4 * rotationSpeed * Time.deltaTime, 0.0f);
 
             var currentAngleDiff = Vector3.Angle(newDirection, targetDirection);
             if (Math.Abs(currentAngleDiff - previousAngleDiff) < 0.01)
@@ -30,7 +30,13 @@ public class LerpRotation: BaseEventCallback
                 break;
             }
 
+            var oldRotation = transform.rotation.eulerAngles;
             transform.rotation = Quaternion.LookRotation(newDirection);
+            if(onlyRotateOnYAs)
+            {
+                var onlyYRotation = new Vector3(oldRotation.x, transform.rotation.eulerAngles.y, oldRotation.z);
+                transform.rotation = Quaternion.Euler(onlyYRotation);
+            }
 
             previousAngleDiff = currentAngleDiff;
             yield return null;

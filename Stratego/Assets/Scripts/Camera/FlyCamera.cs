@@ -54,6 +54,12 @@ public class FlyCamera : MonoBehaviour
         positionBeforeChange.z = transform.position.z;
         transform.position = positionBeforeChange;
 
+
+        // rotate
+        var rotateInput = GetRotateInput();
+        transform.eulerAngles = transform.eulerAngles + rotateInput;
+
+
         //scrollen = zoomen
         positionBeforeChange = transform.position;
 
@@ -130,6 +136,22 @@ public class FlyCamera : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             p_Velocity += new Vector3(1, 0, 0);
+        }
+
+        return p_Velocity;
+    }
+
+    private Vector3 GetRotateInput()
+    { 
+        Vector3 p_Velocity = new Vector3();       
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            p_Velocity += new Vector3(0, -0.16f, 0);
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            p_Velocity += new Vector3(0, 0.16f, 0);
         }
 
         return p_Velocity;

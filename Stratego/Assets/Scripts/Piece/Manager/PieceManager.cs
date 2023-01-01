@@ -2,12 +2,13 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 
-public class PieceManager : MonoBehaviour
+public class PieceManager : BaseEventCallback
 {
     public static PieceManager instance;
 
-    void Awake()
+    public new void Awake()
     {
+        base.Awake();
         instance = this;
     }
 
@@ -24,12 +25,6 @@ public class PieceManager : MonoBehaviour
         }
     }
 
-    public Piece GetPiece(int pieceId, bool? isAlive = null, PieceType? pieceType = null)
-    {
-        var pieces = GetPieces(isAlive: isAlive, pieceType: pieceType);
-        return pieces.FirstOrDefault(x => x.Id == pieceId);
-    }   
-
     public List<Piece> GetPieces(bool? isAlive = null, PieceType? pieceType = null)
     {
         var pieces = this.GoPieces;
@@ -44,6 +39,4 @@ public class PieceManager : MonoBehaviour
 
         return pieces;
     }
-
-    
 }

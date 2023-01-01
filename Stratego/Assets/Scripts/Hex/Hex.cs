@@ -21,8 +21,8 @@ public class Hex : BaseEventCallback
     public HexSurfaceType HexSurfaceType;
 
     public PieceType PieceType;
-    public HexObjectOnTileType HexObjectOnTileType; // voor debug + setting purposes
     [ConditionalHide("PieceType", PieceType.Unit)] public int UnitValue;
+    public HexObjectOnTileType HexObjectOnTileType; // voor debug + setting purposes
 
 
     public Vector3 OrigPosition;
@@ -87,23 +87,6 @@ public class Hex : BaseEventCallback
         }
     }
 
-    public void DestroyStructure()
-    {
-        if (HexStructureType == HexStructureType.Mountain)
-        {
-            var structureGo = Utils.GetStructureGoFromHex(this);
-            if (structureGo != null)
-            {
-                var mountainScript = structureGo.GetComponentInChildren<MountainScript>();
-                mountainScript.Destroy();
-            }
-        }
-        else
-        {
-            throw new Exception("Alleen mountain vernietigen wordt nog ondersteund!");
-        }
-    }
-
     public void ChangeHexStructureType(HexStructureType changeToType, bool alsoChangeType = true)
     {
         if (alsoChangeType)
@@ -115,7 +98,7 @@ public class Hex : BaseEventCallback
         else
         {
             // alleen hiden/showen van model
-            var structureGo = Utils.GetStructureGoFromHex(this);
+            var structureGo = Utils.GetUnderlyingStructureGoFromHex(this);
             if (structureGo != null)
             {
                 var structureGoModel = structureGo.GetComponentInChildren<StructureModel>(true)?.gameObject;

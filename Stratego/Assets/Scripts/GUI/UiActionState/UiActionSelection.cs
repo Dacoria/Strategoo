@@ -12,7 +12,7 @@ public class UiActionSelection : MonoBehaviour
         instance = this;
     }
 
-    public UnitSelected PieceSelected;        
+    public PieceSelected PieceSelected;        
 
     public void ClickOnHex(Hex hex)
     {
@@ -50,7 +50,7 @@ public class UiActionSelection : MonoBehaviour
     {
         if (PieceSelected == null || PieceSelected.HexId != hexSelected.HexCoordinates)
         {
-            PieceSelected = new UnitSelected(hexSelected.HexCoordinates);
+            PieceSelected = new PieceSelected(hexSelected.HexCoordinates);
             ActionEvents.NewHexSelected?.Invoke(hexSelected.HexCoordinates);
         }
     }
@@ -70,7 +70,7 @@ public class UiActionSelection : MonoBehaviour
     }    
 }
 
-public class UnitSelected
+public class PieceSelected
 {
     public Vector3Int HexId;
     public DateTime HexSelectionDate;
@@ -80,7 +80,7 @@ public class UnitSelected
     public AbilityType Ability;
     public List<Vector3Int> HexIdAbilityOptions;
 
-    public UnitSelected(Vector3Int hexId)
+    public PieceSelected(Vector3Int hexId)
     {
         HexId = hexId;
         HexSelectionDate = DateTime.Now;

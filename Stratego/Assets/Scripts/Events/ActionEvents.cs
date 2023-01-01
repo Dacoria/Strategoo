@@ -13,7 +13,6 @@ public static class ActionEvents
     public static Action<PlayerScript> EndRound;
     public static Action EndGame;
 
-    public static Action<Piece, Hex> PieceMove;
     public static Action<Piece, Hex> PieceMovingFinished;
 
 

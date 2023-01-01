@@ -52,7 +52,7 @@ public class FillUnitSelectedColorOnHex : MonoBehaviourSlowUpdate
                 hex.EnableHighlight(HighlightActionType.SelectTile.GetColor());
                 break;
             case ColorHexSelectionType.ConfirmOption:
-                if(hexBeingHoveredOver)
+                if(false && hexBeingHoveredOver)
                 {
                     hex.EnableHighlight(HighlightActionType.HoverOption.GetColor());
                 }

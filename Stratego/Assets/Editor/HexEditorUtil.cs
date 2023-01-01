@@ -53,10 +53,13 @@ public static class HexEditorUtil
             {
                 var go = PrefabUtility.InstantiatePrefab(result, structureGo.transform) as GameObject;
                 go.transform.rotation = new Quaternion(0, 180, 0, 0);
-                var enemyScript = go.GetComponent<Piece>();
-                if(enemyScript != null)
+                var pieceScript = go.GetComponent<Piece>();
+                if(pieceScript != null)
                 {
-                    enemyScript.SetCurrentHexTile(hex);
+                    if(hex.PieceType == PieceType.Unit)
+                    {
+                        ((Unit)pieceScript).Value = hex.UnitValue;
+                    }
                 }
             }
         }

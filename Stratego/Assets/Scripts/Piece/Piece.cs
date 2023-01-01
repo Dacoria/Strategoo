@@ -14,14 +14,19 @@ public abstract class Piece : BaseEventCallback
     }
     private void Start()
     {
-        Id = MonoHelper.instance.GenerateNewId();
-        SetCurrentHexTile(GetComponentInParent<Hex>());
         gameObject.AddComponent<PieceAttackMovementHandler>();
+        CurrentHexTile = GetComponentInParent<Hex>();
+        IsAlive = true;
     }
 
-    public int Id;
     public Hex CurrentHexTile { get; private set; }
-    public bool IsAlive => true;        
     public void SetCurrentHexTile(Hex hex) => CurrentHexTile = hex;
+    public bool IsAlive { get; private set; }
+    public void Die(bool isAlive)
+    {
+        IsAlive = false;
+        modelGo.SetActive(false);
+    }
     public void SetVisible(bool isVisible) => modelGo.SetActive(isVisible);
+    public GameObject GetModel() => modelGo;
 }

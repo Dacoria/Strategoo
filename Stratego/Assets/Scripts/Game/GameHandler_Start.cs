@@ -12,7 +12,6 @@ public partial class GameHandler : BaseEventCallback
     private void SetupNewGame()
     {
         var players = NetworkHelper.instance.GetAllPlayers().OrderBy(x => x.Id).Take(MAX_PLAYERS).ToList();
-
         NetworkAE.instance.NewRoundStarted_Simultanious(players);
     }    
 

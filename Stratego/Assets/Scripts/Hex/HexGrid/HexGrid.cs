@@ -7,7 +7,6 @@ public class HexGrid : BaseEventCallback
 {
     private Dictionary<Vector3Int, Hex> hexTileDict = new Dictionary<Vector3Int, Hex>();
 
-
     public static HexGrid instance;
 
     public FogOnHex FogPrefab;
@@ -76,7 +75,6 @@ public class HexGrid : BaseEventCallback
             excludeWater: excludeWater
         );
     }
-    
 
     // voor A*
     public float Cost(Vector3Int current, Vector3Int directNeighbor) => 1;
@@ -99,5 +97,12 @@ public class HexGrid : BaseEventCallback
             .First().Key;
 
         return hexTileDict[hexRightUpperCornerCoordinate];
+    }
+
+    public void MovePieceToNewTile(Piece piece, Hex newHex)
+    {
+        var currentHex = piece.CurrentHexTile;
+        piece.SetCurrentHexTile(newHex);
+        piece.transform.SetParent(newHex.GetGoStructure().transform);
     }
 }
