@@ -14,7 +14,7 @@ public class PieceMovementHandler : BaseEventCallback
         pieceMovement = gameObject.AddComponent<PieceMovementAction>();
     }
 
-    protected override void OnPieceAbility(Piece piece, Hex hex, AbilityType abilType)
+    protected override void OnDoPieceAbility(Piece piece, Hex hex, AbilityType abilType)
     {
         if(piece == pieceScript && abilType == AbilityType.Movement)
         {

@@ -4,14 +4,9 @@ using System.Linq;
 
 public class UiHexPieceSelection : BaseEventCallback
 {
-    public PieceSelected PieceSelected;
+    public PieceSelected PieceSelected;     
 
-    private void Start()
-    {
-        ActionEvents.PieceAbilitySelected += OnPieceAbilitySelected;
-    }    
-
-    private void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexOptions)
+    protected override void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexOptions)
     {
         if(PieceSelected.HexId == hexId)
         {
@@ -72,10 +67,5 @@ public class UiHexPieceSelection : BaseEventCallback
     {
         PieceSelected = null;
         ActionEvents.HexDeselected?.Invoke();
-    }
-
-    private void OnDestroy()
-    {
-        ActionEvents.PieceAbilitySelected -= OnPieceAbilitySelected;
     }
 }

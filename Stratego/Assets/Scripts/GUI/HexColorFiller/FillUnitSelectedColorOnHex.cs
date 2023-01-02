@@ -7,15 +7,6 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
 {
     [ComponentInject] private Hex hex;
 
-
-    void Start()
-    {
-        ActionEvents.NewHexSelected += OnNewHexSelected;
-        ActionEvents.HexDeselected += OnHexDeselected;
-        ActionEvents.PieceAbilitySelected += OnPieceAbilitySelected;
-        ActionEvents.DoPieceAbility += OnDoPieceAbility;
-    }    
-
     private void UpdateColor(ColorHexSelectionType currentColorTileSelection)
     {
         var hexHasPiece = hex.HasPiece();
@@ -42,7 +33,7 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
         }
     }
 
-    private void OnNewHexSelected(Vector3Int hexId)
+    protected override void OnNewHexSelected(Vector3Int hexId)
     {
         if (hex.HexCoordinates == hexId)
         {
@@ -54,7 +45,7 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
         }
     }
 
-    private void OnPieceAbilitySelected(Vector3Int hexSelected, AbilityType abilityType, List<Vector3Int> hexOptions)
+    protected override void OnPieceAbilitySelected(Vector3Int hexSelected, AbilityType abilityType, List<Vector3Int> hexOptions)
     {
         if (hex.HexCoordinates == hexSelected)
         {
@@ -66,15 +57,8 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
         }
     }
 
-    private void OnHexDeselected() => UpdateColor(ColorHexSelectionType.None);
+    protected override void OnHexDeselected() => UpdateColor(ColorHexSelectionType.None);
 
-    private void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilityType) => UpdateColor(ColorHexSelectionType.None);
+    protected override void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilityType) => UpdateColor(ColorHexSelectionType.None);
 
-    private void OnDestroy()
-    {
-        ActionEvents.NewHexSelected -= OnNewHexSelected;
-        ActionEvents.HexDeselected -= OnHexDeselected;
-        ActionEvents.PieceAbilitySelected -= OnPieceAbilitySelected;
-        ActionEvents.DoPieceAbility -= OnDoPieceAbility;
-    }
 }

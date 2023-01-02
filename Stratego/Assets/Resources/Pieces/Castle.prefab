@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Owner: {fileID: 0}
-  Id: 0
+  Skills: 
 --- !u!1 &7433365685427441286
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 7810172050618405948}
   - component: {fileID: 6614826384747682713}
   - component: {fileID: 8946509259023363923}
+  - component: {fileID: 8687663957595737387}
   m_Layer: 0
   m_Name: CastleStructure
   m_TagString: Untagged
@@ -111,8 +112,8 @@ MeshRenderer:
   - {fileID: 963798294112862009, guid: e7e08f29f06bcac43ae43877d0abf19f, type: 3}
   - {fileID: 6694312389017904013, guid: e7e08f29f06bcac43ae43877d0abf19f, type: 3}
   - {fileID: 7575915981058242857, guid: e7e08f29f06bcac43ae43877d0abf19f, type: 3}
-  - {fileID: -4770390735465466038, guid: e7e08f29f06bcac43ae43877d0abf19f, type: 3}
-  - {fileID: -8848810374240701247, guid: e7e08f29f06bcac43ae43877d0abf19f, type: 3}
+  - {fileID: 2100000, guid: 0648419df4a00c749b324d3459e9da74, type: 2}
+  - {fileID: 2100000, guid: 0648419df4a00c749b324d3459e9da74, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -134,3 +135,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8687663957595737387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7433365685427441286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c629c60dd5ea3434eabdacbee70ca1a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

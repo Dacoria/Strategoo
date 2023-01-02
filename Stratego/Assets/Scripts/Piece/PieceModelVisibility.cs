@@ -42,6 +42,17 @@ public class PieceModelVisibility : BaseEventCallback
         var me = NetworkHelper.instance.GetMyPlayer();
         if (me != null)
         {
+            UpdatePieceKnown();
+            initSuccesfull = true;
+            UpdateColors();
+        }
+    }
+
+
+    private void UpdatePieceKnown()
+    {
+        if (piece.IsAlive)
+        {
             if (piece.Owner == null || piece.Owner == NetworkHelper.instance.GetMyPlayer())
             {
                 MakePieceModelKnown();
@@ -50,9 +61,6 @@ public class PieceModelVisibility : BaseEventCallback
             {
                 MakePieceModelUnknown();
             }
-
-            initSuccesfull = true;
-            UpdateColors();
         }
     }
 
@@ -76,12 +84,14 @@ public class PieceModelVisibility : BaseEventCallback
         unknownPieceGo?.SetActive(false);
     }
 
+    protected override void OnNewHexSelected(Vector3Int hexSelected) => UpdatePieceKnown();
     protected override void OnUpdatePlayerIndex(int playerId, int playerIndex) => StartCoroutine(UpdateColors());
 
     private IEnumerator UpdateColors()
     {
         yield return Wait4Seconds.Get(0.05f);
 
+        var defaultColor = MonoHelper.instance.P0_Color;
         var pieceColor = MonoHelper.instance.GetPlayerColorMaterial(piece?.Owner);
         unknownPieceGo.GetComponentInChildren<Renderer>().material = pieceColor;
 
@@ -93,14 +103,21 @@ public class PieceModelVisibility : BaseEventCallback
                 var renderers = pieceColorModel.GetComponentsInChildren<Renderer>(includeInactive: true);
                 foreach (var renderer in renderers)
                 {
-                    renderer.material = pieceColor;
+                    renderer.material = renderer.material.color == defaultColor.color ? pieceColor : renderer.material;                                    
+            
+                    var intMaterials = new Material[renderer.materials.Length];
+                    for (var i = 0; i < renderer.materials.Length; i ++)
+                    {
+                        intMaterials[i] = renderer.materials[i].color == defaultColor.color ? pieceColor : renderer.materials[i];
+                    }
+                    renderer.materials = intMaterials;
                 }
             }
         }
     }
 
 
-    protected override void OnPieceAbility(Piece pieceDoingAbility, Hex hexTarget, AbilityType abilType)
+    protected override void OnDoPieceAbility(Piece pieceDoingAbility, Hex hexTarget, AbilityType abilType)
     {
         if(abilType.In(AbilityType.Movement, AbilityType.ScoutMove))
         {

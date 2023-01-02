@@ -3,19 +3,14 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilitiesForPieceDisplayHandler : MonoBehaviour
+public class AbilitiesForPieceDisplayHandler : BaseEventCallback
 {
     private List<AbilityDisplayScript> ActiveAbilityButtons = new List<AbilityDisplayScript>();
     //private AbilityDisplayScript AbilityButtonPrefab;
     private GameObject AbilityContainer;
 
     [ComponentInject] private CanvasGroup canvasGroup;
-
-    private void Awake()
-    {
-        this.ComponentInject();
-    }
-
+ 
     public AbilityDisplayScript AbilityButtonPrefab;
 
     private void Start()
@@ -24,12 +19,9 @@ public class AbilitiesForPieceDisplayHandler : MonoBehaviour
         //AbilityButtonPrefab = abilityButtonPrefabGo.GetComponent<AbilityDisplayScript>();
 
         AbilityContainer = transform.GetChild(0).gameObject;
-
-        ActionEvents.NewHexSelected += OnNewHexSelected;
-        ActionEvents.HexDeselected += OnHexDeselected;
     }
 
-    private void OnHexDeselected()
+    protected override void OnHexDeselected()
     {
         if(timeUnitSelected.EnoughTimeForNewEvent())
         {
@@ -39,7 +31,7 @@ public class AbilitiesForPieceDisplayHandler : MonoBehaviour
 
     private DateTime? timeUnitSelected;
 
-    private void OnNewHexSelected(Vector3Int hexId)
+    protected override void OnNewHexSelected(Vector3Int hexId)
     {
         timeUnitSelected = DateTime.Now;
         RemoveAllActiveAbilities();
@@ -75,11 +67,5 @@ public class AbilitiesForPieceDisplayHandler : MonoBehaviour
             Destroy(ability.gameObject);
         }
         ActiveAbilityButtons.Clear();
-    }
-
-    private void OnDestroy()
-    {
-        ActionEvents.NewHexSelected -= OnNewHexSelected;
-        ActionEvents.HexDeselected -= OnHexDeselected;
-    }
+    }   
 }

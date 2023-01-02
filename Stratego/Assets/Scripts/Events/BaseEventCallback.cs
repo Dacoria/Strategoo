@@ -17,10 +17,13 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn += OnAllPlayersFinishedTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound += OnEndRound;
         if (IsOverwritten("OnEndGame")) ActionEvents.EndGame += OnEndGame;
-        if (IsOverwritten("OnPieceAbility")) ActionEvents.DoPieceAbility += OnPieceAbility;
+        if (IsOverwritten("OnPieceAbilitySelected")) ActionEvents.PieceAbilitySelected += OnPieceAbilitySelected;
+        if (IsOverwritten("OnDoPieceAbility")) ActionEvents.DoPieceAbility += OnDoPieceAbility;
         if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished += OnPieceMovingFinished;
         if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex += OnUpdatePlayerIndex;
-    }
+        if (IsOverwritten("OnNewHexSelected")) ActionEvents.NewHexSelected += OnNewHexSelected;
+        if (IsOverwritten("OnHexDeselected")) ActionEvents.HexDeselected += OnHexDeselected;
+    }    
 
     protected void OnDisable()
     {
@@ -30,9 +33,12 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn -= OnAllPlayersFinishedTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound -= OnEndRound;
         if (IsOverwritten("OnEndGame")) ActionEvents.EndGame -= OnEndGame;
-        if (IsOverwritten("OnPieceAbility")) ActionEvents.DoPieceAbility -= OnPieceAbility;
+        if (IsOverwritten("OnPieceAbilitySelected")) ActionEvents.PieceAbilitySelected -= OnPieceAbilitySelected;
+        if (IsOverwritten("OnDoPieceAbility")) ActionEvents.DoPieceAbility -= OnDoPieceAbility;
         if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished -= OnPieceMovingFinished;
         if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex -= OnUpdatePlayerIndex;
+        if (IsOverwritten("OnNewHexSelected")) ActionEvents.NewHexSelected -= OnNewHexSelected;
+        if (IsOverwritten("OnHexDeselected")) ActionEvents.HexDeselected -= OnHexDeselected;
     }
 
     protected virtual void OnGridLoaded() { }    
@@ -41,9 +47,12 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected virtual void OnAllPlayersFinishedTurn() { }
     protected virtual void OnEndRound(PlayerScript pWinner) { }
     protected virtual void OnEndGame() { }
-    protected virtual void OnPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType) { }
+    protected virtual void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexOptions) { }
+    protected virtual void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType) { }
     protected virtual void OnPieceMovingFinished(Piece piece, Hex newHex) { }
     protected virtual void OnUpdatePlayerIndex(int playerId, int playerIndex) { }
+    protected virtual void OnNewHexSelected(Vector3Int hexSelected) { }
+    protected virtual void OnHexDeselected() { }
 
 
     // GEEN ABSTRACTE CLASSES!
