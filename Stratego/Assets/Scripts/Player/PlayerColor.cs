@@ -11,17 +11,7 @@ public class PlayerColor : BaseEventCallback
     {
         if(player.Id == playerId)
         {
-            Color = GetPlayerColorForIndex(playerIndex);
+            Color = Utils.GetPlayerColorForIndex(playerIndex);
         }
-    }
-
-
-    private Color GetPlayerColorForIndex(int i) => i switch
-    {
-        1 => Colorr.Orange,
-        2 => Colorr.LightBlue,
-        3 => Colorr.Purple,
-        4 => Colorr.Yellow,
-        _ => Colorr.White,
-    };
+    }    
 }

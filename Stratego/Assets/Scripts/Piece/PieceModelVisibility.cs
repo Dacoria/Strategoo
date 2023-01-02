@@ -52,6 +52,7 @@ public class PieceModelVisibility : BaseEventCallback
             }
 
             initSuccesfull = true;
+            UpdateColors();
         }
     }
 
@@ -81,16 +82,19 @@ public class PieceModelVisibility : BaseEventCallback
     {
         yield return Wait4Seconds.Get(0.05f);
 
-        var pieceColor = piece.Owner != null ? piece.Owner.Color : Color.white;
+        var pieceColor = MonoHelper.instance.GetPlayerColorMaterial(piece?.Owner);
+        unknownPieceGo.GetComponentInChildren<Renderer>().material = pieceColor;
 
-        unknownPieceGo.GetComponentInChildren<Renderer>().material.color = pieceColor;
-        var pieceColorModel = modelGo.GetComponentInChildren<PieceColorModel>();
-        if(pieceColorModel != null)
+        var pieceColorModels = GetComponentsInChildren<PieceColorModel>(includeInactive: true);
+        if(pieceColorModels.Any())
         {
-            var renderers = pieceColorModel.GetComponentsInChildren<Renderer>();
-            foreach(var renderer in renderers)
+            foreach (var pieceColorModel in pieceColorModels)
             {
-                renderer.material.color = pieceColor;
+                var renderers = pieceColorModel.GetComponentsInChildren<Renderer>(includeInactive: true);
+                foreach (var renderer in renderers)
+                {
+                    renderer.material = pieceColor;
+                }
             }
         }
     }

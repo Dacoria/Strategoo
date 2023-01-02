@@ -2,7 +2,8 @@
 public enum HexObjectOnTileType
 {
     None,
-    Boximon,
+    //Boximon,
+    Unit,
     Castle,
     Trap,
     UnknownPiece
@@ -26,22 +27,10 @@ public static class HexObjectOnTileExt
     {
         switch (type)
         {
-            case HexObjectOnTileType.Boximon:
+            case HexObjectOnTileType.Unit:
                 return true;
             default:
                 return false;
         }
     }
-
-    public static bool IsCastle(this HexObjectOnTileType type)
-    {
-        switch (type)
-        {
-            case HexObjectOnTileType.Boximon:
-                return true;
-            default:
-                return false;
-        }
-    }
-
 }

@@ -18,6 +18,24 @@ public class MonoHelper : MonoBehaviour
     public AnimationCurve CurveSlowStart;
     public AnimationCurve CurveSlowEnd;
 
+    public Material P0_Color;
+    public Material P1_Color;
+    public Material P2_Color;
+
+    public Material GetPlayerColorMaterial(PlayerScript player)
+    {
+        if (player?.Index == 1)
+        {
+            return P1_Color;
+        }
+        if (player?.Index == 2)
+        {
+            return P2_Color;
+        }
+
+        return P0_Color;
+    }
+
     public HighlightOneTileDisplayScript GetHighlightOneTileSelection(GameObject gameObject)
     {
         var highlightScripts = gameObject.GetComponents<HighlightOneTileDisplayScript>().ToList();
