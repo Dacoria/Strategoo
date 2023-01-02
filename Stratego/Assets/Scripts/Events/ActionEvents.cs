@@ -15,8 +15,8 @@ public static class ActionEvents
 
     public static Action<Piece, Hex> PieceMovingFinished;
 
-
     public static Action<int, int> UpdatePlayerIndex;
+    public static Action<PlayerScript> PlayerIsVictorious;
 
 
     // local

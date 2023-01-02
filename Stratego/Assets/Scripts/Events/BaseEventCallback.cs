@@ -23,7 +23,8 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex += OnUpdatePlayerIndex;
         if (IsOverwritten("OnNewHexSelected")) ActionEvents.NewHexSelected += OnNewHexSelected;
         if (IsOverwritten("OnHexDeselected")) ActionEvents.HexDeselected += OnHexDeselected;
-    }    
+        if (IsOverwritten("OnPlayerIsVictorious")) ActionEvents.PlayerIsVictorious += OnPlayerIsVictorious;
+    }
 
     protected void OnDisable()
     {
@@ -39,6 +40,8 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex -= OnUpdatePlayerIndex;
         if (IsOverwritten("OnNewHexSelected")) ActionEvents.NewHexSelected -= OnNewHexSelected;
         if (IsOverwritten("OnHexDeselected")) ActionEvents.HexDeselected -= OnHexDeselected;
+        if (IsOverwritten("OnPlayerIsVictorious")) ActionEvents.PlayerIsVictorious -= OnPlayerIsVictorious;
+
     }
 
     protected virtual void OnGridLoaded() { }    
@@ -53,6 +56,8 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected virtual void OnUpdatePlayerIndex(int playerId, int playerIndex) { }
     protected virtual void OnNewHexSelected(Vector3Int hexSelected) { }
     protected virtual void OnHexDeselected() { }
+    protected virtual void OnPlayerIsVictorious(PlayerScript winningPlayer) { }
+
 
 
     // GEEN ABSTRACTE CLASSES!

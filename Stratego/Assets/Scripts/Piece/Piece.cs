@@ -16,7 +16,7 @@ public abstract class Piece : BaseEventCallback
     public bool IsAlive { get; private set; }
 
 
-    private PieceModelVisibility pieceModelVisibility;
+    private PieceModelHandler pieceModelVisibility;
     public bool IsKnown() => pieceModelVisibility.IsKnown();
 
 
@@ -27,7 +27,7 @@ public abstract class Piece : BaseEventCallback
         IsAlive = true;
         Skills = PieceSkillManager.GetSkills(this);
 
-        pieceModelVisibility = gameObject.AddComponent<PieceModelVisibility>();
+        pieceModelVisibility = gameObject.AddComponent<PieceModelHandler>();
     }
 
     public void Die(bool isAlive)
@@ -35,5 +35,5 @@ public abstract class Piece : BaseEventCallback
         IsAlive = false;
         pieceModelVisibility.SetToInvisible();
     }
-    public GameObject GetModel() => pieceModelVisibility.GetModelGo();  
+    public GameObject GetModel() => pieceModelVisibility.GetModelGo();    
 }

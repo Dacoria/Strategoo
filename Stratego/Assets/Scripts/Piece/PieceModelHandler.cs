@@ -4,12 +4,13 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 
-public class PieceModelVisibility : BaseEventCallback
+public class PieceModelHandler : BaseEventCallback
 {
     private GameObject modelGo;
     private GameObject unknownPieceGo;
 
     [ComponentInject] private Piece piece;
+    [ComponentInject(Required.OPTIONAL)] private Animator animator;
 
     private new void Awake()
     {
@@ -130,6 +131,22 @@ public class PieceModelVisibility : BaseEventCallback
             if (pieceOnTargetHex != null && pieceOnTargetHex == piece)
             {
                 MakePieceModelKnown();
+            }
+        }
+    }
+
+    protected override void OnPlayerIsVictorious(PlayerScript winningPlayer)
+    {
+        if (piece.IsAlive)
+        {
+            MakePieceModelKnown();
+            if (piece.Owner == winningPlayer && piece.PieceType == PieceType.Unit)
+            {
+                animator?.SetBool(Statics.ANIMATION_BOOL_VICTORY_JUMP, true);
+            }
+            if (piece.Owner != winningPlayer && piece.PieceType == PieceType.Unit)
+            {
+                animator?.SetBool(Statics.ANIMATION_TRIGGER_DIE, true);
             }
         }
     }

@@ -17,18 +17,18 @@ public class NewSetupPieceButtonScript : BaseEventCallback
     protected override void OnGridLoaded() => button.interactable = true ;
     
 
-    public void OnClick()
+    public void OnClick(bool randomizePieces)
     {
         PieceManager.instance.RemoveAllPieces();
 
         var allPlayers = NetworkHelper.instance.GetAllPlayers();
         foreach (var player in allPlayers)
         {
-            CreateNewLevelSetup(player.Index);
+            CreateNewLevelSetup(player.Index, randomizePieces);
         }
     }
 
-    private void CreateNewLevelSetup(int playerIndex)
+    private void CreateNewLevelSetup(int playerIndex, bool randomizePieces)
     {
         var level1Setup = LevelSetupManager.GetBasicSetup(1);
 
@@ -39,6 +39,7 @@ public class NewSetupPieceButtonScript : BaseEventCallback
         }
 
         List<Hex> playerStartTilesOrdered;
+
         if (playerIndex == 1)
         {
             playerStartTilesOrdered = playerStartTiles
@@ -56,6 +57,11 @@ public class NewSetupPieceButtonScript : BaseEventCallback
         else
         {
             throw new Exception();
+        }
+
+        if(randomizePieces)
+        {
+            level1Setup.UnitPlacementSetting.Shuffle();
         }
 
 
