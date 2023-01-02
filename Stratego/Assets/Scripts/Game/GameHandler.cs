@@ -2,9 +2,9 @@ using UnityEngine;
 
 public partial class GameHandler : BaseEventCallback
 {
-    private HexGrid HexGrid;
     public static GameHandler instance;
-    public GameStatus GameStatus;
+
+    private HexGrid HexGrid;
     public int CurrentTurn;
 
     private new void Awake()
@@ -17,5 +17,5 @@ public partial class GameHandler : BaseEventCallback
     private void Start()
     {
         HexGrid = GameObject.FindObjectOfType<HexGrid>();        
-    }     
+    }    
 }

@@ -5,9 +5,4 @@ public partial class GameHandler : BaseEventCallback
         GameStatus = GameStatus.RoundEnded;
         Textt.GameLocal("Game has ended! " + pWinner.PlayerName + " wins!!!");
     }
-
-    protected override void OnEndGame()
-    {
-        GameStatus = GameStatus.GameEnded;
-    }   
 }

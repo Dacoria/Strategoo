@@ -20,8 +20,7 @@ public static class LevelSetupManager
         var levelSetup = new LevelSetup();
 
         // van links boven, naar rechts, dan volgende rij etc. tm rechtsonder
-        //levelSetup.Add(levelSetting.GetUnit(4));
-        levelSetup.Add(levelSetting.GetCastle());
+        levelSetup.Add(levelSetting.GetUnit(4));
         levelSetup.Add(levelSetting.GetTrap());
         levelSetup.Add(levelSetting.GetUnit(3));
         levelSetup.Add(levelSetting.GetUnit(8));
@@ -44,7 +43,7 @@ public static class LevelSetupManager
 
         if(levelSetting.UnitsSettings.Any(x => x.NumberOfPieces != 0))
         {
-            //throw new Exception();
+            throw new Exception();
         }
 
         return levelSetup;
@@ -56,7 +55,7 @@ public static class LevelSetupManager
         unitSetting.NumberOfPieces--;
         if(unitSetting.NumberOfPieces < 0)
         {
-            //throw new Exception();
+            throw new Exception();
         }
 
         return unitSetting.UnitSetting;
@@ -68,7 +67,7 @@ public static class LevelSetupManager
         unitSetting.NumberOfPieces--;
         if (unitSetting.NumberOfPieces < 0)
         {
-            //throw new Exception();
+            throw new Exception();
         }
 
         return unitSetting.UnitSetting;
@@ -80,7 +79,7 @@ public static class LevelSetupManager
         unitSetting.NumberOfPieces--;
         if (unitSetting.NumberOfPieces < 0)
         {
-            //throw new Exception();
+            throw new Exception();
         }
 
         return unitSetting.UnitSetting;

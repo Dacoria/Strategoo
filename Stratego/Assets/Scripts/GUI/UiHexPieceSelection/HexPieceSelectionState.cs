@@ -1,5 +1,6 @@
 ﻿public enum HexPieceSelectionState
 {
     HexSelected,
-    PieceAbilitySelected
+    PieceAbilitySelected,
+    SwapPieceSelected
 }

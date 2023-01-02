@@ -11,8 +11,8 @@ public partial class GameHandler : BaseEventCallback
 
     private void SetupNewGame()
     {
-        var players = NetworkHelper.instance.GetAllPlayers().OrderBy(x => x.Id).Take(MAX_PLAYERS).ToList();
-        NetworkAE.instance.NewRoundStarted_Simultanious(players);
+        var players = NetworkHelper.instance.GetAllPlayers().OrderBy(x => x.Index).Take(MAX_PLAYERS).ToList();        
+        NetworkAE.instance.NewRoundStarted(players, players[0]);
     }    
 
     public void ResetGame()
@@ -35,7 +35,7 @@ public partial class GameHandler : BaseEventCallback
 
     protected override void OnNewRoundStarted(List<PlayerScript> players, PlayerScript currPlayer)
     {
-        GameStatus = GameStatus.PlayerFase;
+        ActionEvents.NewGameStatus?.Invoke(GameStatus.GameFase);
 
         // refresh om te checken
         AllPlayers = NetworkHelper.instance.GetAllPlayers().Take(MAX_PLAYERS).ToList();

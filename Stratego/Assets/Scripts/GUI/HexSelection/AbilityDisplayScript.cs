@@ -28,10 +28,13 @@ public class AbilityDisplayScript : MonoBehaviour
         if (Settings.UserInterfaceIsLocked)
         {
             return;
-        }        
+        }
 
         // TODO wijkt af per unit/abil combi! (wss abil)
         var hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId);
-        ActionEvents.PieceAbilitySelected?.Invoke(hexId, AbilityType, hexesToSelect);
+        var myPlayer = NetworkHelper.instance.GetMyPlayer();
+
+        var hexesResult = hexesToSelect.Where(x => !x.HasPiece() || x.GetPiece().Owner != myPlayer).ToList();
+        ActionEvents.PieceAbilitySelected?.Invoke(hexId, AbilityType, hexesResult);
     }
 }

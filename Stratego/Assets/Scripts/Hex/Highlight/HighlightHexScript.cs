@@ -19,20 +19,28 @@ public class HighlightHexScript : MonoBehaviour
                 _currentColorHighlight = value;
                 UpdateHighlight(_currentColorHighlight);
             }
-            
+
         }
     }
 
     private void UpdateHighlight(HighlightColorType color)
     {
+        if(isDestroyed) { return; }
         DestroyAllSelections();
-        if(color != HighlightColorType.None)
+        if (color != HighlightColorType.None)
         {
             // TODO POOLEN
             var newSelection = Instantiate(HighlightSelectionPrefab, transform);
             newSelection.SetColor(color);
         }
     }
+
+    private void OnDestroy()
+    {
+        isDestroyed = true;
+    }
+
+    private bool isDestroyed;
 
     private void DestroyAllSelections()
     {

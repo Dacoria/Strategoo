@@ -21,7 +21,14 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
             case ColorHexSelectionType.ConfirmOption:                
                 if(hexHasPiece)
                 {
-                    hex.EnableHighlight(HighlightActionType.EnemyOption.GetColor());
+                    if(GameHandler.instance.GameStatus == GameStatus.UnitPlacement)
+                    {
+                        hex.EnableHighlight(HighlightActionType.SwapOption.GetColor());
+                    }
+                    else
+                    {
+                        hex.EnableHighlight(HighlightActionType.EnemyOption.GetColor());
+                    }                    
                 }
                 else
                 {
@@ -45,13 +52,25 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
         }
     }
 
-    protected override void OnPieceAbilitySelected(Vector3Int hexSelected, AbilityType abilityType, List<Vector3Int> hexOptions)
+    protected override void OnPieceAbilitySelected(Vector3Int hexIdSelected, AbilityType abilityType, List<Vector3Int> hexIdOptions)
     {
-        if (hex.HexCoordinates == hexSelected)
+        if (hex.HexCoordinates == hexIdSelected)
         {
             UpdateColor(ColorHexSelectionType.Selected);
         }
-        if (hexOptions.Any(x => x == hex.HexCoordinates))
+        if (hexIdOptions.Any(x => x == hex.HexCoordinates))
+        {
+            UpdateColor(ColorHexSelectionType.ConfirmOption);
+        }
+    }
+
+    protected override void OnPieceSwapSelected(Vector3Int hexIdSelected, List<Vector3Int> hexIdOptions)
+    {
+        if (hex.HexCoordinates == hexIdSelected)
+        {
+            UpdateColor(ColorHexSelectionType.Selected);
+        }
+        if (hexIdOptions.Any(x => x == hex.HexCoordinates))
         {
             UpdateColor(ColorHexSelectionType.ConfirmOption);
         }
@@ -60,5 +79,5 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
     protected override void OnHexDeselected() => UpdateColor(ColorHexSelectionType.None);
 
     protected override void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilityType) => UpdateColor(ColorHexSelectionType.None);
-
+    protected override void OnSwapPieces(Piece piece1, Piece piece2) => UpdateColor(ColorHexSelectionType.None);
 }

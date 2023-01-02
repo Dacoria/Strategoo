@@ -34,6 +34,6 @@ public class StartGameButtonScript : BaseEventCallback
         }
 
         text.text = hasStartedFirstGame ? "Reset" : "Start";
-        button.interactable = gridLoaded && GameHandler.instance.GameStatus != GameStatus.GameEnded && hasAtLeastTwoPlayers;
+        button.interactable = gridLoaded && hasAtLeastTwoPlayers;
     }
 }

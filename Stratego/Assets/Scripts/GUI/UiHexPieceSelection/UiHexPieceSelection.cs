@@ -14,6 +14,14 @@ public class UiHexPieceSelection : BaseEventCallback
         }    
     }
 
+    protected override void OnPieceSwapSelected(Vector3Int hexId, List<Vector3Int> hexOptions)
+    {
+        if (PieceSelected.HexId == hexId)
+        {
+            PieceSelected.SetSwapSelected(hexOptions);
+        }
+    }
+
     public void ClickOnHex(Hex hex)
     {
         if (PieceSelected != null && !PieceSelected.HexSelectionDate.EnoughTimeForNewEvent())
@@ -25,7 +33,8 @@ public class UiHexPieceSelection : BaseEventCallback
         {
             TrySelectNewHex(hex);
         }
-        else if (PieceSelected.ActionSelectionState.In(HexPieceSelectionState.PieceAbilitySelected))
+
+        else if (PieceSelected.ActionSelectionState.In(HexPieceSelectionState.PieceAbilitySelected, HexPieceSelectionState.SwapPieceSelected))
         {
             TryConfirmAbilityTile(hex);
         }
@@ -33,11 +42,19 @@ public class UiHexPieceSelection : BaseEventCallback
 
     private void TryConfirmAbilityTile(Hex hex)
     {
-        var hexIsConfirmable = PieceSelected.HexIdAbilityOptions?.Any(x => x == hex.HexCoordinates);
+        var hexIsConfirmable = PieceSelected.HexIdOptions?.Any(x => x == hex.HexCoordinates);
         if (hexIsConfirmable == true)
         {
             var pieceOnHex = PieceSelected.HexId.GetPiece();
-            ActionEvents.DoPieceAbility?.Invoke(pieceOnHex, hex, PieceSelected.Ability);
+            if(PieceSelected.ActionSelectionState == HexPieceSelectionState.PieceAbilitySelected)
+            {
+                ActionEvents.DoPieceAbility?.Invoke(pieceOnHex, hex, PieceSelected.Ability);
+            }
+            else if (PieceSelected.ActionSelectionState == HexPieceSelectionState.SwapPieceSelected)
+            {
+                ActionEvents.SwapPieces?.Invoke(pieceOnHex, hex.GetPiece());
+            }
+
             ClearHexSelection();
         }
         else

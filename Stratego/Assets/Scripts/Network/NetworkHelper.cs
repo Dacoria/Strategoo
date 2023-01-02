@@ -52,7 +52,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
     {
         base.OnPlayerLeftRoom(otherPlayer);
         
-        if(GameHandler.instance.GameStatus == GameStatus.PlayerFase)
+        if(GameHandler.instance.GameStatus.In(GameStatus.UnitPlacement, GameStatus.GameFase))
         {
             if(GetAllPlayers().Any(x => x.Id == otherPlayer.ActorNumber))
             {

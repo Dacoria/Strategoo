@@ -11,13 +11,15 @@ public static class ActionEvents
     public static Action<PlayerScript> NewPlayerTurn;
     public static Action AllPlayersFinishedTurn;
     public static Action<PlayerScript> EndRound;
-    public static Action EndGame;
 
     public static Action<Piece, Hex> PieceMovingFinished;
 
     public static Action<int, int> UpdatePlayerIndex;
     public static Action<PlayerScript> PlayerIsVictorious;
 
+    public static Action<Piece, Piece> SwapPieces;
+
+    public static Action<GameStatus> NewGameStatus;
 
     // local
     public static Action GridLoaded;
@@ -30,5 +32,6 @@ public static class ActionEvents
     public static Action HexDeselected;
 
     public static Action<Vector3Int, AbilityType, List<Vector3Int>> PieceAbilitySelected;
+    public static Action<Vector3Int, List<Vector3Int>> PieceSwapSelected;
 
 }

@@ -101,9 +101,9 @@ public class HexGrid : BaseEventCallback
 
     public void MovePieceToNewTile(Piece piece, Hex newHex)
     {
-        var currentHex = piece.CurrentHexTile;
         piece.SetCurrentHexTile(newHex);
         piece.transform.SetParent(newHex.GetGoStructure().transform);
+        piece.transform.position = newHex.transform.position + new Vector3(0,1,0);
     }
 
     public List<Hex> GetPlayerStartTiles(int playerIndex)

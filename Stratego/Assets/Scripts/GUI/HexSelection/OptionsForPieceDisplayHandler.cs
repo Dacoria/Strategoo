@@ -3,29 +3,31 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilitiesForPieceDisplayHandler : BaseEventCallback
+public class OptionsForPieceDisplayHandler : BaseEventCallback
 {
     private List<AbilityDisplayScript> ActiveAbilityButtons = new List<AbilityDisplayScript>();
+    private SwapDisplayScript ActiveSwapButton;
     //private AbilityDisplayScript AbilityButtonPrefab;
-    private GameObject AbilityContainer;
+    private GameObject OptionsContainer;
 
     [ComponentInject] private CanvasGroup canvasGroup;
- 
+
     public AbilityDisplayScript AbilityButtonPrefab;
+    public SwapDisplayScript SwapButtonPrefab;
 
     private void Start()
     {
         //var abilityButtonPrefabGo = Rsc.GoGuiMap.GetEnumerator("AbilityButtonPrefab");
         //AbilityButtonPrefab = abilityButtonPrefabGo.GetComponent<AbilityDisplayScript>();
 
-        AbilityContainer = transform.GetChild(0).gameObject;
+        OptionsContainer = transform.GetChild(0).gameObject;
     }
 
     protected override void OnHexDeselected()
     {
         if(timeUnitSelected.EnoughTimeForNewEvent())
         {
-            RemoveAllActiveAbilities();
+            RemoveAllActiveOptions();
         }
     }
 
@@ -34,38 +36,63 @@ public class AbilitiesForPieceDisplayHandler : BaseEventCallback
     protected override void OnNewHexSelected(Vector3Int hexId)
     {
         timeUnitSelected = DateTime.Now;
-        RemoveAllActiveAbilities();
+        RemoveAllActiveOptions();
 
         var hex = hexId.GetHex();
         if (hex.HasPiece())
         {
-            ShowAbilitiesForPiece(hex);
+            ShowOptionsForPiece(hex);
         }
     }
 
-    private void ShowAbilitiesForPiece(Hex hex)
+    private void ShowOptionsForPiece(Hex hex)
     {
         canvasGroup.alpha = 0;
 
         var piece = hex.GetPiece();
-        var abilities = piece.GetAbilities();
 
-        foreach (var ability in abilities)
+        if(GameHandler.instance.GameStatus == GameStatus.UnitPlacement)
         {
-            var abilityButton = Instantiate(AbilityButtonPrefab, AbilityContainer.transform);
-            abilityButton.SetAbility(ability, hex.HexCoordinates);
-            ActiveAbilityButtons.Add(abilityButton);
+            LoadSwapOptionsForPiece(hex, piece);
         }
+        else if(GameHandler.instance.GameStatus == GameStatus.GameFase)
+        {
+            LoadAbilityOptionsForPiece(hex, piece);
+        }        
 
         MonoHelper.instance.FadeIn(canvasGroup, 0.45f);
     }
 
-    private void RemoveAllActiveAbilities()
+    private void LoadSwapOptionsForPiece(Hex hex, Piece piece)
+    {
+        var swapButton = Instantiate(SwapButtonPrefab, OptionsContainer.transform);
+        swapButton.SetHexForSwap(hex.HexCoordinates);
+        ActiveSwapButton = swapButton;
+    }
+
+    private void LoadAbilityOptionsForPiece(Hex hex, Piece piece)
+    {
+        var abilities = piece.GetAbilities();
+
+        foreach (var ability in abilities)
+        {
+            var abilityButton = Instantiate(AbilityButtonPrefab, OptionsContainer.transform);
+            abilityButton.SetAbility(ability, hex.HexCoordinates);
+            ActiveAbilityButtons.Add(abilityButton);
+        }
+    }
+
+    private void RemoveAllActiveOptions()
     {
         foreach (var ability in ActiveAbilityButtons)
         {
             Destroy(ability.gameObject);
         }
         ActiveAbilityButtons.Clear();
+
+        if(ActiveSwapButton != null)
+        {
+            Destroy(ActiveSwapButton.gameObject);
+        }
     }   
 }

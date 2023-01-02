@@ -16,14 +16,16 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn += OnNewPlayerTurn;
         if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn += OnAllPlayersFinishedTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound += OnEndRound;
-        if (IsOverwritten("OnEndGame")) ActionEvents.EndGame += OnEndGame;
         if (IsOverwritten("OnPieceAbilitySelected")) ActionEvents.PieceAbilitySelected += OnPieceAbilitySelected;
+        if (IsOverwritten("OnPieceSwapSelected")) ActionEvents.PieceSwapSelected += OnPieceSwapSelected;
         if (IsOverwritten("OnDoPieceAbility")) ActionEvents.DoPieceAbility += OnDoPieceAbility;
         if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished += OnPieceMovingFinished;
         if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex += OnUpdatePlayerIndex;
         if (IsOverwritten("OnNewHexSelected")) ActionEvents.NewHexSelected += OnNewHexSelected;
         if (IsOverwritten("OnHexDeselected")) ActionEvents.HexDeselected += OnHexDeselected;
         if (IsOverwritten("OnPlayerIsVictorious")) ActionEvents.PlayerIsVictorious += OnPlayerIsVictorious;
+        if (IsOverwritten("OnNewGameStatus")) ActionEvents.NewGameStatus += OnNewGameStatus;
+        if (IsOverwritten("OnSwapPieces")) ActionEvents.SwapPieces += OnSwapPieces;
     }
 
     protected void OnDisable()
@@ -33,31 +35,34 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn -= OnNewPlayerTurn;
         if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn -= OnAllPlayersFinishedTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound -= OnEndRound;
-        if (IsOverwritten("OnEndGame")) ActionEvents.EndGame -= OnEndGame;
         if (IsOverwritten("OnPieceAbilitySelected")) ActionEvents.PieceAbilitySelected -= OnPieceAbilitySelected;
+        if (IsOverwritten("OnPieceSwapSelected")) ActionEvents.PieceSwapSelected += OnPieceSwapSelected;
         if (IsOverwritten("OnDoPieceAbility")) ActionEvents.DoPieceAbility -= OnDoPieceAbility;
         if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished -= OnPieceMovingFinished;
         if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex -= OnUpdatePlayerIndex;
         if (IsOverwritten("OnNewHexSelected")) ActionEvents.NewHexSelected -= OnNewHexSelected;
         if (IsOverwritten("OnHexDeselected")) ActionEvents.HexDeselected -= OnHexDeselected;
         if (IsOverwritten("OnPlayerIsVictorious")) ActionEvents.PlayerIsVictorious -= OnPlayerIsVictorious;
+        if (IsOverwritten("OnNewGameStatus")) ActionEvents.NewGameStatus -= OnNewGameStatus;
+        if (IsOverwritten("OnSwapPieces")) ActionEvents.SwapPieces -= OnSwapPieces;
 
-    }
+    }    
 
     protected virtual void OnGridLoaded() { }    
     protected virtual void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) { }
     protected virtual void OnNewPlayerTurn(PlayerScript player) { }
     protected virtual void OnAllPlayersFinishedTurn() { }
     protected virtual void OnEndRound(PlayerScript pWinner) { }
-    protected virtual void OnEndGame() { }
-    protected virtual void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexOptions) { }
+    protected virtual void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexIdOptions) { }
+    protected virtual void OnPieceSwapSelected(Vector3Int hexId, List<Vector3Int> hexIdOptions) { }
     protected virtual void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType) { }
     protected virtual void OnPieceMovingFinished(Piece piece, Hex newHex) { }
     protected virtual void OnUpdatePlayerIndex(int playerId, int playerIndex) { }
     protected virtual void OnNewHexSelected(Vector3Int hexSelected) { }
     protected virtual void OnHexDeselected() { }
     protected virtual void OnPlayerIsVictorious(PlayerScript winningPlayer) { }
-
+    protected virtual void OnNewGameStatus(GameStatus newGameStatus) { }
+    protected virtual void OnSwapPieces(Piece piece1, Piece piece2) { }
 
 
     // GEEN ABSTRACTE CLASSES!

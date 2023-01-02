@@ -22,7 +22,7 @@ public class SpawnPlayerButtonScript : MonoBehaviour
 
     private void Update()
     {
-        if (GameHandler.instance.GameStatus != GameStatus.NotStarted)
+        if (!GameHandler.instance.GameStatus.In(GameStatus.NotStarted, GameStatus.UnitPlacement))
         {
             buttons.ForEach(button => button.interactable = false);
         }

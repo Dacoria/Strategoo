@@ -10,7 +10,6 @@ public class PieceValueDisplayScript : MonoBehaviourSlowUpdate
 
     [ComponentInject] private Piece piece;
     [ComponentInject] private TMP_Text Text;
-    [ComponentInject] private Renderer renderer;
 
     private void Start()
     {
