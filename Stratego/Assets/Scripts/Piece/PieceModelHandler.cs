@@ -135,8 +135,8 @@ public class PieceModelHandler : BaseEventCallback
         }
     }
 
-    protected override void OnPlayerIsVictorious(PlayerScript winningPlayer)
-    {
+    protected override void OnEndRound(PlayerScript winningPlayer)
+    {     
         if (piece.IsAlive)
         {
             MakePieceModelKnown();

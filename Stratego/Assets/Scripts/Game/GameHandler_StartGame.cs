@@ -15,7 +15,7 @@ public partial class GameHandler : BaseEventCallback
         NetworkAE.instance.NewRoundStarted(players, players[0]);
     }    
 
-    public void ResetGame()
+    private void ResetGame()
     {
         StartCoroutine(CR_ResetGame());
     }

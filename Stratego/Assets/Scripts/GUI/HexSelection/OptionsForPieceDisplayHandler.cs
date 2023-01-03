@@ -41,15 +41,18 @@ public class OptionsForPieceDisplayHandler : BaseEventCallback
         var hex = hexId.GetHex();
         if (hex.HasPiece())
         {
-            ShowOptionsForPiece(hex);
+            var piece = hex.GetPiece();
+            var myPlayer = NetworkHelper.instance.GetMyPlayer();
+            if(piece.Owner == myPlayer)
+            {
+                ShowOptionsForPiece(hex, piece);
+            }           
         }
     }
 
-    private void ShowOptionsForPiece(Hex hex)
+    private void ShowOptionsForPiece(Hex hex, Piece piece)
     {
-        canvasGroup.alpha = 0;
-
-        var piece = hex.GetPiece();
+        canvasGroup.alpha = 0;        
 
         if(GameHandler.instance.GameStatus == GameStatus.UnitPlacement)
         {

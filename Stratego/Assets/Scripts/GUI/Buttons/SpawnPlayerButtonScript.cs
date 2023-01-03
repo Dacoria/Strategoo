@@ -16,6 +16,10 @@ public class SpawnPlayerButtonScript : MonoBehaviour
     public void OnButtonClick(bool useAi)
     {
         SpawnPlayersManager.instance.SpawnDummyPlayer(useAi);
+        var newAiPlayer = NetworkHelper.instance.GetAllPlayers(isAi: true, myNetwork: true).First();
+        PieceManager.instance.CreateNewLevelSetup(newAiPlayer.Index, randomizePieces: true);
+
+        Destroy(gameObject);
     }
 
     private bool hasMaxAmountOfPlayers;

@@ -94,7 +94,7 @@ public class AttackHandler : BaseEventCallback
     {
         if (defender.PieceType == PieceType.Castle)
         {
-            ActionEvents.PlayerIsVictorious?.Invoke(attacker.Owner);
+            ActionEvents.EndRound?.Invoke(attacker.Owner);
         }
     }
 }

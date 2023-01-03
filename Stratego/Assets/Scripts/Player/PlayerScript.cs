@@ -39,5 +39,14 @@ public class PlayerScript : BaseEventCallback, IPunInstantiateMagicCallback
 
         NetworkHelper.instance.RefreshPlayerGos();
         PlayerName = name;
-    }    
+    }
+
+    public bool ReadyToStartGame;
+    protected override void OnPlayerReadyForGame(PlayerScript playerThatIsReady)
+    {
+        if(playerThatIsReady == this)
+        {
+            ReadyToStartGame = true;
+        }
+    }
 }

@@ -4,36 +4,69 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
 public class StartGameButtonScript : BaseEventCallback
 {
     [ComponentInject] private Button button;
     [ComponentInject] private TMP_Text text;
-    
-    protected override void OnGridLoaded()
-    {
-        gridLoaded = true;
-    }
-
-    private bool hasStartedFirstGame;
-    private bool hasAtLeastTwoPlayers;
-    private bool gridLoaded;
+    [ComponentInject] private CanvasGroup canvasGroup;
 
     public void OnButtonClick()
     {
-        GameHandler.instance.ResetGame();
-        hasStartedFirstGame = true;
+        if (GameHandler.instance.GameStatus == GameStatus.UnitPlacement)
+        {
+            ReadyToStartGame();
+        }
+        if (GameHandler.instance.GameStatus == GameStatus.RoundEnded)
+        {
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #endif
+            Application.Quit();
+        }
+    }
+
+    public void ReadyToStartGame()
+    {
+        var me = NetworkHelper.instance.GetMyPlayer();
+        ReadyToStartGame(me);
+    }
+
+    public void ReadyToStartGame(PlayerScript playerScript)
+    {
+        ActionEvents.PlayerReadyForGame?.Invoke(playerScript);
+    }
+
+    private bool playerIsReady;
+    protected override void OnPlayerReadyForGame(PlayerScript playerThatIsReady)
+    {
+        var myPlayer = NetworkHelper.instance.GetMyPlayer();
+        if (playerThatIsReady == myPlayer)
+        {
+            playerIsReady = true;
+        }
     }
 
     private void Update()
     {
-        if (!hasAtLeastTwoPlayers)
-        {
-            hasAtLeastTwoPlayers = NetworkHelper.instance.GetAllPlayers().Count() >= 2;
-        }
+        var playerCount = NetworkHelper.instance.GetAllPlayers().Count();
+        var hasAtLeastTwoPlayers = playerCount >= 2;
 
-        text.text = hasStartedFirstGame ? "Reset" : "Start";
-        button.interactable = gridLoaded && hasAtLeastTwoPlayers;
+        var piecesCountPerPlayer = LevelSettings.LevelSetting_1_20pcs.UnitsSettings.Sum(x => x.NumberOfPieces);
+        var allPiecesAreOnTheField = PieceManager.instance.GetPieces().Count == piecesCountPerPlayer * playerCount;
+
+        canvasGroup.alpha = 0;
+        if (GameHandler.instance.GameStatus == GameStatus.UnitPlacement)
+        {
+            text.text = "Ready";
+            canvasGroup.alpha = 1;
+            button.interactable = hasAtLeastTwoPlayers && allPiecesAreOnTheField && !playerIsReady;
+        }        
+        else if (GameHandler.instance.GameStatus == GameStatus.RoundEnded)
+        {
+            text.text = "End Game";
+            canvasGroup.alpha = 1;
+            button.interactable = true;
+        }
     }
 }

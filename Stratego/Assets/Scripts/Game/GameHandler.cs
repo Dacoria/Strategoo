@@ -17,5 +17,5 @@ public partial class GameHandler : BaseEventCallback
     private void Start()
     {
         HexGrid = GameObject.FindObjectOfType<HexGrid>();        
-    }    
+    }
 }

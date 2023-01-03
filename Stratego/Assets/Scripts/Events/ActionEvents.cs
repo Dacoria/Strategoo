@@ -21,6 +21,9 @@ public static class ActionEvents
 
     public static Action<GameStatus> NewGameStatus;
 
+    public static Action<PlayerScript> PlayerReadyForGame;
+
+
     // local
     public static Action GridLoaded;
 
