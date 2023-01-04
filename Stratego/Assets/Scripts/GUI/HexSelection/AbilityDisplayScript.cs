@@ -32,9 +32,9 @@ public class AbilityDisplayScript : MonoBehaviour
 
         // TODO wijkt af per unit/abil combi! (wss abil)
         var hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId);
-        var myPlayer = NetworkHelper.instance.GetMyPlayer();
+        var hexPieceOwner = hexId.GetPiece().Owner;
 
-        var hexesResult = hexesToSelect.Where(x => !x.HasPiece() || x.GetPiece().Owner != myPlayer).ToList();
+        var hexesResult = hexesToSelect.Where(x => !x.HasPiece() || x.GetPiece().Owner != hexPieceOwner).ToList();
         ActionEvents.PieceAbilitySelected?.Invoke(hexId, AbilityType, hexesResult);
     }
 }

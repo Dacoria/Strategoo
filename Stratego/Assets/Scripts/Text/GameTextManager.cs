@@ -7,7 +7,7 @@ public class GameTextManager : BaseEventCallback
     {  
         Textt.Reset();
         Textt.GameLocal("Game started!");
-        Textt.GameLocal("New turn! - pick your moves ");
+        Textt.GameLocal(currentPlayer.PlayerName + " turn!");
     }
 
     protected override void OnNewGameStatus(GameStatus newGameStatus)
@@ -16,5 +16,15 @@ public class GameTextManager : BaseEventCallback
         {
             Textt.GameLocal("Choose your setup - you can swap units");
         }
-    }    
+    }
+
+    protected override void OnNewPlayerTurn(PlayerScript player)
+    {
+        Textt.GameLocal(player.PlayerName + " turn!");
+    }
+
+    protected override void OnEndRound(PlayerScript pWinner)
+    {
+        Textt.GameLocal("Game has ended! " + pWinner.PlayerName + " wins!!!");
+    }
 }

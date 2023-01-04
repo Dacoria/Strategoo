@@ -42,8 +42,7 @@ public class OptionsForPieceDisplayHandler : BaseEventCallback
         if (hex.HasPiece())
         {
             var piece = hex.GetPiece();
-            var myPlayer = NetworkHelper.instance.GetMyPlayer();
-            if(piece.Owner == myPlayer)
+            if(piece.Owner.IsOnMyNetwork() && piece.IsKnown())
             {
                 ShowOptionsForPiece(hex, piece);
             }           

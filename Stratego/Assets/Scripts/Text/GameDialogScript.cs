@@ -43,6 +43,7 @@ public class GameDialogScript : BaseEventCallback
 
         if (UseTypeWriterEffect)
         {
+            StopAllCoroutines();
             StartCoroutine(NewTextApearsInTypeWriterStyle(newLine, allPreviousLines));
         }
         else

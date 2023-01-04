@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StartGameButtonScript : BaseEventCallback
+public class StartReadyEndGameButtonScript : BaseEventCallback
 {
     [ComponentInject] private Button button;
     [ComponentInject] private TMP_Text text;
@@ -17,7 +17,7 @@ public class StartGameButtonScript : BaseEventCallback
         {
             ReadyToStartGame();
         }
-        if (GameHandler.instance.GameStatus == GameStatus.RoundEnded)
+        if (GameHandler.instance.GameStatus.In(GameStatus.GameFase, GameStatus.RoundEnded))
         {
             #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
@@ -61,8 +61,8 @@ public class StartGameButtonScript : BaseEventCallback
             text.text = "Ready";
             canvasGroup.alpha = 1;
             button.interactable = hasAtLeastTwoPlayers && allPiecesAreOnTheField && !playerIsReady;
-        }        
-        else if (GameHandler.instance.GameStatus == GameStatus.RoundEnded)
+        }
+        if (GameHandler.instance.GameStatus.In(GameStatus.GameFase, GameStatus.RoundEnded))
         {
             text.text = "End Game";
             canvasGroup.alpha = 1;

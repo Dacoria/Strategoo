@@ -32,7 +32,7 @@ public class PieceModelHandler : BaseEventCallback
 
     private void Update()
     {
-        if(!initSuccesfull)
+        if (!initSuccesfull)
         {
             TryInit();
         }
@@ -73,11 +73,18 @@ public class PieceModelHandler : BaseEventCallback
 
     private void MakePieceModelUnknown()
     {
-        modelGo.SetActive(false);
-        unknownPieceGo?.SetActive(true);
+        if(!Settings.AiPieceModelAlwaysKnown)
+        {
+            modelGo.SetActive(false);
+            unknownPieceGo?.SetActive(true);
+        }
+        else
+        {
+            MakePieceModelKnown();
+        }        
     }
 
-    public GameObject GetModelGo() => modelGo;    
+    public GameObject GetModelGo() => modelGo;
 
     public void SetToInvisible()
     {
@@ -97,17 +104,17 @@ public class PieceModelHandler : BaseEventCallback
         unknownPieceGo.GetComponentInChildren<Renderer>().material = pieceColor;
 
         var pieceColorModels = GetComponentsInChildren<PieceColorModel>(includeInactive: true);
-        if(pieceColorModels.Any())
+        if (pieceColorModels.Any())
         {
             foreach (var pieceColorModel in pieceColorModels)
             {
                 var renderers = pieceColorModel.GetComponentsInChildren<Renderer>(includeInactive: true);
                 foreach (var renderer in renderers)
                 {
-                    renderer.material = renderer.material.color == defaultColor.color ? pieceColor : renderer.material;                                    
-            
+                    renderer.material = renderer.material.color == defaultColor.color ? pieceColor : renderer.material;
+
                     var intMaterials = new Material[renderer.materials.Length];
-                    for (var i = 0; i < renderer.materials.Length; i ++)
+                    for (var i = 0; i < renderer.materials.Length; i++)
                     {
                         intMaterials[i] = renderer.materials[i].color == defaultColor.color ? pieceColor : renderer.materials[i];
                     }
@@ -120,9 +127,9 @@ public class PieceModelHandler : BaseEventCallback
 
     protected override void OnDoPieceAbility(Piece pieceDoingAbility, Hex hexTarget, AbilityType abilType)
     {
-        if(abilType.In(AbilityType.Movement, AbilityType.ScoutMove))
+        if (abilType.In(AbilityType.Movement, AbilityType.ScoutMove))
         {
-            if(pieceDoingAbility == piece)
+            if (pieceDoingAbility == piece)
             {
                 MakePieceModelKnown();
             }
@@ -136,7 +143,7 @@ public class PieceModelHandler : BaseEventCallback
     }
 
     protected override void OnEndRound(PlayerScript winningPlayer)
-    {     
+    {
         if (piece.IsAlive)
         {
             MakePieceModelKnown();
@@ -148,6 +155,26 @@ public class PieceModelHandler : BaseEventCallback
             {
                 animator?.SetBool(Statics.ANIMATION_TRIGGER_DIE, true);
             }
+        }
+    }
+
+    protected override void OnAiPieceModelAlwaysKnownIsUpdated()
+    {
+        if (!piece.Owner.IsAi)
+        {
+            return;
+        }
+
+        if (piece.IsAlive)
+        {
+            if(Settings.AiPieceModelAlwaysKnown)
+            {
+                MakePieceModelKnown();
+            }
+            else
+            {
+                MakePieceModelUnknown();
+            }            
         }
     }
 }

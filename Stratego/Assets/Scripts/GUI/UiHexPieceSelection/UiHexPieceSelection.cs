@@ -65,6 +65,19 @@ public class UiHexPieceSelection : BaseEventCallback
 
     public void TrySelectNewHex(Hex hexSelected)
     {
+        var currentPlayer = GameHandler.instance.GetCurrentPlayer();
+        if (!currentPlayer.IsOnMyNetwork())
+        {
+            return;
+        }
+        if(GameHandler.instance.GameStatus.In(GameStatus.GameFase, GameStatus.RoundEnded))
+        {
+            if (hexSelected.HasPiece() && hexSelected.GetPiece().Owner != currentPlayer)
+            {
+                return;
+            }
+        }        
+
         if (PieceSelected == null || PieceSelected.HexId != hexSelected.HexCoordinates)
         {
             PieceSelected = new PieceSelected(hexSelected.HexCoordinates);

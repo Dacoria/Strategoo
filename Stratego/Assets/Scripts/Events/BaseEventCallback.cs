@@ -14,6 +14,7 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnGridLoaded")) ActionEvents.GridLoaded += OnGridLoaded;
         if (IsOverwritten("OnNewRoundStarted")) ActionEvents.NewRoundStarted += OnNewRoundStarted;
         if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn += OnNewPlayerTurn;
+        if (IsOverwritten("OnEndTurn")) ActionEvents.EndTurn += OnEndTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound += OnEndRound;
         if (IsOverwritten("OnPieceAbilitySelected")) ActionEvents.PieceAbilitySelected += OnPieceAbilitySelected;
         if (IsOverwritten("OnPieceSwapSelected")) ActionEvents.PieceSwapSelected += OnPieceSwapSelected;
@@ -25,6 +26,9 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnNewGameStatus")) ActionEvents.NewGameStatus += OnNewGameStatus;
         if (IsOverwritten("OnSwapPieces")) ActionEvents.SwapPieces += OnSwapPieces;
         if (IsOverwritten("OnPlayerReadyForGame")) ActionEvents.PlayerReadyForGame += OnPlayerReadyForGame;
+        if (IsOverwritten("OnAiPieceModelAlwaysKnownIsUpdated")) ActionEvents.AiPieceModelAlwaysKnownIsUpdated += OnAiPieceModelAlwaysKnownIsUpdated;
+
+
     }
 
     protected void OnDisable()
@@ -32,6 +36,7 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnGridLoaded")) ActionEvents.GridLoaded -= OnGridLoaded;
         if (IsOverwritten("OnNewRoundStarted")) ActionEvents.NewRoundStarted -= OnNewRoundStarted;
         if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn -= OnNewPlayerTurn;
+        if (IsOverwritten("OnEndTurn")) ActionEvents.EndTurn -= OnEndTurn;
         if (IsOverwritten("OnEndRound")) ActionEvents.EndRound -= OnEndRound;
         if (IsOverwritten("OnPieceAbilitySelected")) ActionEvents.PieceAbilitySelected -= OnPieceAbilitySelected;
         if (IsOverwritten("OnPieceSwapSelected")) ActionEvents.PieceSwapSelected += OnPieceSwapSelected;
@@ -43,13 +48,17 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnNewGameStatus")) ActionEvents.NewGameStatus -= OnNewGameStatus;
         if (IsOverwritten("OnSwapPieces")) ActionEvents.SwapPieces -= OnSwapPieces;
         if (IsOverwritten("OnPlayerReadyForGame")) ActionEvents.PlayerReadyForGame -= OnPlayerReadyForGame;
+        if (IsOverwritten("OnAiPieceModelAlwaysKnownIsUpdated")) ActionEvents.AiPieceModelAlwaysKnownIsUpdated -= OnAiPieceModelAlwaysKnownIsUpdated;
+
 
 
     }
+        
 
     protected virtual void OnGridLoaded() { }    
     protected virtual void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) { }
     protected virtual void OnNewPlayerTurn(PlayerScript player) { }
+    protected virtual void OnEndTurn(PlayerScript player) { }
     protected virtual void OnEndRound(PlayerScript pWinner) { }
     protected virtual void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexIdOptions) { }
     protected virtual void OnPieceSwapSelected(Vector3Int hexId, List<Vector3Int> hexIdOptions) { }
@@ -61,6 +70,8 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected virtual void OnNewGameStatus(GameStatus newGameStatus) { }
     protected virtual void OnSwapPieces(Piece piece1, Piece piece2) { }
     protected virtual void OnPlayerReadyForGame(PlayerScript playerThatIsReady) { }
+    protected virtual void OnAiPieceModelAlwaysKnownIsUpdated() { }
+
 
 
     // GEEN ABSTRACTE CLASSES!

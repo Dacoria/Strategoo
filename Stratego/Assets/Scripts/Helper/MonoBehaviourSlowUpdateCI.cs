@@ -2,10 +2,11 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 
-public abstract class MonoBehaviourSlowUpdate : MonoBehaviour
+public abstract class BaseEventCallbackSlowUpdate : BaseEventCallback
 {
     protected virtual int TicksToUpdate => 15;
-    private int counter;
+    private int counter;    
+
 
     private void Update()
     {

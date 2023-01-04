@@ -57,14 +57,17 @@ public class AttackHandler : BaseEventCallback
 
         if (attackResult == AttackResult.AttackerWins)
         {
+            Textt.GameLocal("Attacker wins! Defender is destroyed");
             defender.Die(false);            
         }
         else if (attackResult == AttackResult.DefenderWins)
         {
+            Textt.GameLocal("Defender wins! Attacker is destroyed");
             attacker.Die(false);
         }
         else
         {
+            Textt.GameLocal("Draw! Both pieces are destroyed");
             defender.Die(false);
             attacker.Die(false);
         }
@@ -78,23 +81,31 @@ public class AttackHandler : BaseEventCallback
             var movementAction = attacker.gameObject.GetAdd<PieceMovementAction>();
             movementAction.GoToDestination(defender.CurrentHexTile, 1.5f, callbackOnFinished: () => RotateToOriginalPos(attacker));
         }
-        if (attackResult == AttackResult.DefenderWins)
+        else if (attackResult == AttackResult.DefenderWins)
         {
             RotateToOriginalPos(defender);
+        }
+        else
+        {
+            AttackFaseFinished();
         }
     }
 
     private void RotateToOriginalPos(Piece piece)
     {
         var movementAction = piece.gameObject.GetAdd<PieceMovementAction>();
-        movementAction.RotateTowardsDestination(piece.transform.position + new Vector3(0,0,-1), callbackOnFinished: RotationToOriginalFinished);
+        movementAction.RotateTowardsDestination(piece.transform.position + new Vector3(0,0,-1), callbackOnFinished: AttackFaseFinished);
     }
 
-    private void RotationToOriginalFinished()
+    private void AttackFaseFinished()
     {
         if (defender.PieceType == PieceType.Castle)
         {
-            ActionEvents.EndRound?.Invoke(attacker.Owner);
+            GameHandler.instance.EndRound(pWinner: attacker.Owner);
+        }
+        else
+        {
+            GameHandler.instance.EndTurn();
         }
     }
 }

@@ -2,13 +2,14 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 
-public class UiHoverOverHex : MonoBehaviourSlowUpdate
+public class UiHoverOverHex : BaseEventCallbackSlowUpdate
 {
     private Camera mainCamera;
     public static UiHoverOverHex Instance;
 
-    private void Awake()
+    protected new void Awake()
     {
+        base.Awake();
         mainCamera = Camera.main;
         Instance = this;
     }
@@ -24,6 +25,10 @@ public class UiHoverOverHex : MonoBehaviourSlowUpdate
             return;
         }
         if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        if (!GameHandler.instance.GetCurrentPlayer().IsOnMyNetwork())
         {
             return;
         }

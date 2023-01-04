@@ -23,8 +23,8 @@ public class SwapDisplayScript : MonoBehaviour
             return;
         }
 
-        var myPlayerIndex = NetworkHelper.instance.GetMyPlayer().Index;
-        var startTiles = HexGrid.instance.GetPlayerStartTiles(myPlayerIndex);
+        var playerIndex = hexId.GetPiece().Owner.Index;
+        var startTiles = HexGrid.instance.GetPlayerStartTiles(playerIndex);
         var hexResult = startTiles.Where(x => x.HexCoordinates != hexId).Select(x => x.HexCoordinates).ToList();
         ActionEvents.PieceSwapSelected?.Invoke(hexId, hexResult);
     }

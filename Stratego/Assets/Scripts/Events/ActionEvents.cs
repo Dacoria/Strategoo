@@ -10,6 +10,7 @@ public static class ActionEvents
     public static Action<List<PlayerScript>, PlayerScript> NewRoundStarted;
     public static Action<PlayerScript> NewPlayerTurn;
     public static Action AllPlayersFinishedTurn;
+    public static Action<PlayerScript> EndTurn;
     public static Action<PlayerScript> EndRound;
 
     public static Action<Piece, Hex> PieceMovingFinished;
@@ -24,6 +25,7 @@ public static class ActionEvents
     public static Action<PlayerScript> PlayerReadyForGame;
 
 
+
     // local
     public static Action GridLoaded;
 
@@ -36,5 +38,7 @@ public static class ActionEvents
 
     public static Action<Vector3Int, AbilityType, List<Vector3Int>> PieceAbilitySelected;
     public static Action<Vector3Int, List<Vector3Int>> PieceSwapSelected;
+
+    public static Action AiPieceModelAlwaysKnownIsUpdated;
 
 }

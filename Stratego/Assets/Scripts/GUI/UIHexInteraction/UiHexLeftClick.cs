@@ -20,6 +20,10 @@ public class UiHexLeftClick : MonoBehaviour
         {
             return;
         }
+        if (!GameHandler.instance.GetCurrentPlayer().IsOnMyNetwork())
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             if (UiHoverOverHex.Instance.HexHoveredOver != null)

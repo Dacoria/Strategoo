@@ -4,4 +4,6 @@
     public static bool ShowPunMcButtons = true;
 
     public static bool UserInterfaceIsLocked = false;
+
+    public static bool AiPieceModelAlwaysKnown = false;
 }

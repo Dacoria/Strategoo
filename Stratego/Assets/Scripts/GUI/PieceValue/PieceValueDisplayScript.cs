@@ -1,13 +1,8 @@
 using UnityEngine;
 using TMPro;
 
-public class PieceValueDisplayScript : MonoBehaviourSlowUpdate
+public class PieceValueDisplayScript : BaseEventCallbackSlowUpdate
 {
-    private void Awake()
-    {
-        this.ComponentInject();
-    }
-
     [ComponentInject] private Piece piece;
     [ComponentInject] private TMP_Text Text;
 
