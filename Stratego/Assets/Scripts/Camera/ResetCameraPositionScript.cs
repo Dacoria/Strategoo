@@ -16,7 +16,6 @@ public class ResetCameraPositionScript : BaseEventCallback
         new PlayerInitCameraPos(2, new Vector3(10,10,18), new Vector3(50,180,0)),
     };
 
-
     void Start()
     {
         originalCameraPosition = Camera.main.transform.position;
