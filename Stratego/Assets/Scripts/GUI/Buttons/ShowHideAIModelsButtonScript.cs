@@ -26,6 +26,6 @@ public class ShowHideAIModelsButtonScript : BaseEventCallbackSlowUpdate
     public void OnClick()
     {
         Settings.PieceModelAlwaysShown = !Settings.PieceModelAlwaysShown;
-        ActionEvents.PieceModelAlwaysShown?.Invoke();
+        AE.PieceModelAlwaysShown?.Invoke();
     }
 }

@@ -35,6 +35,6 @@ public class AbilityDisplayScript : MonoBehaviour
         var hexPieceOwner = hexId.GetPiece().Owner;
 
         var hexesResult = hexesToSelect.Where(x => !x.HasPiece() || x.GetPiece().Owner != hexPieceOwner).ToList();
-        ActionEvents.PieceAbilitySelected?.Invoke(hexId, AbilityType, hexesResult);
+        AE.PieceAbilitySelected?.Invoke(hexId, AbilityType, hexesResult);
     }
 }

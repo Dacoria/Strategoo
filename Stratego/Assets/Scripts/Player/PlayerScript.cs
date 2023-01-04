@@ -32,10 +32,19 @@ public class PlayerScript : BaseEventCallback, IPunInstantiateMagicCallback
         {
             Id = info.photonView.OwnerActorNr;
         }
-        if(IsAi && PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && !IsAi)
         {
-            // TODO AI TOEVOEGEN
+            playerIndex.Index = 1;
         }
+        else
+        {
+            playerIndex.Index = 2;
+        }
+
+        //if(IsAi && PhotonNetwork.IsMasterClient)
+        //{
+        //    // TODO AI TOEVOEGEN
+        //}
 
         NetworkHelper.instance.RefreshPlayerGos();
         PlayerName = name;

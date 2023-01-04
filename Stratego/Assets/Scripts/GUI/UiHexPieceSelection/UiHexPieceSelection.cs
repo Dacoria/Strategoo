@@ -48,11 +48,11 @@ public class UiHexPieceSelection : BaseEventCallback
             var pieceOnHex = PieceSelected.HexId.GetPiece();
             if(PieceSelected.ActionSelectionState == HexPieceSelectionState.PieceAbilitySelected)
             {
-                ActionEvents.DoPieceAbility?.Invoke(pieceOnHex, hex, PieceSelected.Ability);
+                NAE.DoPieceAbility?.Invoke(pieceOnHex, hex, PieceSelected.Ability);
             }
             else if (PieceSelected.ActionSelectionState == HexPieceSelectionState.SwapPieceSelected)
             {
-                ActionEvents.SwapPieces?.Invoke(pieceOnHex, hex.GetPiece());
+                NAE.SwapPieces?.Invoke(pieceOnHex, hex.GetPiece());
             }
 
             ClearHexSelection();
@@ -81,7 +81,7 @@ public class UiHexPieceSelection : BaseEventCallback
         if (PieceSelected == null || PieceSelected.HexId != hexSelected.HexCoordinates)
         {
             PieceSelected = new PieceSelected(hexSelected.HexCoordinates);
-            ActionEvents.NewHexSelected?.Invoke(hexSelected.HexCoordinates);
+            AE.NewHexSelected?.Invoke(hexSelected.HexCoordinates);
         }
     }
 
@@ -96,6 +96,6 @@ public class UiHexPieceSelection : BaseEventCallback
     public void ClearHexSelection()
     {
         PieceSelected = null;
-        ActionEvents.HexDeselected?.Invoke();
+        AE.HexDeselected?.Invoke();
     }
 }

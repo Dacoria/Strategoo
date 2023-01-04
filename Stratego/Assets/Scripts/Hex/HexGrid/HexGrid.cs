@@ -54,7 +54,7 @@ public class HexGrid : BaseEventCallback
             HexGridLoaded = hexTileDict.Values.All(x => Vector3.Distance(x.OrigPosition, x.transform.position) < 0.01f);
             if(HexGridLoaded)
             {
-                ActionEvents.GridLoaded?.Invoke(); 
+                AE.GridLoaded?.Invoke(); 
             }
         }
     }

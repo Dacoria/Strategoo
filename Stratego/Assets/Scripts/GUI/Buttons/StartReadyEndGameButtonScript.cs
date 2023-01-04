@@ -34,7 +34,7 @@ public class StartReadyEndGameButtonScript : BaseEventCallback
 
     public void ReadyToStartGame(PlayerScript playerScript)
     {
-        ActionEvents.PlayerReadyForGame?.Invoke(playerScript);
+        NAE.PlayerReadyForGame?.Invoke(playerScript);
     }
 
     private bool playerIsReady;

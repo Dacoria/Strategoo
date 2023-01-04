@@ -21,7 +21,6 @@ public class PieceMovementAction : BaseEventCallback
     {
         HexGrid.instance.MovePieceToNewTile(piece, originalDestinationHex);
         callbackOnFinished?.Invoke();
-        ActionEvents.PieceMovingFinished?.Invoke(piece, originalDestinationHex);
     }
 
     public void RotateTowardsDestination(Vector3 endPosition, float rotationSpeed = 1, Action callbackOnFinished = null)

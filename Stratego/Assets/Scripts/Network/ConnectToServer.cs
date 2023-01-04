@@ -92,6 +92,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         //Textt.GameLocal("OnConnectedToMaster");
+        Debug.Log("OnConnectedToMaster");
         if (ConnectMethod == ConnectMethod.Offline)
         {
             PhotonNetwork.JoinRandomRoom();
@@ -105,13 +106,14 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        //Textt.GameLocal("OnJoinedLobby");
+        Debug.Log("OnJoinedLobby");
 
         if (ConnectMethod == ConnectMethod.Online_Fast)
         {
             //PhotonNetwork.JoinRandomOrCreateRoom();
             var roomOptions = new RoomOptions { };
-            var punRoomName = string.IsNullOrEmpty(levelName) ? "Randomm" : levelName;
+            //var punRoomName = string.IsNullOrEmpty(levelName) ? "Randommmm" : levelName;
+            var punRoomName = "new";
             PhotonNetwork.JoinOrCreateRoom(punRoomName, roomOptions, TypedLobby.Default);
         }        
     }
@@ -127,6 +129,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
         var sceneName = GetSceneName();
         PhotonNetwork.LoadLevel(sceneName);
+        Debug.Log("OnJoinedRoom");
     }
 
     private string GetSceneName()

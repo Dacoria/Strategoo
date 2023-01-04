@@ -7,9 +7,9 @@ public class PlayerColor : BaseEventCallback
 
     public Color Color;
 
-    protected override void OnUpdatePlayerIndex(int playerId, int playerIndex)
+    protected override void OnUpdatePlayerIndex(PlayerScript playerToUpdate, int playerIndex)
     {
-        if(player.Id == playerId)
+        if(player.Id == playerToUpdate.Id)
         {
             Color = Utils.GetPlayerColorForIndex(playerIndex);
         }

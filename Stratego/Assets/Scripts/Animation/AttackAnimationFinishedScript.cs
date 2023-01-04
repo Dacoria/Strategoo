@@ -6,6 +6,6 @@ public class AttackAnimationFinishedScript : MonoBehaviour
 {
    void AttackAnimation()
     {
-        ActionEvents.AttackAnimationFinished?.Invoke(gameObject);
+        AE.AttackAnimationFinished?.Invoke(gameObject);
     }
 }

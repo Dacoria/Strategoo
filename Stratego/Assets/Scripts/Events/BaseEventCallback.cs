@@ -11,44 +11,42 @@ public abstract class BaseEventCallback : MonoBehaviour
 
     protected void OnEnable()
     {
-        if (IsOverwritten("OnGridLoaded")) ActionEvents.GridLoaded += OnGridLoaded;
-        if (IsOverwritten("OnNewRoundStarted")) ActionEvents.NewRoundStarted += OnNewRoundStarted;
-        if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn += OnNewPlayerTurn;
-        if (IsOverwritten("OnEndTurn")) ActionEvents.EndTurn += OnEndTurn;
-        if (IsOverwritten("OnEndRound")) ActionEvents.EndRound += OnEndRound;
-        if (IsOverwritten("OnPieceAbilitySelected")) ActionEvents.PieceAbilitySelected += OnPieceAbilitySelected;
-        if (IsOverwritten("OnPieceSwapSelected")) ActionEvents.PieceSwapSelected += OnPieceSwapSelected;
-        if (IsOverwritten("OnDoPieceAbility")) ActionEvents.DoPieceAbility += OnDoPieceAbility;
-        if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished += OnPieceMovingFinished;
-        if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex += OnUpdatePlayerIndex;
-        if (IsOverwritten("OnNewHexSelected")) ActionEvents.NewHexSelected += OnNewHexSelected;
-        if (IsOverwritten("OnHexDeselected")) ActionEvents.HexDeselected += OnHexDeselected;
-        if (IsOverwritten("OnNewGameStatus")) ActionEvents.NewGameStatus += OnNewGameStatus;
-        if (IsOverwritten("OnSwapPieces")) ActionEvents.SwapPieces += OnSwapPieces;
-        if (IsOverwritten("OnPlayerReadyForGame")) ActionEvents.PlayerReadyForGame += OnPlayerReadyForGame;
-        if (IsOverwritten("OnPieceModelAlwaysShown")) ActionEvents.PieceModelAlwaysShown += OnPieceModelAlwaysShown;
+        if (IsOverwritten("OnGridLoaded")) AE.GridLoaded += OnGridLoaded;
+        if (IsOverwritten("OnNewRoundStarted")) NAE.NewRoundStarted += OnNewRoundStarted;
+        if (IsOverwritten("OnNewPlayerTurn")) NAE.NewPlayerTurn += OnNewPlayerTurn;
+        if (IsOverwritten("OnEndTurn")) NAE.EndTurn += OnEndTurn;
+        if (IsOverwritten("OnEndRound")) NAE.EndRound += OnEndRound;
+        if (IsOverwritten("OnPieceAbilitySelected")) AE.PieceAbilitySelected += OnPieceAbilitySelected;
+        if (IsOverwritten("OnPieceSwapSelected")) AE.PieceSwapSelected += OnPieceSwapSelected;
+        if (IsOverwritten("OnDoPieceAbility")) NAE.DoPieceAbility += OnDoPieceAbility;
+        if (IsOverwritten("OnUpdatePlayerIndex")) NAE.UpdatePlayerIndex += OnUpdatePlayerIndex;
+        if (IsOverwritten("OnNewHexSelected")) AE.NewHexSelected += OnNewHexSelected;
+        if (IsOverwritten("OnHexDeselected")) AE.HexDeselected += OnHexDeselected;
+        if (IsOverwritten("OnNewGameStatus")) NAE.NewGameStatus += OnNewGameStatus;
+        if (IsOverwritten("OnSwapPieces")) NAE.SwapPieces += OnSwapPieces;
+        if (IsOverwritten("OnPlayerReadyForGame")) NAE.PlayerReadyForGame += OnPlayerReadyForGame;
+        if (IsOverwritten("OnPieceModelAlwaysShown")) AE.PieceModelAlwaysShown += OnPieceModelAlwaysShown;
 
 
     }
 
     protected void OnDisable()
     {
-        if (IsOverwritten("OnGridLoaded")) ActionEvents.GridLoaded -= OnGridLoaded;
-        if (IsOverwritten("OnNewRoundStarted")) ActionEvents.NewRoundStarted -= OnNewRoundStarted;
-        if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn -= OnNewPlayerTurn;
-        if (IsOverwritten("OnEndTurn")) ActionEvents.EndTurn -= OnEndTurn;
-        if (IsOverwritten("OnEndRound")) ActionEvents.EndRound -= OnEndRound;
-        if (IsOverwritten("OnPieceAbilitySelected")) ActionEvents.PieceAbilitySelected -= OnPieceAbilitySelected;
-        if (IsOverwritten("OnPieceSwapSelected")) ActionEvents.PieceSwapSelected += OnPieceSwapSelected;
-        if (IsOverwritten("OnDoPieceAbility")) ActionEvents.DoPieceAbility -= OnDoPieceAbility;
-        if (IsOverwritten("PieceMovingFinished")) ActionEvents.PieceMovingFinished -= OnPieceMovingFinished;
-        if (IsOverwritten("OnUpdatePlayerIndex")) ActionEvents.UpdatePlayerIndex -= OnUpdatePlayerIndex;
-        if (IsOverwritten("OnNewHexSelected")) ActionEvents.NewHexSelected -= OnNewHexSelected;
-        if (IsOverwritten("OnHexDeselected")) ActionEvents.HexDeselected -= OnHexDeselected;
-        if (IsOverwritten("OnNewGameStatus")) ActionEvents.NewGameStatus -= OnNewGameStatus;
-        if (IsOverwritten("OnSwapPieces")) ActionEvents.SwapPieces -= OnSwapPieces;
-        if (IsOverwritten("OnPlayerReadyForGame")) ActionEvents.PlayerReadyForGame -= OnPlayerReadyForGame;
-        if (IsOverwritten("OnPieceModelAlwaysShown")) ActionEvents.PieceModelAlwaysShown -= OnPieceModelAlwaysShown;
+        if (IsOverwritten("OnGridLoaded")) AE.GridLoaded -= OnGridLoaded;
+        if (IsOverwritten("OnNewRoundStarted")) NAE.NewRoundStarted -= OnNewRoundStarted;
+        if (IsOverwritten("OnNewPlayerTurn")) NAE.NewPlayerTurn -= OnNewPlayerTurn;
+        if (IsOverwritten("OnEndTurn")) NAE.EndTurn -= OnEndTurn;
+        if (IsOverwritten("OnEndRound")) NAE.EndRound -= OnEndRound;
+        if (IsOverwritten("OnPieceAbilitySelected")) AE.PieceAbilitySelected -= OnPieceAbilitySelected;
+        if (IsOverwritten("OnPieceSwapSelected")) AE.PieceSwapSelected += OnPieceSwapSelected;
+        if (IsOverwritten("OnDoPieceAbility")) NAE.DoPieceAbility -= OnDoPieceAbility;
+        if (IsOverwritten("OnUpdatePlayerIndex")) NAE.UpdatePlayerIndex -= OnUpdatePlayerIndex;
+        if (IsOverwritten("OnNewHexSelected")) AE.NewHexSelected -= OnNewHexSelected;
+        if (IsOverwritten("OnHexDeselected")) AE.HexDeselected -= OnHexDeselected;
+        if (IsOverwritten("OnNewGameStatus")) NAE.NewGameStatus -= OnNewGameStatus;
+        if (IsOverwritten("OnSwapPieces")) NAE.SwapPieces -= OnSwapPieces;
+        if (IsOverwritten("OnPlayerReadyForGame")) NAE.PlayerReadyForGame -= OnPlayerReadyForGame;
+        if (IsOverwritten("OnPieceModelAlwaysShown")) AE.PieceModelAlwaysShown -= OnPieceModelAlwaysShown;
 
 
 
@@ -63,8 +61,7 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected virtual void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexIdOptions) { }
     protected virtual void OnPieceSwapSelected(Vector3Int hexId, List<Vector3Int> hexIdOptions) { }
     protected virtual void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType) { }
-    protected virtual void OnPieceMovingFinished(Piece piece, Hex newHex) { }
-    protected virtual void OnUpdatePlayerIndex(int playerId, int playerIndex) { }
+    protected virtual void OnUpdatePlayerIndex(PlayerScript player, int playerIndex) { }
     protected virtual void OnNewHexSelected(Vector3Int hexSelected) { }
     protected virtual void OnHexDeselected() { }
     protected virtual void OnNewGameStatus(GameStatus newGameStatus) { }

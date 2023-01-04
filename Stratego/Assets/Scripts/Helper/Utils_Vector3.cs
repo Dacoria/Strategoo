@@ -23,6 +23,20 @@ public static partial class Utils
         return new Vector3Int(x, y, z);
     }
 
+    public static Vector3Int ToV3Int(this Vector3 position)
+    {
+        var x = Mathf.RoundToInt(position.x);
+        var y = Mathf.RoundToInt(position.y);
+        var z = Mathf.RoundToInt(position.z);
+
+        return new Vector3Int(x, y, z);
+    }
+
+    public static Vector3 ToV3(this Vector3Int position)
+    {
+        return new Vector3Int(position.x, position.y, position.z);
+    }
+
     public static Vector3 ConvertCoordinatesToPosition(this Vector3Int position)
     {
         if (position.z % 2 == 0)

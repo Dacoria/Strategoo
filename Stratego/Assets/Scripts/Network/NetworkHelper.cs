@@ -48,8 +48,16 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         SyncPlayerIndex();
     }
 
+    public override void OnCreatedRoom()
+    {
+        base.OnCreatedRoom();
+        Debug.Log("OnCreatedRoom");
+
+    }
+
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        Debug.Log("OnPlayerLeftRoom");
         base.OnPlayerLeftRoom(otherPlayer);
         
         if(GameHandler.instance.GameStatus.In(GameStatus.UnitPlacement, GameStatus.GameFase))
@@ -81,6 +89,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.Log("OnPlayerEnteredRoom");
         base.OnPlayerEnteredRoom(newPlayer);
         PlayerList = PhotonNetwork.PlayerList;
         RefreshPlayerGos();        
@@ -92,13 +101,13 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         if(allPlayers.Count == 0) { return; }
 
         var masterclientPlayer = GetMyPlayer();
-        ActionEvents.UpdatePlayerIndex(masterclientPlayer.Id, 1); // MC == 1 --> NIET SWITCHEN!
+        NAE.UpdatePlayerIndex(masterclientPlayer, 1); // MC == 1 --> NIET SWITCHEN!
 
         var allPlayersWithIndexes = allPlayers.Where(x => x.Index > 1).ToList();
         for (int i = 0; i < allPlayersWithIndexes.Count; i++)
         {
             var playerWithIndex = allPlayersWithIndexes[i];
-            ActionEvents.UpdatePlayerIndex(playerWithIndex.Id, i + 2);
+            NAE.UpdatePlayerIndex(playerWithIndex, i + 2);
         }
 
         var allPlayersWithoutIndexes = allPlayers.Where(x => x.Index == 0).ToList();
@@ -108,7 +117,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         {
             var playerWithoutIndex = allPlayersWithoutIndexes[i];
             highestIndex = highestIndex + 1;
-            ActionEvents.UpdatePlayerIndex(playerWithoutIndex.Id, highestIndex);
+            NAE.UpdatePlayerIndex(playerWithoutIndex, highestIndex);
         }        
     }
 

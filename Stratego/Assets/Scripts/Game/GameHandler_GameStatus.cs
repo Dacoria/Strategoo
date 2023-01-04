@@ -8,6 +8,6 @@ public partial class GameHandler : BaseEventCallback
     protected override void OnGridLoaded()
     {
         PieceManager.instance.CreateNewLevelSetup(randomizePieces: true);
-        ActionEvents.NewGameStatus?.Invoke(GameStatus.UnitPlacement);
+        NAE.NewGameStatus?.Invoke(GameStatus.UnitPlacement);
     }
 }

@@ -13,6 +13,6 @@ public partial class NetworkAE : MonoBehaviour
     [PunRPC]
     public void RPC_AE_NewRoundStarted(int[] playerIds, int currentPlayerId)
     {
-        ActionEvents.NewRoundStarted?.Invoke(playerIds.Select(x => x.GetPlayerById()).ToList(), currentPlayerId.GetPlayerById());
+        NAE.NewRoundStarted?.Invoke(playerIds.Select(x => x.GetPlayerById()).ToList(), currentPlayerId.GetPlayerById());
     }
 }

@@ -7,9 +7,9 @@ public class PlayerIndex : BaseEventCallback
 
     public int Index;
 
-    protected override void OnUpdatePlayerIndex(int playerId, int playerIndex)
+    protected override void OnUpdatePlayerIndex(PlayerScript playerToUpdate, int playerIndex)
     {
-        if(playerId == player.Id)
+        if(player.Id == playerToUpdate.Id)
         {
             Index = playerIndex;
         }

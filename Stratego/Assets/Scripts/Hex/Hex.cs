@@ -20,7 +20,7 @@ public class Hex : BaseEventCallback
     public HexSurfaceType HexSurfaceType;
 
     public PieceType PieceType;
-    [ConditionalHide("PieceType", PieceType.Unit)] public int UnitValue;
+    public int UnitValue;
     public HexObjectOnTileType HexObjectOnTileType; // voor debug + setting purposes
 
 
