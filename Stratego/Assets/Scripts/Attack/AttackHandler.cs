@@ -94,7 +94,7 @@ public class AttackHandler : BaseEventCallback
     private void RotateToOriginalPos(Piece piece)
     {
         var movementAction = piece.gameObject.GetAdd<PieceMovementAction>();
-        movementAction.RotateTowardsDestination(piece.transform.position + new Vector3(0,0,-1), callbackOnFinished: AttackFaseFinished);
+        movementAction.RotateTowardsDestination(piece.transform.position + Utils.GetRotationDir(), callbackOnFinished: AttackFaseFinished);
     }
 
     private void AttackFaseFinished()

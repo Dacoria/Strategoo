@@ -12,10 +12,8 @@ public class ResetCameraPositionScript : BaseEventCallback
 
     private List<PlayerInitCameraPos> PlayerInitCameraPositions = new List<PlayerInitCameraPos>
     {
-        new PlayerInitCameraPos(0, new Vector3(-5,6,-3), new Vector3(38,48,0)),
-        new PlayerInitCameraPos(1, new Vector3(16,6,14), new Vector3(38,-130,0)),
-        new PlayerInitCameraPos(2, new Vector3(-5,6,14), new Vector3(38,130,0)),
-        new PlayerInitCameraPos(3, new Vector3(16,6,-3), new Vector3(38,-48,0)),
+        new PlayerInitCameraPos(1, new Vector3(10,10,-2), new Vector3(50,0,0)),
+        new PlayerInitCameraPos(2, new Vector3(10,10,18), new Vector3(50,180,0)),
     };
 
 
@@ -36,10 +34,10 @@ public class ResetCameraPositionScript : BaseEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
-        if(Setting_ResetCameraOnNewTurnEvent && player.IsOnMyNetwork() && player.IsAi)
+        if (Setting_ResetCameraOnNewTurnEvent && player.IsOnMyNetwork() && player.IsAi)
         {
             ResetCameraToPlayer();
-        }   
+        }
     }
 
     private IEnumerator ResetCameraAfterXSeconds(float seconds)
@@ -51,11 +49,31 @@ public class ResetCameraPositionScript : BaseEventCallback
 
     public void ResetCameraToPlayer()
     {
+        var allPlayers = NetworkHelper.instance.GetAllPlayers();
+        if(allPlayers.Any(x => x.IsAi) && Settings.RotateTowardsMyPlayer)
+        {
+            ResetCameraToPlayer(GameHandler.instance.GetCurrentPlayer().Index);
+        }
+        else
+        {
+            ResetCameraToPlayer(NetworkHelper.instance.GetMyPlayer().Index);
+        }
+    }
+
+    public void ResetCameraToPlayer(int playerIndex)
+    {
         // AI + aan de beurt? pak die, anders pak je eigen char
         var player = Netw.CurrPlayer().IsOnMyNetwork() ? Netw.CurrPlayer() : Netw.MyPlayer();
 
         var targetPos = originalCameraPosition;
         var targetRot = originalCameraRotation;
+
+        var playerCameraSettings = PlayerInitCameraPositions.FirstOrDefault(x => x.Index == playerIndex);
+        if (playerCameraSettings != null)
+        {
+            targetPos = playerCameraSettings.Position;
+            targetRot = Quaternion.Euler(playerCameraSettings.Rotation);
+        }
 
         // geleidelijk bewegen + draaien naar target plek+rot
         var lerpMovement = gameObject.GetAdd<LerpMovement>();

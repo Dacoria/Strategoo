@@ -39,6 +39,6 @@ public static class ActionEvents
     public static Action<Vector3Int, AbilityType, List<Vector3Int>> PieceAbilitySelected;
     public static Action<Vector3Int, List<Vector3Int>> PieceSwapSelected;
 
-    public static Action AiPieceModelAlwaysKnownIsUpdated;
+    public static Action PieceModelAlwaysShown;
 
 }

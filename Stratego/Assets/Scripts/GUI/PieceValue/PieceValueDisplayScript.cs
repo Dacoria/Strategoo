@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class PieceValueDisplayScript : BaseEventCallbackSlowUpdate
 {
@@ -9,26 +10,48 @@ public class PieceValueDisplayScript : BaseEventCallbackSlowUpdate
     private void Start()
     {
         transform.GetChild(0).gameObject.SetActive(false);
-    }
+    }    
 
     protected override void SlowUpdate()
     {
-        if(!piece.IsAlive)
+        if (!piece.IsAlive)
         {
             gameObject.SetActive(false);
             return;
         }
 
-        if(!piece.IsKnown())
+        if (!piece.IsKnown())
         {
             transform.GetChild(0).gameObject.SetActive(false);
             return;
         }
 
+        SetRotation();
+        ShowText();
+    }
+
+    private void SetRotation()
+    {
+        if (Settings.RotateTowardsMyPlayer && piece.IsKnown())
+        {
+            var playerRotationDir = Utils.GetRotationDir();
+            if (playerRotationDir.z == -1)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+        }
+    }
+
+    private void ShowText()
+    {
         transform.GetChild(0).gameObject.SetActive(true);
 
         var value = "";
-        switch(piece.PieceType)
+        switch (piece.PieceType)
         {
             case PieceType.Castle:
                 value = "C";

@@ -19,7 +19,6 @@ public class PlayerStatusTextDisplayScript : BaseEventCallbackSlowUpdate
 
     private void UpdateText()
     {
-        //var allPlayers = NetworkHelper.instance.GetAllPlayers(isAi: false);
         var allPlayers = NetworkHelper.instance.GetAllPlayers();
 
         if (GameHandler.instance.GameStatus == GameStatus.NotStarted)

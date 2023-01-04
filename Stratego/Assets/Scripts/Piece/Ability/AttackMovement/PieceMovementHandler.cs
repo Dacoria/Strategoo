@@ -49,7 +49,7 @@ public class PieceMovementHandler : BaseEventCallback
     private void RotateToOriginalPos()
     {
         var movementAction = pieceScript.gameObject.GetAdd<PieceMovementAction>();
-        movementAction.RotateTowardsDestination(pieceScript.transform.position + new Vector3(0, 0, -1), callbackOnFinished: RotationToOriginalFinished);
+        movementAction.RotateTowardsDestination(pieceScript.transform.position + Utils.GetRotationDir(), callbackOnFinished: RotationToOriginalFinished);
     }
 
     private void RotationToOriginalFinished()

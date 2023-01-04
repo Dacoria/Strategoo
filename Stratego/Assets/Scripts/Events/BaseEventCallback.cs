@@ -26,7 +26,7 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnNewGameStatus")) ActionEvents.NewGameStatus += OnNewGameStatus;
         if (IsOverwritten("OnSwapPieces")) ActionEvents.SwapPieces += OnSwapPieces;
         if (IsOverwritten("OnPlayerReadyForGame")) ActionEvents.PlayerReadyForGame += OnPlayerReadyForGame;
-        if (IsOverwritten("OnAiPieceModelAlwaysKnownIsUpdated")) ActionEvents.AiPieceModelAlwaysKnownIsUpdated += OnAiPieceModelAlwaysKnownIsUpdated;
+        if (IsOverwritten("OnPieceModelAlwaysShown")) ActionEvents.PieceModelAlwaysShown += OnPieceModelAlwaysShown;
 
 
     }
@@ -48,7 +48,7 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnNewGameStatus")) ActionEvents.NewGameStatus -= OnNewGameStatus;
         if (IsOverwritten("OnSwapPieces")) ActionEvents.SwapPieces -= OnSwapPieces;
         if (IsOverwritten("OnPlayerReadyForGame")) ActionEvents.PlayerReadyForGame -= OnPlayerReadyForGame;
-        if (IsOverwritten("OnAiPieceModelAlwaysKnownIsUpdated")) ActionEvents.AiPieceModelAlwaysKnownIsUpdated -= OnAiPieceModelAlwaysKnownIsUpdated;
+        if (IsOverwritten("OnPieceModelAlwaysShown")) ActionEvents.PieceModelAlwaysShown -= OnPieceModelAlwaysShown;
 
 
 
@@ -70,7 +70,7 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected virtual void OnNewGameStatus(GameStatus newGameStatus) { }
     protected virtual void OnSwapPieces(Piece piece1, Piece piece2) { }
     protected virtual void OnPlayerReadyForGame(PlayerScript playerThatIsReady) { }
-    protected virtual void OnAiPieceModelAlwaysKnownIsUpdated() { }
+    protected virtual void OnPieceModelAlwaysShown() { }
 
 
 

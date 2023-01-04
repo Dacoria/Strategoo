@@ -5,5 +5,7 @@
 
     public static bool UserInterfaceIsLocked = false;
 
-    public static bool AiPieceModelAlwaysKnown = false;
+    public static bool PieceModelAlwaysShown = false;
+
+    public static bool RotateTowardsMyPlayer = true;
 }
