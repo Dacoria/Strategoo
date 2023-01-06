@@ -2,23 +2,21 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 
-public class UiHoverOverHex : BaseEventCallbackSlowUpdate
+public class UiHoverOverHex : MonoBehaviour
 {
     private Camera mainCamera;
     public static UiHoverOverHex Instance;
 
-    protected new void Awake()
+    protected void Awake()
     {
-        base.Awake();
         mainCamera = Camera.main;
         Instance = this;
     }
 
     public Hex HexHoveredOver;
 
-    //protected override int TicksToUpdate => 1000;
 
-    protected override void SlowUpdate()
+    private void Update()
     {
         if (Settings.UserInterfaceIsLocked)
         {
