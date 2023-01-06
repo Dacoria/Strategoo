@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -19,7 +19,7 @@ public class PlayerStatusTextDisplayScript : BaseEventCallbackSlowUpdate
 
     private void UpdateText()
     {
-        var allPlayers = NetworkHelper.instance.GetAllPlayers();
+        var allPlayers = NetworkHelper.instance.GetAllPlayers().OrderBy(x => x.Index);
 
         if (GameHandler.instance.GameStatus == GameStatus.NotStarted)
         {
