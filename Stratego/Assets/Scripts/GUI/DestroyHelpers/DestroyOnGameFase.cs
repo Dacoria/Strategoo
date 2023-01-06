@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class DestroyOnGameFase : BaseEventCallback
 {
-    public GameStatus GamestatusToDestroy;
-
-    protected override void OnNewGameStatus(GameStatus newGameStatus)
+    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)
     {
-        if (GamestatusToDestroy == newGameStatus)
-        {
-            Destroy(gameObject);
-        }
-    }
+        Destroy(gameObject);
+    }    
 }

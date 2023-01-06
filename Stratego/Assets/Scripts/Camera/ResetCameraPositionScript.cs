@@ -51,11 +51,11 @@ public class ResetCameraPositionScript : BaseEventCallback
         var allPlayers = NetworkHelper.instance.GetAllPlayers();
         if(allPlayers.Any(x => x.IsAi) && Settings.RotateTowardsMyPlayer)
         {
-            ResetCameraToPlayer(GameHandler.instance.GetCurrentPlayer().Index);
+            ResetCameraToPlayer(Netw.CurrPlayer().Index);
         }
         else
         {
-            ResetCameraToPlayer(NetworkHelper.instance.GetMyPlayer().Index);
+            ResetCameraToPlayer(Netw.MyPlayer().Index);
         }
     }
 

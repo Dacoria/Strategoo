@@ -28,19 +28,16 @@ public class StartReadyEndGameButtonScript : BaseEventCallback
 
     public void ReadyToStartGame()
     {
-        var me = NetworkHelper.instance.GetMyPlayer();
-        ReadyToStartGame(me);
-    }
-
-    public void ReadyToStartGame(PlayerScript playerScript)
-    {
-        NAE.PlayerReadyForGame?.Invoke(playerScript);
+        foreach(var playerOnMyNetwork in Netw.PlayersOnMyNetwork())
+        {
+            NetworkAE.instance.PlayerReadyForGame(playerOnMyNetwork, PieceManager.instance.GetHexPieceSetup(playerOnMyNetwork));
+        }
     }
 
     private bool playerIsReady;
-    protected override void OnPlayerReadyForGame(PlayerScript playerThatIsReady)
+    protected override void OnPlayerReadyForGame(PlayerScript playerThatIsReady, HexPieceSetup hexPieceSetup)
     {
-        var myPlayer = NetworkHelper.instance.GetMyPlayer();
+        var myPlayer = Netw.MyPlayer();
         if (playerThatIsReady == myPlayer)
         {
             playerIsReady = true;
@@ -52,15 +49,12 @@ public class StartReadyEndGameButtonScript : BaseEventCallback
         var playerCount = NetworkHelper.instance.GetAllPlayers().Count();
         var hasAtLeastTwoPlayers = playerCount >= 2;
 
-        var piecesCountPerPlayer = LevelSettings.LevelSetting_1_20pcs.UnitsSettings.Sum(x => x.NumberOfPieces);
-        var allPiecesAreOnTheField = PieceManager.instance.GetPieces().Count == piecesCountPerPlayer * playerCount;
-
         canvasGroup.alpha = 0;
         if (GameHandler.instance.GameStatus == GameStatus.UnitPlacement)
         {
             text.text = "Ready";
             canvasGroup.alpha = 1;
-            button.interactable = hasAtLeastTwoPlayers && allPiecesAreOnTheField && !playerIsReady;
+            button.interactable = hasAtLeastTwoPlayers && !playerIsReady;
         }
         if (GameHandler.instance.GameStatus.In(GameStatus.GameFase, GameStatus.RoundEnded))
         {

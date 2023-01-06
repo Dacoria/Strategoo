@@ -7,12 +7,25 @@ using System.Collections;
 
 public partial class GameHandler : BaseEventCallback
 {
-    protected override void OnPlayerReadyForGame(PlayerScript playerThatIsReady)
-    {
-        if (!PhotonNetwork.IsMasterClient) { return; }
-        StartCoroutine(TryToStartGame());
+    protected override void OnPlayerReadyForGame(PlayerScript player, HexPieceSetup hexPieceSetup)
+    {        
+        StartCoroutine(UpdatePiecesOnHex(player, hexPieceSetup));
     }
- 
+
+    private IEnumerator UpdatePiecesOnHex(PlayerScript player, HexPieceSetup hexPieceSetup)
+    {
+        yield return Wait4Seconds.Get(0.05f);
+
+        if (!player.HasPiecesOnGrid())
+        {
+            CreateHexPieceSetupForPlayer(player, hexPieceSetup);
+        }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(TryToStartGame());
+        }        
+    }    
 
     private IEnumerator TryToStartGame()
     {
@@ -21,6 +34,14 @@ public partial class GameHandler : BaseEventCallback
         if(allPlayers.All(x => x.ReadyToStartGame))
         {
             ResetGame();
+        }
+    }
+
+    private void CreateHexPieceSetupForPlayer(PlayerScript player, HexPieceSetup hexPieceSetup)
+    {
+        foreach(var hexPiecePlacement in hexPieceSetup.HexPiecePlacements)
+        {
+            PieceManager.instance.CreatePiece(hexPiecePlacement.PieceSetting.PieceType, hexPiecePlacement.PieceSetting.UnitBaseValue, hexPiecePlacement.hexId.GetHex(), player.Index);
         }
     }
 }

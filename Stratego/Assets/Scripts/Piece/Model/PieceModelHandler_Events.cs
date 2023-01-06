@@ -4,7 +4,6 @@ public partial class PieceModelHandler : BaseEventCallback
 {
     protected override void OnNewHexSelected(Vector3Int hexSelected) => UpdateModelViewAndRotation();
     protected override void OnUpdatePlayerIndex(PlayerScript playerToUpdate, int playerIndex) => StartCoroutine(UpdateColors());
-
     protected override void OnDoPieceAbility(Piece pieceDoingAbility, Hex hexTarget, AbilityType abilType)
     {
         if (abilType.In(AbilityType.Movement, AbilityType.ScoutMove))
@@ -31,15 +30,15 @@ public partial class PieceModelHandler : BaseEventCallback
 
         if (piece.IsAlive)
         {
-            UpdateModelViewAndRotation();
+            StartCoroutine(CR_UpdateModelViewAndRotation(0.10f));
         }
     }
 
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
-        if (piece.IsAlive)
+        if(piece.IsAlive && Netw.GameHasAiPlayer())
         {
-            UpdateModelViewAndRotation();
+            StartCoroutine(CR_UpdateModelViewAndRotation(0.05f));
         }
     }
 

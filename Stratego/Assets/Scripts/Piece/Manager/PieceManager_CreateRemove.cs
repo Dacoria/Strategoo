@@ -17,7 +17,7 @@ public partial class PieceManager : BaseEventCallback
             ((Unit)pieceGo).Value = unitBaseValue;
         }
 
-        _goPieces.Add(pieceGo);
+        GoPieces.Add(pieceGo);
     }
 
     public void RemoveAllPieces()
@@ -26,6 +26,27 @@ public partial class PieceManager : BaseEventCallback
         {
             Destroy(piece.gameObject);
         }
-        _goPieces.Clear();
+        GoPieces.Clear();
+    }
+
+    public HexPieceSetup GetHexPieceSetup(PlayerScript playerScript)
+    {
+        var myPieces = GetPieces().Where(x => x.Owner == playerScript).ToList();
+        var result = new HexPieceSetup
+        {
+            HexPiecePlacements = myPieces.Select(x => new HexPiecePlacement
+            {
+                hexId = x.CurrentHexTile.HexCoordinates,
+                PieceSetting = new PieceSetting
+                {
+                    PieceType = x.PieceType,
+                    UnitBaseValue = x.PieceType == PieceType.Unit ?
+                        ((Unit)x).Value :
+                        -1
+                }
+            }).ToList()
+        };
+
+        return result;
     }
 }

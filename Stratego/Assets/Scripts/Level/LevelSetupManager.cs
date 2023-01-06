@@ -41,7 +41,7 @@ public static class LevelSetupManager
         levelSetup.Add(levelSetting.GetTrap());
         levelSetup.Add(levelSetting.GetCastle());
 
-        if(levelSetting.UnitsSettings.Any(x => x.NumberOfPieces != 0))
+        if(levelSetting.PiecesSettings.Any(x => x.NumberOfPieces != 0))
         {
             throw new Exception();
         }
@@ -49,40 +49,40 @@ public static class LevelSetupManager
         return levelSetup;
     }
 
-    private static UnitSetting GetUnit(this LevelSetting levelSettings, int value)
+    private static PieceSetting GetUnit(this LevelSetting levelSettings, int value)
     {
-        var unitSetting = levelSettings.UnitsSettings.First(x => x.UnitSetting.PieceType == PieceType.Unit && x.UnitSetting.UnitBaseValue == value);
+        var unitSetting = levelSettings.PiecesSettings.First(x => x.PieceSetting.PieceType == PieceType.Unit && x.PieceSetting.UnitBaseValue == value);
         unitSetting.NumberOfPieces--;
         if(unitSetting.NumberOfPieces < 0)
         {
             throw new Exception();
         }
 
-        return unitSetting.UnitSetting;
+        return unitSetting.PieceSetting;
     }
 
-    private static UnitSetting GetCastle(this LevelSetting levelSettings)
+    private static PieceSetting GetCastle(this LevelSetting levelSettings)
     {
-        var unitSetting = levelSettings.UnitsSettings.First(x => x.UnitSetting.PieceType == PieceType.Castle);
+        var unitSetting = levelSettings.PiecesSettings.First(x => x.PieceSetting.PieceType == PieceType.Castle);
         unitSetting.NumberOfPieces--;
         if (unitSetting.NumberOfPieces < 0)
         {
             throw new Exception();
         }
 
-        return unitSetting.UnitSetting;
+        return unitSetting.PieceSetting;
     }
 
-    private static UnitSetting GetTrap(this LevelSetting levelSettings)
+    private static PieceSetting GetTrap(this LevelSetting levelSettings)
     {
-        var unitSetting = levelSettings.UnitsSettings.First(x => x.UnitSetting.PieceType == PieceType.Trap);
+        var unitSetting = levelSettings.PiecesSettings.First(x => x.PieceSetting.PieceType == PieceType.Trap);
         unitSetting.NumberOfPieces--;
         if (unitSetting.NumberOfPieces < 0)
         {
             throw new Exception();
         }
 
-        return unitSetting.UnitSetting;
+        return unitSetting.PieceSetting;
     }
 }
 
@@ -91,7 +91,7 @@ public class LevelSetup
     public List<UnitPlacementSetting> UnitPlacementSetting = new List<UnitPlacementSetting>();
     private int indexCounter;
 
-    public void Add(UnitSetting unitSetting)
+    public void Add(PieceSetting unitSetting)
     {
         var unitPlacement = new UnitPlacementSetting
         {
@@ -106,5 +106,5 @@ public class LevelSetup
 public class UnitPlacementSetting
 {
     public int HexCounter;
-    public UnitSetting UnitSetting;
+    public PieceSetting UnitSetting;
 }

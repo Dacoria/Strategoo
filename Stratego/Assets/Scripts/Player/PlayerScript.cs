@@ -7,14 +7,13 @@ public class PlayerScript : BaseEventCallback, IPunInstantiateMagicCallback
     public bool IsAi;
     public string PlayerName;
 
-    public GameObject GameObject => gameObject;
-    public int Id { get; private set; }
+    public int Id { get; private set; }  
 
+    [ComponentInject] private PhotonView photonView;
     [ComponentInject] private PlayerIndex playerIndex;
-    [ComponentInject] private PlayerColor playerColor;
-
-    public Color Color => playerColor.Color;
+        
     public int Index => playerIndex.Index;
+    public bool IsPunOwner => photonView.Owner.IsLocal;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
@@ -32,26 +31,44 @@ public class PlayerScript : BaseEventCallback, IPunInstantiateMagicCallback
         {
             Id = info.photonView.OwnerActorNr;
         }
-        if (PhotonNetwork.IsMasterClient && !IsAi)
+
+        if (IsPunOwner)
         {
-            playerIndex.Index = 1;
+            if (PhotonNetwork.IsMasterClient && !IsAi)
+            {
+                playerIndex.Index = 1;
+            }
+            else
+            {
+                playerIndex.Index = 2;
+            }
         }
         else
         {
-            playerIndex.Index = 2;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                playerIndex.Index = 2;
+            }
+            else
+            {
+                playerIndex.Index = 1;
+            }
         }
-
-        //if(IsAi && PhotonNetwork.IsMasterClient)
-        //{
-        //    // TODO AI TOEVOEGEN
-        //}
 
         NetworkHelper.instance.RefreshPlayerGos();
         PlayerName = name;
+
+        if(GameHandler.instance.GameStatus != GameStatus.NotStarted)
+        {
+            if (IsPunOwner)
+            {
+                PieceManager.instance.CreateNewLevelSetup(Index, true);
+            }
+        }
     }
 
     public bool ReadyToStartGame;
-    protected override void OnPlayerReadyForGame(PlayerScript playerThatIsReady)
+    protected override void OnPlayerReadyForGame(PlayerScript playerThatIsReady, HexPieceSetup hexPieceSetup)
     {
         if(playerThatIsReady == this)
         {

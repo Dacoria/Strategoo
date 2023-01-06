@@ -7,12 +7,15 @@ public partial class PieceManager : BaseEventCallback
 {
     public void CreateNewLevelSetup(bool randomizePieces)
     {
-        PieceManager.instance.RemoveAllPieces();
+        RemoveAllPieces();
 
         var allPlayers = NetworkHelper.instance.GetAllPlayers();
         foreach (var player in allPlayers)
         {
-            CreateNewLevelSetup(player.Index, randomizePieces);
+            if(player.IsPunOwner)
+            {
+                CreateNewLevelSetup(player.Index, randomizePieces);
+            }            
         }
     }
 
@@ -52,14 +55,17 @@ public partial class PieceManager : BaseEventCallback
             level1Setup.UnitPlacementSetting.Shuffle();
         }
 
+        NewPieceTileSetupForPlayer(playerIndex.GetPlayerByIndex(), level1Setup, playerStartTilesOrdered);
+    }
 
-        for (int i = 0; i < level1Setup.UnitPlacementSetting.Count; i++)
+    private void NewPieceTileSetupForPlayer(PlayerScript player, LevelSetup levelSetup, List<Hex> hexes)
+    {
+        for (int i = 0; i < levelSetup.UnitPlacementSetting.Count; i++)
         {
-            var newUnitSetting = level1Setup.UnitPlacementSetting[i].UnitSetting;
-            var relatedHex = playerStartTilesOrdered[i];
+            var newUnitSetting = levelSetup.UnitPlacementSetting[i].UnitSetting;
+            var relatedHex = hexes[i];
 
-            var player = playerIndex.GetPlayerByIndex();
-            PieceManager.instance.CreatePiece(newUnitSetting.PieceType, newUnitSetting.UnitBaseValue, relatedHex, player.Id);
+            CreatePiece(newUnitSetting.PieceType, newUnitSetting.UnitBaseValue, relatedHex, player.Id);
         }
     }
 }

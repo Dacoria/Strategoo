@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class NAE
+public static class NAE_NoCalling
 {
     // network
     public static Action<Piece, Hex, AbilityType> DoPieceAbility;
@@ -11,7 +11,5 @@ public static class NAE
     public static Action<PlayerScript> EndTurn;
     public static Action<PlayerScript> EndRound;
     public static Action<PlayerScript, int> UpdatePlayerIndex;
-    public static Action<Piece, Piece> SwapPieces;
-    public static Action<GameStatus> NewGameStatus;
-    public static Action<PlayerScript> PlayerReadyForGame;
+    public static Action<PlayerScript, HexPieceSetup> PlayerReadyForGame;
 }

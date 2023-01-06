@@ -21,6 +21,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     private IEnumerator Start()
     {
         yield return Wait4Seconds.Get(0.1f);
+        DontDestroyOnLoad(gameObject);
         levelName = null;
         NameInputField.text = NameGen.Get();
 
@@ -33,9 +34,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         {
             NameInputField.text = NameGen.Get();
             StartGameOffline();
-        }
-
-        
+        }        
     }
 
     private string levelName;
@@ -84,52 +83,30 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         HasStartedGame = true;
         ConnectMethod = connectMethod;
-        //Textt.GameLocal("StartGame");
-        PhotonNetwork.ConnectUsingSettings(PhotonNetwork.PhotonServerSettings.AppSettings, startInOfflineMode: connectMethod == ConnectMethod.Offline);
-    }
-
+        PhotonNetwork.ConnectUsingSettings();
+    }   
 
     public override void OnConnectedToMaster()
     {
-        //Textt.GameLocal("OnConnectedToMaster");
-        Debug.Log("OnConnectedToMaster");
-        if (ConnectMethod == ConnectMethod.Offline)
-        {
-            PhotonNetwork.JoinRandomRoom();
-            LevelLoader.instance.LoadScene(Settings.DefaultLevelName);
-        }
-        else
-        {
-            PhotonNetwork.JoinLobby();
-        }
+        PhotonNetwork.JoinLobby();       
+
     }
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("OnJoinedLobby");
+        PhotonNetwork.JoinRandomRoom();
+    }
 
-        if (ConnectMethod == ConnectMethod.Online_Fast)
-        {
-            //PhotonNetwork.JoinRandomOrCreateRoom();
-            var roomOptions = new RoomOptions { };
-            //var punRoomName = string.IsNullOrEmpty(levelName) ? "Randommmm" : levelName;
-            var punRoomName = "new";
-            PhotonNetwork.JoinOrCreateRoom(punRoomName, roomOptions, TypedLobby.Default);
-        }        
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        PhotonNetwork.CreateRoom("NewRoom");
     }
 
     public override void OnJoinedRoom()
     {
-        //Textt.GameLocal("OnJoinedRoom");
-        //Debug.Log("OnJoinedRoom");
-        if (ConnectMethod == ConnectMethod.Online_Fast)
-        {
-            PhotonNetwork.NickName = NameInputField.text;
-        }
-
+        PhotonNetwork.NickName = NameInputField.text;
         var sceneName = GetSceneName();
         PhotonNetwork.LoadLevel(sceneName);
-        Debug.Log("OnJoinedRoom");
     }
 
     private string GetSceneName()

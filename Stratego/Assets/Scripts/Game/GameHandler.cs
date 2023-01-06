@@ -17,6 +17,6 @@ public partial class GameHandler : BaseEventCallback
     private void Start()
     {
         HexGrid = GameObject.FindObjectOfType<HexGrid>();
-        SetCurrentPlayer(NetworkHelper.instance.GetMyPlayer());
+        SetCurrentPlayer(Netw.MyPlayer());
     }
 }

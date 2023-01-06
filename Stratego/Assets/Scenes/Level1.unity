@@ -7364,6 +7364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AlsoHideForPunMaster: 0
+  OnlyShowWhenGridLoaded: 0
 --- !u!114 &615053397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8538,7 +8539,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ceb1b40e398b404e948b0f54a1c6375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GamestatusToDestroy: 2
 --- !u!4 &703993456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8594558758828914871, guid: eda0d380e5ea7d54287af7b0ab280b7f,
@@ -9429,9 +9429,9 @@ RectTransform:
   m_Father: {fileID: 5802622712205073551}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -324.98138, y: 171.22984}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 75.018616, y: -78}
   m_SizeDelta: {x: 131.70398, y: 20.299469}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &751774183
@@ -18449,6 +18449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FogPrefab: {fileID: 2050267263486411377, guid: 5a7eed1ed1701c349ba91009c2eb1957,
     type: 3}
+  GridIsLoaded: 0
 --- !u!114 &1503049465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21344,7 +21345,6 @@ GameObject:
   - component: {fileID: 1845603982}
   - component: {fileID: 1845603981}
   - component: {fileID: 1845603980}
-  - component: {fileID: 1845603979}
   - component: {fileID: 1845603978}
   - component: {fileID: 1845603977}
   m_Layer: 5
@@ -21395,19 +21395,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1845603975}
   m_CullTransparentMesh: 1
---- !u!114 &1845603979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1845603975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f8d90eb7dc6f134a957514c2d64fb9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AlsoHideForPunMaster: 0
 --- !u!114 &1845603980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23601,7 +23588,6 @@ GameObject:
   - component: {fileID: 2069857373}
   - component: {fileID: 2069857372}
   - component: {fileID: 2069857371}
-  - component: {fileID: 2069857370}
   - component: {fileID: 2069857369}
   m_Layer: 5
   m_Name: ResetButton
@@ -23643,19 +23629,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &2069857370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069857367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f8d90eb7dc6f134a957514c2d64fb9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AlsoHideForPunMaster: 0
 --- !u!114 &2069857371
 MonoBehaviour:
   m_ObjectHideFlags: 0

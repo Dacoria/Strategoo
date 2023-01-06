@@ -13,9 +13,10 @@ public partial class PieceModelHandler : BaseEventCallback
             return;
         }
 
-        var currentPlayer = GameHandler.instance.GetCurrentPlayer();
+        var currentPlayer = Netw.CurrPlayer();
+        var hasAi = Netw.GameHasAiPlayer();
 
-        if(Settings.PieceModelAlwaysShown)
+        if (Settings.PieceModelAlwaysShown)
         {
             MakePieceModelKnownIfAlive();
             return;
@@ -25,13 +26,24 @@ public partial class PieceModelHandler : BaseEventCallback
             MakePieceModelUnknown();
             return;
         }
-        if(piece.Owner == currentPlayer)
+        
+        if(hasAi)
         {
-            MakePieceModelKnownIfAlive();
+            if(currentPlayer == piece.Owner)
+            {
+                MakePieceModelKnownIfAlive();
+                return;
+            }
+            else
+            {
+                MakePieceModelUnknown();
+                return;
+            }
         }
         else
         {
-            MakePieceModelUnknown();
+            MakePieceModelKnownIfAlive();
+            return;
         }
     }
 
@@ -70,6 +82,12 @@ public partial class PieceModelHandler : BaseEventCallback
     {
         modelGo.SetActive(false);
         unknownPieceGo?.SetActive(false);
+    }
+
+    private IEnumerator CR_UpdateModelViewAndRotation(float waitTimeInSeconds)
+    {
+        yield return Wait4Seconds.Get(waitTimeInSeconds);
+        UpdateModelViewAndRotation();
     }
 
     private void UpdateModelViewAndRotation()

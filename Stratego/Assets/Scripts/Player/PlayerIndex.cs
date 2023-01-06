@@ -11,7 +11,7 @@ public class PlayerIndex : BaseEventCallback
     {
         if(player.Id == playerToUpdate.Id)
         {
-            Index = playerIndex;
+            //Index = playerIndex;
         }
     }
 }

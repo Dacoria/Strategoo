@@ -28,7 +28,7 @@ public class UiHoverOverHex : BaseEventCallbackSlowUpdate
         {
             return;
         }
-        if (!GameHandler.instance.GetCurrentPlayer().IsOnMyNetwork())
+        if (!Netw.CurrPlayer().IsOnMyNetwork())
         {
             return;
         }

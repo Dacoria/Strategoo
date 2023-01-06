@@ -35,7 +35,7 @@ public partial class GameHandler : BaseEventCallback
 
     protected override void OnNewRoundStarted(List<PlayerScript> players, PlayerScript currPlayer)
     {
-        NAE.NewGameStatus?.Invoke(GameStatus.GameFase);
+        GameStatus = GameStatus.GameFase;
 
         // refresh om te checken
         AllPlayers = NetworkHelper.instance.GetAllPlayers().Take(MAX_PLAYERS).ToList();

@@ -21,7 +21,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         }
         if (myNetwork.HasValue)
         {
-            result = result.Where(player => player?.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer?.ActorNumber).ToList();
+            result = result.Where(player => player != null && player.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer?.ActorNumber).ToList();
         }
 
         return result;
@@ -45,19 +45,10 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
     public void RefreshPlayerGos()
     {
         this.allPlayers = GameObject.FindGameObjectsWithTag(Statics.TAG_PLAYER).Select(x => x.GetComponent<PlayerScript>()).ToList();
-        SyncPlayerIndex();
-    }
-
-    public override void OnCreatedRoom()
-    {
-        base.OnCreatedRoom();
-        Debug.Log("OnCreatedRoom");
-
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Debug.Log("OnPlayerLeftRoom");
         base.OnPlayerLeftRoom(otherPlayer);
         
         if(GameHandler.instance.GameStatus.In(GameStatus.UnitPlacement, GameStatus.GameFase))
@@ -89,38 +80,10 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("OnPlayerEnteredRoom");
-        base.OnPlayerEnteredRoom(newPlayer);
         PlayerList = PhotonNetwork.PlayerList;
         RefreshPlayerGos();        
     }
-
-    private void SyncPlayerIndex()
-    {
-        if(!PhotonNetwork.IsMasterClient) { return; }
-        if(allPlayers.Count == 0) { return; }
-
-        var masterclientPlayer = GetMyPlayer();
-        NAE.UpdatePlayerIndex(masterclientPlayer, 1); // MC == 1 --> NIET SWITCHEN!
-
-        var allPlayersWithIndexes = allPlayers.Where(x => x.Index > 1).ToList();
-        for (int i = 0; i < allPlayersWithIndexes.Count; i++)
-        {
-            var playerWithIndex = allPlayersWithIndexes[i];
-            NAE.UpdatePlayerIndex(playerWithIndex, i + 2);
-        }
-
-        var allPlayersWithoutIndexes = allPlayers.Where(x => x.Index == 0).ToList();
-        var highestIndex = allPlayersWithIndexes.Any() ? allPlayersWithIndexes.Max(x => x.Index) : 1;
-
-        for (int i = 0; i < allPlayersWithoutIndexes.Count; i++)
-        {
-            var playerWithoutIndex = allPlayersWithoutIndexes[i];
-            highestIndex = highestIndex + 1;
-            NAE.UpdatePlayerIndex(playerWithoutIndex, highestIndex);
-        }        
-    }
-
+    
     public List<PlayerScript> GetMyPlayers(bool? isAi = null) => GetAllPlayers(isAi:isAi, myNetwork: true);
 
     public PlayerScript GetMyPlayer() => GetMyPlayers(isAi: false).FirstOrDefault();    

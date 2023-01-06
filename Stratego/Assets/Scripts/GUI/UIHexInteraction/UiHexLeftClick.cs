@@ -20,7 +20,7 @@ public class UiHexLeftClick : MonoBehaviour
         {
             return;
         }
-        if (!GameHandler.instance.GetCurrentPlayer().IsOnMyNetwork())
+        if (!Netw.CurrPlayer().IsOnMyNetwork())
         {
             return;
         }

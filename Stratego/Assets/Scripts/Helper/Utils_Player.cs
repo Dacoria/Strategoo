@@ -24,14 +24,14 @@ public static partial class Utils
             return new Vector3(0, 0, -1);
         }
 
-        var currentPlayer = GameHandler.instance.GetCurrentPlayer();
+        var currentPlayer = Netw.CurrPlayer();
         if(currentPlayer.IsOnMyNetwork())
         {
             return GetRotationDir(currentPlayer.Index);
         }
         else
         {
-            var myPlayer = NetworkHelper.instance.GetMyPlayer();
+            var myPlayer = Netw.MyPlayer();
             return GetRotationDir(myPlayer.Index);
         }
     }

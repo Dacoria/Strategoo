@@ -11,5 +11,6 @@ public partial class PieceManager : BaseEventCallback
     {
         base.Awake();
         instance = this;
+        GoPieces = GameObject.FindObjectsOfType<Piece>().ToList();
     }
 }

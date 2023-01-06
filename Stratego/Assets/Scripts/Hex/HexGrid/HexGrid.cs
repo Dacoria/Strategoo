@@ -12,6 +12,7 @@ public class HexGrid : BaseEventCallback
     public FogOnHex FogPrefab;
 
     private HexNeighbours hexNeighbours = new HexNeighbours();
+    public bool GridIsLoaded;
 
     private new void Awake()
     {
@@ -110,7 +111,9 @@ public class HexGrid : BaseEventCallback
     {
         var allHexes = GetAllHexes();
         var hexRightUpper = GetHexRightUpperCorner();
-        
+
+        //Debug.Log("GetPlayerStartTiles " + playerIndex);
+
         List<Hex> result;
         if (playerIndex == 1)
         {

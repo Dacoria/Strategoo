@@ -13,4 +13,6 @@ public static class AE
     public static Action<Vector3Int, AbilityType, List<Vector3Int>> PieceAbilitySelected;
     public static Action<Vector3Int, List<Vector3Int>> PieceSwapSelected;
     public static Action PieceModelAlwaysShown;
+    public static Action<Piece, Piece> SwapPieces;
+
 }

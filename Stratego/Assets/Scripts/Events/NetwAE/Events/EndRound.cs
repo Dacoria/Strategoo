@@ -11,6 +11,6 @@ public partial class NetworkAE : MonoBehaviour
     [PunRPC]
     public void RPC_AE_EndRound(int playerId)
     {
-        NAE.EndRound?.Invoke(playerId.GetPlayerById());
+        NAE_NoCalling.EndRound?.Invoke(playerId.GetPlayerById());
     }
 }

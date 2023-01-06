@@ -48,7 +48,7 @@ public class PlayerStatusTextDisplayScript : BaseEventCallbackSlowUpdate
         }
         if (GameHandler.instance.GameStatus.In(GameStatus.GameFase))
         {
-            var currentPlayer = GameHandler.instance.GetCurrentPlayer();
+            var currentPlayer = Netw.CurrPlayer();
             if(currentPlayer == player)
             {
                 return "YOUR MOVE";

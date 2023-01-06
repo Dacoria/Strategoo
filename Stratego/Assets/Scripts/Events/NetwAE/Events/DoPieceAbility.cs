@@ -11,6 +11,6 @@ public partial class NetworkAE : MonoBehaviour
     [PunRPC]
     public void RPC_AE_DoPieceAbility(Vector3 hexIdPiece, Vector3 hexIdTarget, int abilityType)
     {
-        NAE.DoPieceAbility?.Invoke(hexIdPiece.ToV3Int().GetHex().GetPiece(), hexIdTarget.ToV3Int().GetHex(), (AbilityType)(abilityType));
+        NAE_NoCalling.DoPieceAbility?.Invoke(hexIdPiece.ToV3Int().GetHex().GetPiece(), hexIdTarget.ToV3Int().GetHex(), (AbilityType)(abilityType));
     }
 }

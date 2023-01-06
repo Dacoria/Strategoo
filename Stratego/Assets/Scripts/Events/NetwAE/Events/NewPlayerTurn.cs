@@ -12,6 +12,6 @@ public partial class NetworkAE : MonoBehaviour
     [PunRPC]
     public void RPC_AE_NewPlayerTurn(int playerId)
     {
-        NAE.NewPlayerTurn?.Invoke(playerId.GetPlayerById());
+        NAE_NoCalling.NewPlayerTurn?.Invoke(playerId.GetPlayerById());
     }
 }

@@ -1,13 +1,31 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class HideGoOnPunClient : MonoBehaviour
+public class HideGoOnPunClient : BaseEventCallback
 {
+    [ComponentInject] private CanvasGroup canvasGroup;
+
     public bool AlsoHideForPunMaster;
+    public bool OnlyShowWhenGridLoaded;
+
+    private bool gridIsLoaded;
+
+    private void Start()
+    {
+        canvasGroup.alpha = 0;
+    }
+
+    protected override void OnGridLoaded()
+    {
+        gridIsLoaded = true;
+    }
 
     void Update()
     {
-        var canvasGroup = GetComponent<CanvasGroup>();
+        if(OnlyShowWhenGridLoaded && !gridIsLoaded)
+        {
+            return;
+        }
 
         if (AlsoHideForPunMaster)
         {

@@ -20,7 +20,7 @@ public class ShowHideAIModelsButtonScript : BaseEventCallbackSlowUpdate
             {
                 canvasGroup.alpha = 1;
             }
-        }        
+        }
     }
 
     public void OnClick()

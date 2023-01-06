@@ -48,11 +48,11 @@ public class UiHexPieceSelection : BaseEventCallback
             var pieceOnHex = PieceSelected.HexId.GetPiece();
             if(PieceSelected.ActionSelectionState == HexPieceSelectionState.PieceAbilitySelected)
             {
-                NAE.DoPieceAbility?.Invoke(pieceOnHex, hex, PieceSelected.Ability);
+                NetworkAE.instance.DoPieceAbility(pieceOnHex, hex, PieceSelected.Ability);
             }
             else if (PieceSelected.ActionSelectionState == HexPieceSelectionState.SwapPieceSelected)
             {
-                NAE.SwapPieces?.Invoke(pieceOnHex, hex.GetPiece());
+                AE.SwapPieces?.Invoke(pieceOnHex, hex.GetPiece());
             }
 
             ClearHexSelection();
@@ -65,7 +65,7 @@ public class UiHexPieceSelection : BaseEventCallback
 
     public void TrySelectNewHex(Hex hexSelected)
     {
-        var currentPlayer = GameHandler.instance.GetCurrentPlayer();
+        var currentPlayer = Netw.CurrPlayer();
         if (!currentPlayer.IsOnMyNetwork())
         {
             return;

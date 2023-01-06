@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using UnityEngine;
 
 public partial class NetworkAE : MonoBehaviour
@@ -11,6 +12,6 @@ public partial class NetworkAE : MonoBehaviour
     [PunRPC]
     public void RPC_AE_UpdatePlayerIndex(int playerId, int index)
     {
-        NAE.UpdatePlayerIndex?.Invoke(playerId.GetPlayerById(), index);
+        NAE_NoCalling.UpdatePlayerIndex?.Invoke(playerId.GetPlayerById(), index);
     }
 }

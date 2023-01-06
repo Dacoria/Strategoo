@@ -25,8 +25,17 @@ public class PieceMovementAction : BaseEventCallback
 
     public void RotateTowardsDestination(Vector3 endPosition, float rotationSpeed = 1, Action callbackOnFinished = null)
     {
-        var lerpRotation = piece.GetModel().GetAdd<LerpRotation>(); // rotatie op model (voor unit value weergave)
-        lerpRotation.RotateTowardsDestination(endPosition, rotationSpeed: rotationSpeed, callbackOnFinished: callbackOnFinished);
+        var model = piece.GetModel();
+
+        if (model != null)
+        {
+            var lerpRotation = piece.GetModel().GetAdd<LerpRotation>(); // rotatie op model (voor unit value weergave)
+            lerpRotation.RotateTowardsDestination(endPosition, rotationSpeed: rotationSpeed, callbackOnFinished: callbackOnFinished);
+        }
+        else
+        {
+            callbackOnFinished();
+        }
     }
 
     private void MoveToDestination(Vector3 endPosition, float duration, Action callbackOnFinished = null)

@@ -10,12 +10,9 @@ public class GameTextManager : BaseEventCallback
         Textt.GameLocal(currentPlayer.PlayerName + " turn!");
     }
 
-    protected override void OnNewGameStatus(GameStatus newGameStatus)
+    protected override void OnGridLoaded()
     {
-        if (newGameStatus == GameStatus.UnitPlacement)
-        {
-            Textt.GameLocal("Choose your setup - you can swap units");
-        }
+        Textt.GameLocal("Choose your setup - you can swap units");
     }
 
     protected override void OnNewPlayerTurn(PlayerScript player)

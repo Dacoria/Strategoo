@@ -9,14 +9,17 @@ public partial class GameHandler : BaseEventCallback
 
     public void EndTurn()
     {
-        NAE.EndTurn(_currentPlayer);
+        if(_currentPlayer.IsOnMyNetwork())
+        {
+            NetworkAE.instance.EndTurn(_currentPlayer);
+        }
     }
 
     protected override void OnEndTurn(PlayerScript player)
     {
         if(!PhotonNetwork.IsMasterClient) { return; }
         var nextPlayer = GetNextPlayer();
-        NAE.NewPlayerTurn(nextPlayer);
+        NetworkAE.instance.NewPlayerTurn(nextPlayer);
     }
 
     private PlayerScript GetNextPlayer()
