@@ -1,25 +1,20 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class OptionsForPieceDisplayHandler : BaseEventCallback
 {
+    [ComponentInject] private CanvasGroup canvasGroup;
+
     private List<AbilityDisplayScript> ActiveAbilityButtons = new List<AbilityDisplayScript>();
     private SwapDisplayScript ActiveSwapButton;
-    //private AbilityDisplayScript AbilityButtonPrefab;
     private GameObject OptionsContainer;
-
-    [ComponentInject] private CanvasGroup canvasGroup;
 
     public AbilityDisplayScript AbilityButtonPrefab;
     public SwapDisplayScript SwapButtonPrefab;
 
     private void Start()
     {
-        //var abilityButtonPrefabGo = Rsc.GoGuiMap.GetEnumerator("AbilityButtonPrefab");
-        //AbilityButtonPrefab = abilityButtonPrefabGo.GetComponent<AbilityDisplayScript>();
-
         OptionsContainer = transform.GetChild(0).gameObject;
     }
 
@@ -82,6 +77,11 @@ public class OptionsForPieceDisplayHandler : BaseEventCallback
             abilityButton.SetAbility(ability, hex.HexCoordinates);
             ActiveAbilityButtons.Add(abilityButton);
         }
+    }
+
+    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)
+    {
+        RemoveAllActiveOptions();
     }
 
     private void RemoveAllActiveOptions()
