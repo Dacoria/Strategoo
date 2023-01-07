@@ -12,7 +12,7 @@ public class LoadingDisplayShowerScript : BaseEventCallbackSlowUpdate
         transform.GetChild(0).gameObject.SetActive(Settings.UserInterfaceIsLocked);
     }
 
-    protected override void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType)
+    protected override void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType, Hex hex2)
     {
         Settings.UserInterfaceIsLocked = true;
     }

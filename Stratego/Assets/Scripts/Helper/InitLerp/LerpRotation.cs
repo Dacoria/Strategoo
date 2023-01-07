@@ -9,7 +9,14 @@ public class LerpRotation: BaseEventCallback
     public void RotateTowardsDestination(Vector3 endPosition, float delayedStart = 0, float rotationSpeed = 1, bool onlyRotateOnYAs = true, Action callbackOnFinished = null, bool destroyGoOnFinished = false)
     {
         StopAllCoroutines();
-        StartCoroutine(RotateTowardsDestinationLerp(endPosition, delayedStart, rotationSpeed, onlyRotateOnYAs, callbackOnFinished, destroyGoOnFinished));
+        if (this.isActiveAndEnabled && gameObject.activeInHierarchy)
+        {
+            StartCoroutine(RotateTowardsDestinationLerp(endPosition, delayedStart, rotationSpeed, onlyRotateOnYAs, callbackOnFinished, destroyGoOnFinished));
+        }
+        else
+        {
+            callbackOnFinished?.Invoke();
+        }
     }
 
     private IEnumerator RotateTowardsDestinationLerp(Vector3 endPosition, float delayedStart, float rotationSpeed, bool onlyRotateOnYAs, Action callbackOnFinished, bool destroyGoOnFinished)
@@ -49,7 +56,14 @@ public class LerpRotation: BaseEventCallback
     public void RotateTowardsAngle(Quaternion endRotation, float duration, Quaternion? startRotation = null, float delayedStart = 0, Action callbackOnFinished = null, bool destroyGoOnFinished = false)
     {
         StopAllCoroutines();
-        StartCoroutine(RotateTowardsAngleLerp(endRotation, duration, startRotation, delayedStart, callbackOnFinished, destroyGoOnFinished));
+        if (this.isActiveAndEnabled && gameObject.activeInHierarchy)
+        {
+            StartCoroutine(RotateTowardsAngleLerp(endRotation, duration, startRotation, delayedStart, callbackOnFinished, destroyGoOnFinished));
+        }
+        else
+        {
+            callbackOnFinished?.Invoke();
+        }
     }
 
     private IEnumerator RotateTowardsAngleLerp(Quaternion endRotation, float duration, Quaternion? startRotation, float delayedStart, Action callbackOnFinished, bool destroyGoOnFinished)
@@ -73,5 +87,9 @@ public class LerpRotation: BaseEventCallback
         callbackOnFinished?.Invoke();
         if (destroyGoOnFinished) { Destroy(gameObject); }
     }
-}
 
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+}

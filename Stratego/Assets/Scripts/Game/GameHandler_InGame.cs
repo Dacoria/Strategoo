@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using System.Linq;
 
 public partial class GameHandler : BaseEventCallback
@@ -9,10 +10,16 @@ public partial class GameHandler : BaseEventCallback
 
     public void EndTurn()
     {
-        if(_currentPlayer.IsOnMyNetwork())
+        if(PhotonNetwork.IsMasterClient)
         {
-            NetworkAE.instance.EndTurn(_currentPlayer);
+            StartCoroutine(CR_EndTurn(0.5f));
         }
+    }
+
+    private IEnumerator CR_EndTurn(float waitInSeconds)
+    {
+        yield return Wait4Seconds.Get(waitInSeconds);
+        NetworkAE.instance.EndTurn(_currentPlayer);
     }
 
     protected override void OnEndTurn(PlayerScript player)

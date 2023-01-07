@@ -4,7 +4,8 @@ using System.Linq;
 
 public class UiHexPieceSelection : BaseEventCallback
 {
-    public PieceSelected PieceSelected;     
+    public PieceSelected PieceSelected;
+    public PieceSelected FirstPieceSelected;
 
     protected override void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexOptions)
     {
@@ -28,6 +29,15 @@ public class UiHexPieceSelection : BaseEventCallback
         {
             return; // 1 click per 100 ms registeren
         }
+        if(Settings.DebugDestroyPiece)
+        {
+            if(hex.HasPiece())
+            {
+                var piece = hex.GetPiece();
+                PieceManager.instance.RemovePiece(piece);
+            }
+            return; // DEBUG
+        }
 
         if(PieceSelected == null || PieceSelected.ActionSelectionState.In(HexPieceSelectionState.HexSelected))
         {
@@ -36,31 +46,86 @@ public class UiHexPieceSelection : BaseEventCallback
 
         else if (PieceSelected.ActionSelectionState.In(HexPieceSelectionState.PieceAbilitySelected, HexPieceSelectionState.SwapPieceSelected))
         {
-            TryConfirmAbilityTile(hex);
+            TryConfirmOptionTile(hex);
         }
     }
 
-    private void TryConfirmAbilityTile(Hex hex)
+    private void TryConfirmOptionTile(Hex hexConfirmed)
     {
-        var hexIsConfirmable = PieceSelected.HexIdOptions?.Any(x => x == hex.HexCoordinates);
+        var hexIsConfirmable = PieceSelected.HexIdOptions?.Any(x => x == hexConfirmed.HexCoordinates);
         if (hexIsConfirmable == true)
         {
-            var pieceOnHex = PieceSelected.HexId.GetPiece();
             if(PieceSelected.ActionSelectionState == HexPieceSelectionState.PieceAbilitySelected)
             {
-                NetworkAE.instance.DoPieceAbility(pieceOnHex, hex, PieceSelected.Ability);
+                ConfirmAbility(PieceSelected.Ability, hexConfirmed);
             }
             else if (PieceSelected.ActionSelectionState == HexPieceSelectionState.SwapPieceSelected)
             {
-                AE.SwapPieces?.Invoke(pieceOnHex, hex.GetPiece());
+                ConfirmSwap(hexConfirmed);
             }
-
-            ClearHexSelection();
         }
         else
         {
             ClearHexSelection();
         }
+    }
+
+    private void ConfirmSwap(Hex hexConfirmed)
+    {
+        var pieceOnHex = PieceSelected.HexId.GetPiece();
+        AE.SwapPieces?.Invoke(pieceOnHex, hexConfirmed.GetPiece());
+        ClearHexSelection();
+    }
+
+    private void ConfirmAbility(AbilityType ability, Hex hexConfirmed)
+    {
+        var abilityProperties = ability.GetProperties();
+
+        if(abilityProperties.HasFollowUpTileSelection)
+        {
+            if (IsFollowUpPieceSelected())
+            {
+                var firstHexConfirmed = PieceSelected.HexId.GetHex();
+                var pieceDoingAbility = FirstPieceSelected.HexId.GetPiece();
+                NetworkAE.instance.DoPieceAbility(pieceDoingAbility, firstHexConfirmed, PieceSelected.Ability, hexConfirmed);
+            }
+            else
+            {                
+                StartFollowUpPieceSelection(hexConfirmed);
+                return;
+            }
+        }
+        else
+        {
+            var pieceOnHex = PieceSelected.HexId.GetPiece();
+            NetworkAE.instance.DoPieceAbility(pieceOnHex, hexConfirmed, PieceSelected.Ability, hexTarget2: null);
+        }
+
+        ClearHexSelection();
+    }    
+
+    private bool IsFollowUpPieceSelected()
+    {
+        return FirstPieceSelected != null;
+    }
+
+    private void StartFollowUpPieceSelection(Hex hexConfirmed)
+    {
+        var originalHexId = PieceSelected.HexId;
+        var abilitySelected = PieceSelected.Ability;
+
+        FirstPieceSelected = new PieceSelected(originalHexId);
+        FirstPieceSelected.SetAbilitySelected(abilitySelected, PieceSelected.HexIdOptions);
+
+        PieceSelected = new PieceSelected(hexConfirmed.HexCoordinates);
+
+        var hexesToSelect = hexConfirmed.HexCoordinates.GetHexOptions(abilitySelected.GetProperties().HexAbilityOptionType2.Value);
+        var hexPieceOwner = originalHexId.GetPiece().Owner;
+
+        var hexesResult = hexesToSelect.Where(x => x.HasPiece() && x.GetPiece().Owner != hexPieceOwner).ToList();
+        hexesResult.Add(hexConfirmed.HexCoordinates);
+
+        AE.PieceAbilitySelected?.Invoke(hexConfirmed.HexCoordinates, abilitySelected, hexesResult);
     }
 
     public void TrySelectNewHex(Hex hexSelected)
@@ -96,6 +161,7 @@ public class UiHexPieceSelection : BaseEventCallback
     public void ClearHexSelection()
     {
         PieceSelected = null;
+        FirstPieceSelected = null;
         AE.HexDeselected?.Invoke();
     }
 }

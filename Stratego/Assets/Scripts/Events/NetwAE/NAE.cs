@@ -5,7 +5,7 @@ using UnityEngine;
 public static class NAE_NoCalling
 {
     // network
-    public static Action<Piece, Hex, AbilityType> DoPieceAbility;
+    public static Action<Piece, Hex, AbilityType, Hex> DoPieceAbility;
     public static Action<List<PlayerScript>, PlayerScript> NewRoundStarted;
     public static Action<PlayerScript> NewPlayerTurn;
     public static Action<PlayerScript> EndTurn;

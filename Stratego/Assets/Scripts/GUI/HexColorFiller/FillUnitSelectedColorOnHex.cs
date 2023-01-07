@@ -18,6 +18,9 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
             case ColorHexSelectionType.Selected:
                 hex.EnableHighlight(HighlightActionType.SelectTile.GetColor());
                 break;
+            case ColorHexSelectionType.SelfConfirmOption:
+                hex.EnableHighlight(HighlightActionType.SelfSelectOption.GetColor());
+                break;
             case ColorHexSelectionType.ConfirmOption:                
                 if(hexHasPiece)
                 {
@@ -54,30 +57,46 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
 
     protected override void OnPieceAbilitySelected(Vector3Int hexIdSelected, AbilityType abilityType, List<Vector3Int> hexIdOptions)
     {
-        if (hex.HexCoordinates == hexIdSelected)
+        if (abilityType == AbilityType.ScoutMove &&  hex.HexCoordinates == hexIdSelected && hexIdOptions.Any(x => x == hex.HexCoordinates))
+        {
+            UpdateColor(ColorHexSelectionType.SelfConfirmOption);
+        }
+        else if (hex.HexCoordinates == hexIdSelected)
         {
             UpdateColor(ColorHexSelectionType.Selected);
         }
-        if (hexIdOptions.Any(x => x == hex.HexCoordinates))
+        else if (hexIdOptions.Any(x => x == hex.HexCoordinates))
         {
             UpdateColor(ColorHexSelectionType.ConfirmOption);
+        }
+        else
+        {
+            UpdateColor(ColorHexSelectionType.None);
         }
     }
 
     protected override void OnPieceSwapSelected(Vector3Int hexIdSelected, List<Vector3Int> hexIdOptions)
     {
-        if (hex.HexCoordinates == hexIdSelected)
+        if (hex.HexCoordinates == hexIdSelected && hexIdOptions.Any(x => x == hex.HexCoordinates))
+        {
+            UpdateColor(ColorHexSelectionType.SelfConfirmOption);
+        }
+        else if (hex.HexCoordinates == hexIdSelected)
         {
             UpdateColor(ColorHexSelectionType.Selected);
         }
-        if (hexIdOptions.Any(x => x == hex.HexCoordinates))
+        else if (hexIdOptions.Any(x => x == hex.HexCoordinates))
         {
             UpdateColor(ColorHexSelectionType.ConfirmOption);
+        }
+        else
+        {
+            UpdateColor(ColorHexSelectionType.None);
         }
     }
 
     protected override void OnHexDeselected() => UpdateColor(ColorHexSelectionType.None);
 
-    protected override void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilityType) => UpdateColor(ColorHexSelectionType.None);
+    protected override void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilityType, Hex hex2) => UpdateColor(ColorHexSelectionType.None);
     protected override void OnSwapPieces(Piece piece1, Piece piece2) => UpdateColor(ColorHexSelectionType.None);
 }

@@ -17,4 +17,24 @@ public static partial class Utils
         var props = hex.GetGoStructure();
         return props.transform.childCount > 0 ? props.transform.GetChild(0).gameObject : null;
     }
+
+    public static List<Vector3Int> GetHexOptions(this Vector3Int hexId, HexAbilityOptionType hexOptionsType)
+    {
+        List<Vector3Int> hexesToSelect;
+
+        if (hexOptionsType == HexAbilityOptionType.DirectNeighbours)
+        {
+            hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId);
+        }
+        else if (hexOptionsType == HexAbilityOptionType.NeighboursInLine)
+        {
+            hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId, range: 100, onlyMoveInOneDirection: true, stopBeforePieceOnTile: true);
+        }
+        else
+        {
+            throw new System.Exception("");
+        }
+
+        return hexesToSelect;
+    }
 }

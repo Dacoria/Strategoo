@@ -7,6 +7,7 @@ public static class ColorAction
         HighlightActionType.EnemyOption => HighlightColorType.Red,
         HighlightActionType.HoverOption => HighlightColorType.LightGreen,
         HighlightActionType.SwapOption => HighlightColorType.Yellow,
+        HighlightActionType.SelfSelectOption => HighlightColorType.LightGreen,
         _ => throw new System.Exception("HighlightActionType " + actionType + " is not supported")
     };
 }
@@ -17,5 +18,6 @@ public enum HighlightActionType
     MoveOption,
     EnemyOption,
     HoverOption,
-    SwapOption
+    SwapOption,
+    SelfSelectOption
 }

@@ -4,16 +4,16 @@ public partial class PieceModelHandler : BaseEventCallback
 {
     protected override void OnNewHexSelected(Vector3Int hexSelected) => UpdateModelViewAndRotation();
     protected override void OnUpdatePlayerIndex(PlayerScript playerToUpdate, int playerIndex) => StartCoroutine(UpdateColors());
-    protected override void OnDoPieceAbility(Piece pieceDoingAbility, Hex hexTarget, AbilityType abilType)
+    protected override void OnDoPieceAbility(Piece pieceDoingAbility, Hex hexTarget, AbilityType abilType, Hex hex2Target)
     {
         if (abilType.In(AbilityType.Movement, AbilityType.ScoutMove))
         {
-            if (pieceDoingAbility == piece)
+            if (abilType != AbilityType.Movement && pieceDoingAbility == piece)
             {
                 MakePieceModelKnownIfAlive();
             }
 
-            var pieceOnTargetHex = hexTarget.GetPiece();
+            var pieceOnTargetHex = abilType == AbilityType.ScoutMove ? hex2Target.GetPiece() : hexTarget.GetPiece();
             if (pieceOnTargetHex != null && pieceOnTargetHex == piece)
             {
                 MakePieceModelKnownIfAlive();

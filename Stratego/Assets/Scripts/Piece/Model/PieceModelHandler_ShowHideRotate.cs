@@ -6,7 +6,7 @@ using System.Collections;
 
 public partial class PieceModelHandler : BaseEventCallback
 {
-    private void ShowModelPieceToOwnPlayer()
+    private void ShowModelPieceToPlayer(bool onlyOwnPlayer)
     {
         if (!piece.IsAlive)
         {
@@ -103,7 +103,7 @@ public partial class PieceModelHandler : BaseEventCallback
         else
         {
             StopAllCoroutines();
-            ShowModelPieceToOwnPlayer();
+            ShowModelPieceToPlayer(onlyOwnPlayer: true);
             if(IsKnown())
             {
                 RotateTowardsCurrentPlayer();

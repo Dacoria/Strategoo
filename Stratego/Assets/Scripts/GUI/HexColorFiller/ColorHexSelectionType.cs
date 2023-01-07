@@ -2,5 +2,6 @@
 {
     None,
     Selected,
-    ConfirmOption
+    ConfirmOption,
+    SelfConfirmOption
 }

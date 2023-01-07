@@ -54,7 +54,7 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected virtual void OnEndRound(PlayerScript pWinner) { }
     protected virtual void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexIdOptions) { }
     protected virtual void OnPieceSwapSelected(Vector3Int hexId, List<Vector3Int> hexIdOptions) { }
-    protected virtual void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType) { }
+    protected virtual void OnDoPieceAbility(Piece piece, Hex hexTarget, AbilityType abilType, Hex hexTarget2) { }
     protected virtual void OnNewHexSelected(Vector3Int hexSelected) { }
     protected virtual void OnHexDeselected() { }
     protected virtual void OnSwapPieces(Piece piece1, Piece piece2) { }

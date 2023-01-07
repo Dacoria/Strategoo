@@ -10,10 +10,13 @@ public class ResetCameraPositionScript : BaseEventCallback
 
     public bool Setting_ResetCameraOnNewTurnEvent;
 
-    private List<PlayerInitCameraPos> PlayerInitCameraPositions = new List<PlayerInitCameraPos>
+    private List<PlayerForLevelInitCameraPos> PlayerInitCameraPositions = new List<PlayerForLevelInitCameraPos>
     {
-        new PlayerInitCameraPos(1, new Vector3(10,10,-2), new Vector3(50,0,0)),
-        new PlayerInitCameraPos(2, new Vector3(10,10,18), new Vector3(50,180,0)),
+        new PlayerForLevelInitCameraPos(1, 1, new Vector3(10,10,-2), new Vector3(50,0,0)),
+        new PlayerForLevelInitCameraPos(2, 1, new Vector3(10,10,18), new Vector3(50,180,0)),
+
+        new PlayerForLevelInitCameraPos(1, 2, new Vector3(10,10,-2), new Vector3(50,0,0)),
+        new PlayerForLevelInitCameraPos(2, 2, new Vector3(10,10,18), new Vector3(50,180,0)),
     };
 
     void Start()
@@ -67,11 +70,12 @@ public class ResetCameraPositionScript : BaseEventCallback
         var targetPos = originalCameraPosition;
         var targetRot = originalCameraRotation;
 
-        var playerCameraSettings = PlayerInitCameraPositions.FirstOrDefault(x => x.Index == playerIndex);
+        var levelNr = SceneHandler.instance.GetCurrentSceneNr();
+        var playerCameraSettings = GetPlayerCameraSettings(playerIndex, levelNr);
         if (playerCameraSettings != null)
         {
-            targetPos = playerCameraSettings.Position;
-            targetRot = Quaternion.Euler(playerCameraSettings.Rotation);
+            targetPos = playerCameraSettings.PlayerInitCameraPos.Position;
+            targetRot = Quaternion.Euler(playerCameraSettings.PlayerInitCameraPos.Rotation);
         }
 
         // geleidelijk bewegen + draaien naar target plek+rot
@@ -80,6 +84,25 @@ public class ResetCameraPositionScript : BaseEventCallback
 
         var lerpRotation = gameObject.GetAdd<LerpRotation>();
         lerpRotation.RotateTowardsAngle(endRotation: targetRot, duration: 0.6f, destroyGoOnFinished: false);
+    }
+
+    private PlayerForLevelInitCameraPos GetPlayerCameraSettings(int playerIndex, int level)
+    {
+        return PlayerInitCameraPositions.FirstOrDefault(x => 
+            x.Level == level && 
+            x.PlayerInitCameraPos.Index == playerIndex);
+    }
+}
+
+public class PlayerForLevelInitCameraPos
+{
+    public int Level;
+    public PlayerInitCameraPos PlayerInitCameraPos;
+
+    public PlayerForLevelInitCameraPos(int index, int level, Vector3 position, Vector3 rotation)
+    {
+        Level = level;
+        PlayerInitCameraPos = new PlayerInitCameraPos(index, position, rotation);
     }
 }
 

@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,10 +21,12 @@ public class SceneHandler : MonoBehaviour
     {
         Settings.DefaultLevelName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(Statics.SCENE_LOADING);
-    }    
+    }
 
-    public void LoadSameScene()
+    public int GetCurrentSceneNr()
     {
-        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
+        var currentSceneName = SceneManager.GetActiveScene().name;
+        var value = Regex.Match(currentSceneName, @"\d+").Value;
+        return int.Parse(value);
     }
 }

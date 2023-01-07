@@ -20,6 +20,12 @@ public partial class PieceManager : BaseEventCallback
         GoPieces.Add(pieceGo);
     }
 
+    public void RemovePiece(Piece piece)
+    {
+        GoPieces.Remove(piece);
+        Destroy(piece.gameObject);        
+    }
+
     public void RemoveAllPieces()
     {
         foreach (var piece in this.GoPieces)

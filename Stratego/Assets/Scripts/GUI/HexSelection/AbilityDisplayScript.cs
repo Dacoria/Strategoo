@@ -31,24 +31,7 @@ public class AbilityDisplayScript : MonoBehaviour
             return;
         }
 
-        // TODO wijkt af per unit/abil combi! (wss abil)
-
-        List<Vector3Int> hexesToSelect;
-        var hexOptionsType = AbilityType.GetProperties().HexAbilityOptionType;
-
-        if (hexOptionsType == HexAbilityOptionType.DirectNeighbours)
-        {
-            hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId);
-        }
-        else if (hexOptionsType == HexAbilityOptionType.NeighboursInLine)
-        {
-            hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId, range: 100, onlyMoveInOneDirection: true, stopBeforePieceOnTile: true);
-        }
-        else
-        {
-            throw new System.Exception("");
-        }
-        
+        List<Vector3Int> hexesToSelect = hexId.GetHexOptions(AbilityType.GetProperties().HexAbilityOptionType);        
         var hexPieceOwner = hexId.GetPiece().Owner;
 
         var hexesResult = hexesToSelect.Where(x => !x.HasPiece() || x.GetPiece().Owner != hexPieceOwner).ToList();

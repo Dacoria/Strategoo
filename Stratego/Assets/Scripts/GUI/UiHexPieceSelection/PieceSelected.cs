@@ -2,7 +2,6 @@
 using UnityEngine;
 using System;
 
-[Serializable]
 public class PieceSelected
 {
     public Vector3Int HexId;

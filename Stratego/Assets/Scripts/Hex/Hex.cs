@@ -31,7 +31,6 @@ public class Hex : BaseEventCallback
     public bool FogIsActive() => fogOnHex?.FogIsActive() == true;
 
     private HexSurfaceType initHexSurfaceType;
-    private HexObjectOnTileType initHexObjectOnTileType;
 
     new void Awake()
     {
@@ -39,7 +38,6 @@ public class Hex : BaseEventCallback
         this.hexSurfaceScript = gameObject.AddComponent<HexSurfaceScript>();
 
         initHexSurfaceType = HexSurfaceType;
-        initHexObjectOnTileType = HexObjectOnTileType;
         OrigPosition = this.transform.position;
     }
 

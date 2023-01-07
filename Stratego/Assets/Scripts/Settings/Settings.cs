@@ -8,4 +8,5 @@
     public static bool PieceModelAlwaysShown = false;
 
     public static bool RotateTowardsMyPlayer = true;
+    public static bool DebugDestroyPiece = false;
 }

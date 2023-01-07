@@ -1,11 +1,20 @@
+using Photon.Pun;
+using System.Collections;
+
 public partial class GameHandler : BaseEventCallback
 {
     public void EndRound(PlayerScript pWinner)
     {
-        if (_currentPlayer.IsOnMyNetwork())
+        if (PhotonNetwork.IsMasterClient)
         {
-            NetworkAE.instance.EndRound(pWinner);
-        }        
+            StartCoroutine(CR_EndRound(0.5f, pWinner));
+        }
+    }
+
+    private IEnumerator CR_EndRound(float waitForSeconds, PlayerScript pWinner)
+    {
+        yield return Wait4Seconds.Get(waitForSeconds);
+        NetworkAE.instance.EndRound(pWinner);
     }
 
     protected override void OnEndRound(PlayerScript pWinner)
