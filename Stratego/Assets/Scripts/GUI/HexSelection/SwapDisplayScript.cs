@@ -23,9 +23,9 @@ public class SwapDisplayScript : MonoBehaviour
             return;
         }
 
-        var playerIndex = hexId.GetPiece().Owner.Index;
-        var startTiles = HexGrid.instance.GetPlayerStartTiles(playerIndex);
-        var hexResult = startTiles.Where(x => x.HexCoordinates != hexId).Select(x => x.HexCoordinates).ToList();
+        var player = hexId.GetPiece().Owner;
+        var allPlayerHexes = PieceManager.instance.GetPieces(playerOwner: player).Select(x => x.CurrentHexTile);
+        var hexResult = allPlayerHexes.Where(x => x.HexCoordinates != hexId).Select(x => x.HexCoordinates).ToList();
         AE.PieceSwapSelected?.Invoke(hexId, hexResult);
     }
 }

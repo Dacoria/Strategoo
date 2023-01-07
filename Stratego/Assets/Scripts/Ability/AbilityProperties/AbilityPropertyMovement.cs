@@ -5,4 +5,5 @@ using System.Linq;
 public class AbilityPropertyMovement : AbilityProperty
 {
     public override AbilityType AbilityType => AbilityType.Movement;
+    public override HexAbilityOptionType HexAbilityOptionType => HexAbilityOptionType.DirectNeighbours;
 }

@@ -6,7 +6,7 @@ public static class PieceSkillManager
     public static List<SkillType> GetSkills(Piece piece)
     {
         var result = new List<SkillType>();
-        if(piece.PieceType == PieceType.Unit)
+        if (piece.PieceType == PieceType.Unit)
         {
             var unit = (Unit)piece;
             result.Add(SkillType.Movement);

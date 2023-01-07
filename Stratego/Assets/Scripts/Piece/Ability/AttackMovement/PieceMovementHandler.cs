@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using UnityEngine;
+
 
 public class PieceMovementHandler : BaseEventCallback
 {
@@ -17,6 +17,10 @@ public class PieceMovementHandler : BaseEventCallback
     protected override void OnDoPieceAbility(Piece piece, Hex hex, AbilityType abilType)
     {
         if (piece == pieceScript && abilType == AbilityType.Movement)
+        {
+            StartCoroutine(DoMovementAbility(hex));
+        }
+        if (piece == pieceScript && abilType == AbilityType.ScoutMove)
         {
             StartCoroutine(DoMovementAbility(hex));
         }

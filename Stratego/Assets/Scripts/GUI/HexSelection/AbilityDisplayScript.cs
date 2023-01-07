@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,23 @@ public class AbilityDisplayScript : MonoBehaviour
         }
 
         // TODO wijkt af per unit/abil combi! (wss abil)
-        var hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId);
+
+        List<Vector3Int> hexesToSelect;
+        var hexOptionsType = AbilityType.GetProperties().HexAbilityOptionType;
+
+        if (hexOptionsType == HexAbilityOptionType.DirectNeighbours)
+        {
+            hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId);
+        }
+        else if (hexOptionsType == HexAbilityOptionType.NeighboursInLine)
+        {
+            hexesToSelect = HexGrid.instance.GetNeighboursFor(hexId, range: 100, onlyMoveInOneDirection: true, stopBeforePieceOnTile: true);
+        }
+        else
+        {
+            throw new System.Exception("");
+        }
+        
         var hexPieceOwner = hexId.GetPiece().Owner;
 
         var hexesResult = hexesToSelect.Where(x => !x.HasPiece() || x.GetPiece().Owner != hexPieceOwner).ToList();

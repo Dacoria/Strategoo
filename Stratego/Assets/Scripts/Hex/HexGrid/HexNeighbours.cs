@@ -8,9 +8,20 @@ public class HexNeighbours
     // cache
     private Dictionary<Vector3Int, List<Vector3Int>> hexTileNeightboursDict = new Dictionary<Vector3Int, List<Vector3Int>>();
 
-    public List<Vector3Int> GetNeighboursFor(Dictionary<Vector3Int, Hex> hexTileDict, Vector3Int hexCoordinates, int range, bool excludeObstacles, bool? withPieceOnHex, bool onlyMoveInOneDirection, bool showOnlyFurthestRange, bool includeStartHex, bool excludeWater = false)
+    public List<Vector3Int> GetNeighboursFor(
+        Dictionary<Vector3Int, Hex> hexTileDict, 
+        Vector3Int hexCoordinates, 
+        int range, 
+        bool excludeObstacles, 
+        bool? withPieceOnHex, 
+        bool onlyMoveInOneDirection, 
+        bool showOnlyFurthestRange, 
+        bool includeStartHex, 
+        bool excludeWater,
+        bool stopBeforePieceOnTile
+    )
     {
-        var neighbours = GetNeighboursForWithDirection(hexTileDict, hexCoordinates, range, onlyMoveInOneDirection);
+        var neighbours = GetNeighboursForWithDirection(hexTileDict, hexCoordinates, range, onlyMoveInOneDirection, stopBeforePieceOnTile);
 
         if (showOnlyFurthestRange)
         {            
@@ -36,11 +47,11 @@ public class HexNeighbours
         return neighbours;
     }
 
-    private List<Vector3Int> GetNeighboursForWithDirection(Dictionary<Vector3Int, Hex> hexTileDict, Vector3Int hexCoordinates, int range, bool onlyMoveInOneDirection)
+    private List<Vector3Int> GetNeighboursForWithDirection(Dictionary<Vector3Int, Hex> hexTileDict, Vector3Int hexCoordinates, int range, bool onlyMoveInOneDirection, bool stopBeforePieceOnTile)
     {
         if(onlyMoveInOneDirection)
         {
-            return GetNeighboursOneDirections(hexTileDict, hexCoordinates, range);
+            return GetNeighboursOneDirections(hexTileDict, hexCoordinates, range, stopBeforePieceOnTile);
         }
         else
         {
@@ -48,7 +59,7 @@ public class HexNeighbours
         }
     }
 
-    private List<Vector3Int> GetNeighboursOneDirections(Dictionary<Vector3Int, Hex> hexTileDict, Vector3Int startHexCoor, int range)
+    private List<Vector3Int> GetNeighboursOneDirections(Dictionary<Vector3Int, Hex> hexTileDict, Vector3Int startHexCoor, int range, bool stopBeforePieceOnTile)
     {
         if (range <= 0)
         {
@@ -64,6 +75,15 @@ public class HexNeighbours
                 var newHexCoor = startHexCoor.GetNewHexCoorFromDirection(direction, step);
                 if (hexTileDict.ContainsKey(newHexCoor))
                 {
+                    if(stopBeforePieceOnTile)
+                    {
+                        var hex = hexTileDict[newHexCoor];
+                        if(hex.HasPiece())
+                        {
+                            break;
+                        }
+                    }
+
                     result.Add(newHexCoor);
                 }
             }

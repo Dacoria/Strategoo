@@ -23,7 +23,7 @@ public partial class PieceManager : BaseEventCallback
     {
         var level1Setup = LevelSetupManager.GetBasicSetup(1);
 
-        var playerStartTiles = HexGrid.instance.GetPlayerStartTiles(playerIndex);
+        var playerStartTiles = HexGrid.instance.GetPlayerStartTiles(playerIndex, level1Setup.UnitPlacementSetting.Count);
         if (playerStartTiles.Count != level1Setup.UnitPlacementSetting.Count)
         {
             throw new Exception("Hoort niet");

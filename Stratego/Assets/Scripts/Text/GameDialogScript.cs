@@ -3,6 +3,7 @@ using TMPro;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameDialogScript : BaseEventCallback
 {
@@ -11,6 +12,8 @@ public class GameDialogScript : BaseEventCallback
 
     public bool UseTypeWriterEffect = true;
     private float TypeWriterSpeed = 30;
+
+    [ComponentInject] private Scrollbar scrollbar;
 
     private new void Awake()
     {
@@ -34,12 +37,20 @@ public class GameDialogScript : BaseEventCallback
         var lastNumberAdded = 0;
         if(allPreviousLines.Any())
         {
-            lastNumberAdded = int.Parse(allPreviousLines[0].Split(" ")[0].Replace(".", ""));
+            for(int i = allPreviousLines.Count - 1; i >= 0; i--)
+            {
+                if(int.TryParse(allPreviousLines[i].Split(" ")[0].Replace(".", ""), out lastNumberAdded))
+                {
+                    break;
+                }
+            }
         }
 
         var newLine = (lastNumberAdded + 1) + ". " + additionalText;
-        var newLinesArray = new[] { newLine }.Concat(allPreviousLines).ToArray();
-        finalText = string.Join("\n", newLinesArray);
+        //var newLinesArray = new[] { newLine }.Concat(allPreviousLines).ToArray();
+        var allLines = allPreviousLines.ToList();
+        allLines.Add(newLine);
+        finalText = string.Join("\n", allLines);        
 
         if (UseTypeWriterEffect)
         {
@@ -49,6 +60,7 @@ public class GameDialogScript : BaseEventCallback
         else
         {
             TextDialogLines.text = finalText;
+            scrollbar.value = 0;
         }        
     }
 
@@ -65,11 +77,27 @@ public class GameDialogScript : BaseEventCallback
             charIndex = Mathf.FloorToInt(time);
             charIndex = Mathf.Clamp(charIndex,0,newLine.Length);
 
-            TextDialogLines.text = newLine.Substring(0, charIndex) + "\n" + lastLinesText;
+            if(string.IsNullOrEmpty(lastLinesText))
+            {
+                TextDialogLines.text = newLine.Substring(0, charIndex);
+            }
+            else
+            {
+                TextDialogLines.text = lastLinesText + "\n" + newLine.Substring(0, charIndex);
+            }
+
+            scrollbar.value = 0;
 
             yield return null;
         }
 
-        TextDialogLines.text = newLine + "\n" + lastLinesText;
+        if (string.IsNullOrEmpty(lastLinesText))
+        {
+            TextDialogLines.text = newLine;
+        }
+        else
+        {
+            TextDialogLines.text = lastLinesText + "\n" + newLine;
+        }
     }
 }

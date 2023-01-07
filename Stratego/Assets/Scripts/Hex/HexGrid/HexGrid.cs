@@ -62,7 +62,7 @@ public class HexGrid : BaseEventCallback
 
     public bool IsLoaded() => HexGridLoaded;
 
-    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnHex = null, bool onlyMoveInOneDirection = false, bool showOnlyFurthestRange = false, bool includeStartHex = false, bool excludeWater = false)
+    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnHex = null, bool onlyMoveInOneDirection = false, bool showOnlyFurthestRange = false, bool includeStartHex = false, bool excludeWater = false, bool stopBeforePieceOnTile = false)
     {
         return hexNeighbours.GetNeighboursFor(
             hexTileDict: hexTileDict,
@@ -73,7 +73,8 @@ public class HexGrid : BaseEventCallback
             onlyMoveInOneDirection: onlyMoveInOneDirection,
             showOnlyFurthestRange: showOnlyFurthestRange,
             includeStartHex: includeStartHex,
-            excludeWater: excludeWater
+            excludeWater: excludeWater,
+            stopBeforePieceOnTile: stopBeforePieceOnTile
         );
     }
 
@@ -107,7 +108,7 @@ public class HexGrid : BaseEventCallback
         piece.transform.position = newHex.transform.position + new Vector3(0,1,0);
     }
 
-    public List<Hex> GetPlayerStartTiles(int playerIndex)
+    public List<Hex> GetPlayerStartTiles(int playerIndex, int hexCount)
     {
         var allHexes = GetAllHexes();
         var hexRightUpper = GetHexRightUpperCorner();
@@ -117,11 +118,11 @@ public class HexGrid : BaseEventCallback
         List<Hex> result;
         if (playerIndex == 1)
         {
-            result = GetBottomHalfOfHexes(allHexes, hexRightUpper);
+            result = GetBottomHalfOfHexes(allHexes, hexRightUpper, hexCount);
         }
         else if(playerIndex == 2)
         {
-            result = GetUpperHalfOfHexes(allHexes, hexRightUpper);
+            result = GetUpperHalfOfHexes(allHexes, hexRightUpper, hexCount);
         }
         else
         {
@@ -131,19 +132,21 @@ public class HexGrid : BaseEventCallback
         return result;
     }
 
-    private static List<Hex> GetBottomHalfOfHexes(List<Hex> allTiles, Hex tileRightUpper)
+    private static List<Hex> GetBottomHalfOfHexes(List<Hex> allTiles, Hex tileRightUpper, int hexCount)
     {
-        return allTiles.Where(hex =>
-            !hex.HexSurfaceType.IsObstacle() &&
-            hex.HexCoordinates.z <= ((tileRightUpper.HexCoordinates.z - 1f) / 2)
-        ).ToList();
+        return allTiles
+            .Where(hex => !hex.HexSurfaceType.IsObstacle())
+            .OrderBy(hex => hex.HexCoordinates.z)
+            .Take(hexCount)
+            .ToList();
     }
 
-    private static List<Hex> GetUpperHalfOfHexes(List<Hex> allTiles, Hex tileRightUpper)
+    private static List<Hex> GetUpperHalfOfHexes(List<Hex> allTiles, Hex tileRightUpper, int hexCount)
     {
-        return allTiles.Where(hex =>
-            !hex.HexSurfaceType.IsObstacle() &&
-            hex.HexCoordinates.z > ((tileRightUpper.HexCoordinates.z - 1f) / 2)
-        ).ToList();
+        return allTiles
+            .Where(hex => !hex.HexSurfaceType.IsObstacle())
+            .OrderByDescending(hex => hex.HexCoordinates.z)
+            .Take(hexCount)
+        .ToList();
     }
 }
