@@ -9,7 +9,7 @@ public class UiHexPieceSelection : BaseEventCallback
 
     protected override void OnPieceAbilitySelected(Vector3Int hexId, AbilityType ability, List<Vector3Int> hexOptions)
     {
-        if(PieceSelected.HexId == hexId)
+        if(PieceSelected?.HexId == hexId)
         {
             PieceSelected.SetAbilitySelected(ability, hexOptions);
         }    
@@ -17,7 +17,7 @@ public class UiHexPieceSelection : BaseEventCallback
 
     protected override void OnPieceSwapSelected(Vector3Int hexId, List<Vector3Int> hexOptions)
     {
-        if (PieceSelected.HexId == hexId)
+        if (PieceSelected?.HexId == hexId)
         {
             PieceSelected.SetSwapSelected(hexOptions);
         }
