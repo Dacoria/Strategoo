@@ -16,7 +16,7 @@ public class ResetCameraPositionScript : BaseEventCallback
         new PlayerForLevelInitCameraPos(2, 1, new Vector3(10,10,18), new Vector3(50,180,0)),
 
         new PlayerForLevelInitCameraPos(1, 2, new Vector3(10,10,-2), new Vector3(50,0,0)),
-        new PlayerForLevelInitCameraPos(2, 2, new Vector3(10,10,18), new Vector3(50,180,0)),
+        new PlayerForLevelInitCameraPos(2, 2, new Vector3(10,10,21), new Vector3(50,180,0)),
     };
 
     void Start()

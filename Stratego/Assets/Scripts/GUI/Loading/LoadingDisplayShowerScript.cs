@@ -31,4 +31,8 @@ public class LoadingDisplayShowerScript : BaseEventCallbackSlowUpdate
     {
         Settings.UserInterfaceIsLocked = false;
     }
+    protected override void OnEndRound(PlayerScript pWinner)
+    {
+        Settings.UserInterfaceIsLocked = false;
+    }
 }
