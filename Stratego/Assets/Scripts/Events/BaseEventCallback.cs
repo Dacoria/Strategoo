@@ -25,7 +25,8 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnPieceModelAlwaysShown")) AE.PieceModelAlwaysShown += OnPieceModelAlwaysShown;
         if (IsOverwritten("OnPieceModelAlwaysShown")) NAE_NoCalling.UpdatePlayerIndex += OnUpdatePlayerIndex;
         if (IsOverwritten("OnPlayerReadyForGame")) NAE_NoCalling.PlayerReadyForGame += OnPlayerReadyForGame;
-        
+        if (IsOverwritten("OnPlayerDisconnected")) AE.PlayerDisconnected += OnPlayerDisconnected;
+
     }
 
     protected void OnDisable()
@@ -44,9 +45,8 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnPieceModelAlwaysShown")) AE.PieceModelAlwaysShown -= OnPieceModelAlwaysShown;
         if (IsOverwritten("OnPieceModelAlwaysShown")) NAE_NoCalling.UpdatePlayerIndex -= OnUpdatePlayerIndex;
         if (IsOverwritten("OnPlayerReadyForGame")) NAE_NoCalling.PlayerReadyForGame -= OnPlayerReadyForGame;
-
+        if (IsOverwritten("OnPlayerDisconnected")) AE.PlayerDisconnected -= OnPlayerDisconnected;
     }
-
     protected virtual void OnGridLoaded() { }    
     protected virtual void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) { }
     protected virtual void OnNewPlayerTurn(PlayerScript player) { }
@@ -61,7 +61,8 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected virtual void OnPieceModelAlwaysShown() { }
     protected virtual void OnUpdatePlayerIndex(PlayerScript player, int newPlayerIndex) { }
     protected virtual void OnPlayerReadyForGame(PlayerScript player, HexPieceSetup hexPieceSetup) { }
-
+    protected virtual void OnPlayerDisconnected(PlayerScript player) { }
+    
 
     // GEEN ABSTRACTE CLASSES!
     private bool IsOverwritten(string functionName)

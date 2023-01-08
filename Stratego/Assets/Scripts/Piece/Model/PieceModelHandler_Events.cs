@@ -57,4 +57,20 @@ public partial class PieceModelHandler : BaseEventCallback
             }
         }
     }
+
+    protected override void OnPlayerDisconnected(PlayerScript disconnectedPlayer)
+    {
+        if (piece.IsAlive)
+        {
+            MakePieceModelKnownIfAlive();
+            if (piece.Owner != disconnectedPlayer && piece.PieceType == PieceType.Unit)
+            {
+                animator?.SetBool(Statics.ANIMATION_BOOL_VICTORY_JUMP, true);
+            }
+            if (piece.Owner == disconnectedPlayer && piece.PieceType == PieceType.Unit)
+            {
+                animator?.SetBool(Statics.ANIMATION_TRIGGER_DIE, true);
+            }
+        }
+    }
 }

@@ -9,11 +9,11 @@ public class PlayerScript : BaseEventCallback, IPunInstantiateMagicCallback
 
     public int Id { get; private set; }  
 
-    [ComponentInject] private PhotonView photonView;
+    [ComponentInject] public PhotonView PhotonView;
     [ComponentInject] private PlayerIndex playerIndex;
         
     public int Index => playerIndex.Index;
-    public bool IsPunOwner => photonView.Owner.IsLocal;
+    public bool IsPunOwner => PhotonView.Owner.IsLocal;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {

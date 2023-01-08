@@ -14,5 +14,5 @@ public static class AE
     public static Action<Vector3Int, List<Vector3Int>> PieceSwapSelected;
     public static Action PieceModelAlwaysShown;
     public static Action<Piece, Piece> SwapPieces;
-
+    public static Action<PlayerScript> PlayerDisconnected;
 }

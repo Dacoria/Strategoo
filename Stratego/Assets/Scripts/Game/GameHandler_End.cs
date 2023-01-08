@@ -21,4 +21,9 @@ public partial class GameHandler : BaseEventCallback
     {
         GameStatus = GameStatus.RoundEnded;
     }
+
+    protected override void OnPlayerDisconnected(PlayerScript player)
+    {
+        GameStatus = GameStatus.RoundEnded;
+    }
 }

@@ -49,24 +49,17 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        base.OnPlayerLeftRoom(otherPlayer);
-        
-        if(GameHandler.instance.GameStatus.In(GameStatus.UnitPlacement, GameStatus.GameFase))
+        var leavingPlayerGo = GetAllPlayers().FirstOrDefault(x => x.Id == otherPlayer.ActorNumber);
+        if (leavingPlayerGo != null)
         {
-            if(GetAllPlayers().Any(x => x.Id == otherPlayer.ActorNumber))
-            {
-                Textt.GameLocal("An active player has left the game! Reset the current game?");
-            }
-            else
-            {
-                Textt.GameLocal("A non-active player has left the game");
-            }            
+            Textt.GameLocal("An active player has left the game!");
         }
         else
         {
-            Textt.GameLocal("A player has left the game");
-        }        
+            Textt.GameLocal("A non-active player has left the game");
+        }
 
+        AE.PlayerDisconnected?.Invoke(leavingPlayerGo);
         PlayerList = PhotonNetwork.PlayerList;
         StartCoroutine(RefreshPlayerGosInXSeconds(0.1f)); // obj is niet direct weg; heel even wachten
     }

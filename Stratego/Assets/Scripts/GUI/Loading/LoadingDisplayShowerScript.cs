@@ -35,4 +35,9 @@ public class LoadingDisplayShowerScript : BaseEventCallbackSlowUpdate
     {
         Settings.UserInterfaceIsLocked = false;
     }
+
+    protected override void OnPlayerDisconnected(PlayerScript player)
+    {
+        Settings.UserInterfaceIsLocked = false;
+    }
 }

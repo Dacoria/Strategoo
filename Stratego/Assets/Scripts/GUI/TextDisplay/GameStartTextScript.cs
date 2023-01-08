@@ -6,7 +6,7 @@ using System;
 
 public class GameStartTextScript : BaseEventCallback
 {
-    [ComponentInject] private TMP_Text Text;
+    [ComponentInject] private TMP_Text text;
     [ComponentInject] private CanvasGroup canvasGroup;
 
     private new void Awake()
@@ -15,8 +15,21 @@ public class GameStartTextScript : BaseEventCallback
         canvasGroup.alpha = 0;
     }
 
+    protected override void OnEndRound(PlayerScript pWinner)
+    {
+        text.text = "Game Ended!";
+        base.OnEndRound(pWinner);
+    }
+
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)
     {
+        text.text = "Game Started!";
+        ShowGameText();
+    }
+
+    protected override void OnPlayerDisconnected(PlayerScript player)
+    {
+        text.text = "Player disconnected";
         ShowGameText();
     }
 

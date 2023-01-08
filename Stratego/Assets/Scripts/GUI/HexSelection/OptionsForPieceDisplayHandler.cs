@@ -96,5 +96,15 @@ public class OptionsForPieceDisplayHandler : BaseEventCallback
         {
             Destroy(ActiveSwapButton.gameObject);
         }
-    }   
+    }
+
+    protected override void OnPlayerDisconnected(PlayerScript player)
+    {
+        RemoveAllActiveOptions();
+    }
+
+    protected override void OnEndRound(PlayerScript pWinner)
+    {
+        RemoveAllActiveOptions();
+    }
 }
