@@ -10,12 +10,12 @@ public partial class PieceMovementHandler : BaseEventCallback
         if(hex.HexCoordinates == hex2.HexCoordinates)
         {
             Textt.GameLocal(pieceScript.Owner.PlayerName + " starts moving!");
-            pieceMovement.GoToDestination(hex, duration: 1.5f, callbackOnFinished: RotateToOriginalPosAndEnd);
+            pieceMovement.GoToDestination(hex, duration: 1f, callbackOnFinished: RotateToOriginalPosAndEnd);
         }
         else
         {
             Textt.GameLocal(pieceScript.Owner.PlayerName + " starts moving and attack!");
-            pieceMovement.GoToDestination(hex, duration: 1.5f, callbackOnFinished: () => AttackPieceOnHex(hex2));
+            pieceMovement.GoToDestination(hex, duration: 1f, callbackOnFinished: () => AttackPieceOnHex(hex2));
         }
     }
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using Photon.Pun;
 
 public partial class PieceManager : BaseEventCallback
 {   
@@ -26,13 +27,21 @@ public partial class PieceManager : BaseEventCallback
         Destroy(piece.gameObject);        
     }
 
-    public void RemoveAllPieces()
+    public void RemoveOwnPieces(PlayerScript ownerToRemovePieceFor)
     {
+        var piecesToRemove = new List<Piece>();
         foreach (var piece in this.GoPieces)
         {
-            Destroy(piece.gameObject);
+            if(piece.Owner == ownerToRemovePieceFor)
+            {
+                piecesToRemove.Add(piece);
+                Destroy(piece.gameObject);
+            }            
         }
-        GoPieces.Clear();
+        foreach (var pieceToRemove in piecesToRemove)
+        {
+            GoPieces.Remove(pieceToRemove);
+        }
     }
 
     public HexPieceSetup GetHexPieceSetup(PlayerScript playerScript)

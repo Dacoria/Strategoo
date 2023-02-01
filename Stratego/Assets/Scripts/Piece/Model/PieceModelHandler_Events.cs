@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public partial class PieceModelHandler : BaseEventCallback
@@ -6,18 +7,40 @@ public partial class PieceModelHandler : BaseEventCallback
     protected override void OnUpdatePlayerIndex(PlayerScript playerToUpdate, int playerIndex) => StartCoroutine(UpdateColors());
     protected override void OnDoPieceAbility(Piece pieceDoingAbility, Hex hexTarget, AbilityType abilType, Hex hex2Target)
     {
-        if (abilType.In(AbilityType.Movement, AbilityType.ScoutMove))
+        if(abilType == AbilityType.ScoutMove)
         {
-            if (abilType != AbilityType.Movement && pieceDoingAbility == piece)
-            {
-                MakePieceModelKnownIfAlive();
-            }
+            ShowModelsOnScoutMove(pieceDoingAbility, hex2Target.GetPiece());
+        }
+        else if (abilType == AbilityType.Movement)
+        {
+            ShowModelsOnMovement(pieceDoingAbility, hexTarget.GetPiece());
+        }
+    }
 
-            var pieceOnTargetHex = abilType == AbilityType.ScoutMove ? hex2Target.GetPiece() : hexTarget.GetPiece();
-            if (pieceOnTargetHex != null && pieceOnTargetHex == piece)
+    private void ShowModelsOnMovement(Piece pieceDoingAbility, Piece targetPiece)
+    {
+        if(targetPiece != null)
+        {
+            if(pieceDoingAbility == piece)
             {
                 MakePieceModelKnownIfAlive();
             }
+            else if (targetPiece == piece)
+            {
+                MakePieceModelKnownIfAlive();
+            }
+        }
+    }
+
+    private void ShowModelsOnScoutMove(Piece movingPiece, Piece attackTarget)
+    {
+        if(movingPiece == piece)
+        {
+            MakePieceModelKnownIfAlive();
+        }
+        else if(attackTarget == piece)
+        {
+            MakePieceModelKnownIfAlive();
         }
     }
 

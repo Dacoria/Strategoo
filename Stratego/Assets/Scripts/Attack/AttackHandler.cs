@@ -47,7 +47,7 @@ public class AttackHandler : BaseEventCallback
     {
         Instantiate(AttackEffectPrefab, attacker.transform);
         Instantiate(AttackEffectPrefab, defender.transform);
-        StartCoroutine(ProcessAttack(3f));
+        StartCoroutine(ProcessAttack(2.5f));
     }
 
     private IEnumerator ProcessAttack(float seconds)
@@ -79,7 +79,7 @@ public class AttackHandler : BaseEventCallback
         if(attackResult == AttackResult.AttackerWins)
         {
             var movementAction = attacker.gameObject.GetAdd<PieceMovementAction>();
-            movementAction.GoToDestination(defender.CurrentHexTile, 1.5f, callbackOnFinished: () => RotateToOriginalPos(attacker));
+            movementAction.GoToDestination(defender.CurrentHexTile, 1f, callbackOnFinished: () => RotateToOriginalPos(attacker));
         }
         else if (attackResult == AttackResult.DefenderWins)
         {

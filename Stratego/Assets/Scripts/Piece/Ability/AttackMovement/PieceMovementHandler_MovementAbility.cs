@@ -24,7 +24,7 @@ public partial class PieceMovementHandler : BaseEventCallback
         else
         {
             Textt.GameLocal(pieceScript.Owner.PlayerName + " starts moving!");
-            pieceMovement.GoToDestination(hex, duration: 1.5f, callbackOnFinished: RotateToOriginalPosAndEnd);
+            pieceMovement.GoToDestination(hex, duration: 1f, callbackOnFinished: RotateToOriginalPosAndEnd);
         }
     } 
 

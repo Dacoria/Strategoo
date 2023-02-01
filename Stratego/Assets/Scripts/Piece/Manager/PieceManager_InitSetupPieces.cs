@@ -7,9 +7,16 @@ public partial class PieceManager : BaseEventCallback
 {
     public void CreateNewLevelSetup(bool randomizePieces)
     {
-        RemoveAllPieces();
-
         var allPlayers = NetworkHelper.instance.GetAllPlayers();
+
+        foreach (var player in allPlayers)
+        {
+            if(player.IsOnMyNetwork() || player.IsAi)
+            {
+                RemoveOwnPieces(player);
+            }
+        }        
+
         foreach (var player in allPlayers)
         {
             if(player.IsPunOwner)

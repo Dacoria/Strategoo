@@ -29,7 +29,7 @@ public class LerpRotation: BaseEventCallback
         while (elapsedTime < 3)
         {
             elapsedTime += Time.deltaTime;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 4 * rotationSpeed * Time.deltaTime, 0.0f);
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 6 * rotationSpeed * Time.deltaTime, 0.0f);
 
             var currentAngleDiff = Vector3.Angle(newDirection, targetDirection);
             if (Math.Abs(currentAngleDiff - previousAngleDiff) < 0.01)

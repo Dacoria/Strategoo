@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsAi: 0
   PlayerName: 
+  PhotonView: {fileID: 0}
   ReadyToStartGame: 0
 --- !u!114 &5768494960248128124
 MonoBehaviour:

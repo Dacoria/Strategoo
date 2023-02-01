@@ -35,5 +35,5 @@ public abstract class Piece : BaseEventCallback
         IsAlive = false;
         pieceModelVisibility.SetToInvisible();
     }
-    public GameObject GetModel() => pieceModelVisibility.GetModelGo();    
+    public GameObject GetModel() => pieceModelVisibility.GetModelGo();
 }

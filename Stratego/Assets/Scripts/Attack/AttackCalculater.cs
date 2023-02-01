@@ -20,7 +20,7 @@ public static class AttackCalculater
                 return AttackResult.AttackerWins;
             }
 
-            return AttackResult.Draw;
+            return AttackResult.DefenderWins;
         }
 
         if (defender.PieceType == PieceType.Castle)
