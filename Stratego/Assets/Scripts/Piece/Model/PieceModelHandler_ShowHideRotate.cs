@@ -52,10 +52,15 @@ public partial class PieceModelHandler : BaseEventCallback
         if (!piece.IsAlive)
         {
             return;
-        }
+        }       
 
         modelGo.SetActive(true);
         unknownPieceGo?.SetActive(false);
+    }
+
+    private void ShowStartMoveEffect()
+    {
+        PlayParticleEffects.ForEach(effect => effect.Play());
     }
 
     private void MakePieceModelUnknown()

@@ -7,7 +7,11 @@ public partial class PieceModelHandler : BaseEventCallback
     protected override void OnUpdatePlayerIndex(PlayerScript playerToUpdate, int playerIndex) => StartCoroutine(UpdateColors());
     protected override void OnDoPieceAbility(Piece pieceDoingAbility, Hex hexTarget, AbilityType abilType, Hex hex2Target)
     {
-        if(abilType == AbilityType.ScoutMove)
+        if (pieceDoingAbility == piece)
+        {
+            ShowStartMoveEffect();
+        }
+        if (abilType == AbilityType.ScoutMove)
         {
             ShowModelsOnScoutMove(pieceDoingAbility, hex2Target.GetPiece());
         }
@@ -18,8 +22,8 @@ public partial class PieceModelHandler : BaseEventCallback
     }
 
     private void ShowModelsOnMovement(Piece pieceDoingAbility, Piece targetPiece)
-    {
-        if(targetPiece != null)
+    {        
+        if (targetPiece != null)
         {
             if(pieceDoingAbility == piece)
             {
