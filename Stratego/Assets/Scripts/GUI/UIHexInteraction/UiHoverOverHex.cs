@@ -33,8 +33,7 @@ public class UiHoverOverHex : MonoBehaviour
 
         var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         var hexLayermask = 1 << LayerMask.NameToLayer(Statics.LAYER_MASK_HEXTILE);
-        var hits = Physics.RaycastAll(ray, hexLayermask);
-
+        var hits = Physics.RaycastAll(ray, 99999999999999, hexLayermask);
         HexHoveredOver = GetFirstHexHit(hits);
     }
 
