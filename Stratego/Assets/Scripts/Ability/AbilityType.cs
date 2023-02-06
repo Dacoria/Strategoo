@@ -2,5 +2,6 @@
 {
     None,
     Movement,
-    ScoutMove
+    ScoutMove,
+    CavalryMove
 }

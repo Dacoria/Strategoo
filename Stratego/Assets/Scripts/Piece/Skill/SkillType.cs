@@ -2,6 +2,7 @@
 {
     Movement,
     ScoutMove,
+    CavalryMove,
     DiffuseTrap,
     AttackKillsTenPiece
 }

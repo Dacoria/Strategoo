@@ -15,7 +15,14 @@ public class NewSetupPieceButtonScript : BaseEventCallback
     }
 
     protected override void OnGridLoaded() => button.interactable = true ;
-    
+
+    protected override void OnPlayerReadyForGame(PlayerScript player, HexPieceSetup hexPieceSetup)
+    {
+        if(player.IsOnMyNetwork())
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void OnClick(bool randomizePieces)
     {

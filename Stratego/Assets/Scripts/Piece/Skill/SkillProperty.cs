@@ -13,6 +13,8 @@ public static class SkillProperty
                 return AbilityType.Movement;
             case SkillType.ScoutMove:
                 return AbilityType.ScoutMove;
+            case SkillType.CavalryMove:
+                return AbilityType.CavalryMove;
             default:
                 return null;
         }

@@ -4,11 +4,16 @@ using System.Collections.Generic;
 
 public static class LevelSetupManager
 {
-    public static LevelSetup GetBasicSetup()
+    public static LevelSetup CreateBasicSetup()
     {
         var level_nr = SceneHandler.instance.GetCurrentSceneNr();
         if (level_nr == 1) { return CreateBasicSetup(LevelSettings.LevelSetting_1_10pcs); }
         if (level_nr == 2) { return CreateBasicSetup(LevelSettings.LevelSetting_2_20pcs); }
+        if (level_nr == 3) 
+        {
+            Settings.LightingStratego = true;
+            return CreateBasicSetup(LevelSettings.LevelSetting_3_20pcs); 
+        }
 
         throw new Exception("");
     }

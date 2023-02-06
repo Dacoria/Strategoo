@@ -58,7 +58,7 @@ public partial class PieceModelHandler : BaseEventCallback
         unknownPieceGo?.SetActive(false);
     }
 
-    private void ShowStartMoveEffect()
+    private void ShowStartParticleEffect()
     {
         PlayParticleEffects.ForEach(effect => effect.Play());
     }

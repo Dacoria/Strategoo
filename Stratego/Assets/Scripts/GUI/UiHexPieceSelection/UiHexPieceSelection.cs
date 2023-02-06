@@ -91,7 +91,7 @@ public class UiHexPieceSelection : BaseEventCallback
             }
             else
             {                
-                StartFollowUpPieceSelection(hexConfirmed);
+                StartFollowUpPieceSelection(hexConfirmed, abilityProperties.HexAbilityOption2CanOnlyAttack.Value);
                 return;
             }
         }
@@ -109,7 +109,7 @@ public class UiHexPieceSelection : BaseEventCallback
         return FirstPieceSelected != null;
     }
 
-    private void StartFollowUpPieceSelection(Hex hexConfirmed)
+    private void StartFollowUpPieceSelection(Hex hexConfirmed, bool followUpCanOnlyAttack)
     {
         var originalHexId = PieceSelected.HexId;
         var abilitySelected = PieceSelected.Ability;
@@ -122,7 +122,17 @@ public class UiHexPieceSelection : BaseEventCallback
         var hexesToSelect = hexConfirmed.HexCoordinates.GetHexOptions(abilitySelected.GetProperties().HexAbilityOptionType2.Value);
         var hexPieceOwner = originalHexId.GetPiece().Owner;
 
-        var hexesResult = hexesToSelect.Where(x => x.HasPiece() && x.GetPiece().Owner != hexPieceOwner).ToList();
+        List<Vector3Int> hexesResult;
+        if (followUpCanOnlyAttack)
+        {
+            hexesResult = hexesToSelect.Where(x => x.HasPiece() && x.GetPiece().Owner != hexPieceOwner).ToList();
+        }
+        else
+        {
+            hexesResult = hexesToSelect.Where(x => !x.HasPiece() || 
+                                                    (x.HasPiece() && x.GetPiece().Owner != hexPieceOwner)).ToList();
+        }
+        
         hexesResult.Add(hexConfirmed.HexCoordinates);
 
         AE.PieceAbilitySelected?.Invoke(hexConfirmed.HexCoordinates, abilitySelected, hexesResult);

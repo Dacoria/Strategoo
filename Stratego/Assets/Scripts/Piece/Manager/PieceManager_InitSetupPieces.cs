@@ -28,7 +28,7 @@ public partial class PieceManager : BaseEventCallback
 
     public void CreateNewLevelSetup(int playerIndex, bool randomizePieces)
     {
-        var level1Setup = LevelSetupManager.GetBasicSetup();
+        var level1Setup = LevelSetupManager.CreateBasicSetup();
 
         var playerStartTiles = HexGrid.instance.GetPlayerStartTiles(playerIndex, level1Setup.UnitPlacementSetting.Count);
         if (playerStartTiles.Count != level1Setup.UnitPlacementSetting.Count)

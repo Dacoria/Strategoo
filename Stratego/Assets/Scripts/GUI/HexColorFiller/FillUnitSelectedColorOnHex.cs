@@ -57,7 +57,7 @@ public class FillUnitSelectedColorOnHex: BaseEventCallback
 
     protected override void OnPieceAbilitySelected(Vector3Int hexIdSelected, AbilityType abilityType, List<Vector3Int> hexIdOptions)
     {
-        if (abilityType == AbilityType.ScoutMove &&  hex.HexCoordinates == hexIdSelected && hexIdOptions.Any(x => x == hex.HexCoordinates))
+        if (abilityType.In(AbilityType.ScoutMove, AbilityType.CavalryMove) && hex.HexCoordinates == hexIdSelected && hexIdOptions.Any(x => x == hex.HexCoordinates))
         {
             UpdateColor(ColorHexSelectionType.SelfConfirmOption);
         }

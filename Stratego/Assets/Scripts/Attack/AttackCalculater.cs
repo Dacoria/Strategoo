@@ -20,7 +20,14 @@ public static class AttackCalculater
                 return AttackResult.AttackerWins;
             }
 
-            return AttackResult.DefenderWins;
+            if (Settings.LightingStratego)
+            {
+                return AttackResult.Draw;
+            }
+            else
+            {
+                return AttackResult.DefenderWins;
+            }
         }
 
         if (defender.PieceType == PieceType.Castle)
@@ -46,7 +53,14 @@ public static class AttackCalculater
         }
         else
         {
-            return AttackResult.Draw;
+            if (Settings.LightingStratego)
+            {
+                return AttackResult.AttackerWins;
+            }
+            else
+            {
+                return AttackResult.Draw;
+            }
         }
     }
 }

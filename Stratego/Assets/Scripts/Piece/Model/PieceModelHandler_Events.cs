@@ -9,11 +9,12 @@ public partial class PieceModelHandler : BaseEventCallback
     {
         if (pieceDoingAbility == piece)
         {
-            ShowStartMoveEffect();
+            ShowStartParticleEffect();
         }
-        if (abilType == AbilityType.ScoutMove)
+
+        if (abilType.In(AbilityType.ScoutMove, AbilityType.CavalryMove))
         {
-            ShowModelsOnScoutMove(pieceDoingAbility, hex2Target.GetPiece());
+            ShowModelsOnDoubleMove(pieceDoingAbility, hex2Target.GetPiece());
         }
         else if (abilType == AbilityType.Movement)
         {
@@ -36,7 +37,7 @@ public partial class PieceModelHandler : BaseEventCallback
         }
     }
 
-    private void ShowModelsOnScoutMove(Piece movingPiece, Piece attackTarget)
+    private void ShowModelsOnDoubleMove(Piece movingPiece, Piece attackTarget)
     {
         if(movingPiece == piece)
         {
