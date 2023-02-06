@@ -3,7 +3,21 @@ using System.Collections.Generic;
 
 public static class LevelSettings
 {
-    public static LevelSetting LevelSetting_1_20pcs = new LevelSetting
+    public static LevelSetting LevelSetting_1_10pcs = new LevelSetting
+    {
+        PiecesSettings = new List<PiecesSetting>
+        {
+            new PiecesSetting(numberOfPieces: 1, PieceType.Castle),
+            new PiecesSetting(numberOfPieces: 2, PieceType.Trap),
+            new PiecesSetting(numberOfPieces: 1, PieceType.Unit, unitBaseValue: 1),
+            new PiecesSetting(numberOfPieces: 2, PieceType.Unit, unitBaseValue: 2),
+            new PiecesSetting(numberOfPieces: 2, PieceType.Unit, unitBaseValue: 3),
+            new PiecesSetting(numberOfPieces: 1, PieceType.Unit, unitBaseValue: 9),
+            new PiecesSetting(numberOfPieces: 1, PieceType.Unit, unitBaseValue: 10),
+        }
+    };
+
+    public static LevelSetting LevelSetting_2_20pcs = new LevelSetting
     {
         PiecesSettings = new List<PiecesSetting>
         {
@@ -52,12 +66,12 @@ public class PiecesSetting
 
     public PiecesSetting(int numberOfPieces, PieceType pieceType, int unitBaseValue = 0)
     {
-        NumberOfPieces = numberOfPieces;
         PieceSetting = new PieceSetting
         {
             PieceType = pieceType,
             UnitBaseValue = unitBaseValue
         };
+        NumberOfPieces = numberOfPieces;
     }
 }
 
