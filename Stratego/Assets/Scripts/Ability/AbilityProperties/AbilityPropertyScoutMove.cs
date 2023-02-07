@@ -5,7 +5,10 @@ using System.Linq;
 public class AbilityPropertyScoutMove : AbilityProperty
 {
     public override AbilityType AbilityType => AbilityType.ScoutMove;
-    public override HexAbilityOptionType HexAbilityOptionType => HexAbilityOptionType.NeighboursInLine;
+
+    public override HexAbilityOptionType HexAbilityOptionType1 => HexAbilityOptionType.NeighboursInLine;
+    public override List<ActionAbilityType> HexAbilityOption1Choices => new List<ActionAbilityType> { ActionAbilityType.Move };
+
     public override HexAbilityOptionType? HexAbilityOptionType2 => HexAbilityOptionType.DirectNeighbours;
-    public override bool? HexAbilityOption2CanOnlyAttack => true;
+    public override List<ActionAbilityType> HexAbilityOption2Choices => new List<ActionAbilityType> { ActionAbilityType.Attack };
 }

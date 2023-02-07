@@ -14,7 +14,7 @@ public class NewSetupPieceButtonScript : BaseEventCallback
         button.interactable = false;
     }
 
-    protected override void OnGridLoaded() => button.interactable = true ;
+    protected override void OnLevelSetupFinished() => button.interactable = true;
 
     protected override void OnPlayerReadyForGame(PlayerScript player, HexPieceSetup hexPieceSetup)
     {

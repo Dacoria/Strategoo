@@ -12,6 +12,7 @@ public abstract class BaseEventCallback : MonoBehaviour
     protected void OnEnable()
     {
         if (IsOverwritten("OnGridLoaded")) AE.GridLoaded += OnGridLoaded;
+        if (IsOverwritten("OnLevelSetupFinished")) AE.LevelSetupFinished += OnLevelSetupFinished;        
         if (IsOverwritten("OnNewRoundStarted")) NAE_NoCalling.NewRoundStarted += OnNewRoundStarted;
         if (IsOverwritten("OnNewPlayerTurn")) NAE_NoCalling.NewPlayerTurn += OnNewPlayerTurn;
         if (IsOverwritten("OnEndTurn")) NAE_NoCalling.EndTurn += OnEndTurn;
@@ -26,12 +27,12 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnPieceModelAlwaysShown")) NAE_NoCalling.UpdatePlayerIndex += OnUpdatePlayerIndex;
         if (IsOverwritten("OnPlayerReadyForGame")) NAE_NoCalling.PlayerReadyForGame += OnPlayerReadyForGame;
         if (IsOverwritten("OnPlayerDisconnected")) AE.PlayerDisconnected += OnPlayerDisconnected;
-
     }
 
     protected void OnDisable()
     {
         if (IsOverwritten("OnGridLoaded")) AE.GridLoaded -= OnGridLoaded;
+        if (IsOverwritten("OnLevelSetupFinished")) AE.LevelSetupFinished -= OnLevelSetupFinished;
         if (IsOverwritten("OnNewRoundStarted")) NAE_NoCalling.NewRoundStarted -= OnNewRoundStarted;
         if (IsOverwritten("OnNewPlayerTurn")) NAE_NoCalling.NewPlayerTurn -= OnNewPlayerTurn;
         if (IsOverwritten("OnEndTurn")) NAE_NoCalling.EndTurn -= OnEndTurn;
@@ -47,7 +48,8 @@ public abstract class BaseEventCallback : MonoBehaviour
         if (IsOverwritten("OnPlayerReadyForGame")) NAE_NoCalling.PlayerReadyForGame -= OnPlayerReadyForGame;
         if (IsOverwritten("OnPlayerDisconnected")) AE.PlayerDisconnected -= OnPlayerDisconnected;
     }
-    protected virtual void OnGridLoaded() { }    
+    protected virtual void OnGridLoaded() { }
+    protected virtual void OnLevelSetupFinished() { }   
     protected virtual void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) { }
     protected virtual void OnNewPlayerTurn(PlayerScript player) { }
     protected virtual void OnEndTurn(PlayerScript player) { }

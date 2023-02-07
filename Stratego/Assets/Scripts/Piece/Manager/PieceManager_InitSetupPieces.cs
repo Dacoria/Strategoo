@@ -63,6 +63,7 @@ public partial class PieceManager : BaseEventCallback
         }
 
         NewPieceTileSetupForPlayer(playerIndex.GetPlayerByIndex(), level1Setup, playerStartTilesOrdered);
+        AE.LevelSetupFinished?.Invoke();
     }
 
     private void NewPieceTileSetupForPlayer(PlayerScript player, LevelSetup levelSetup, List<Hex> hexes)

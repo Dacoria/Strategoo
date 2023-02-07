@@ -15,17 +15,15 @@ public partial class PieceMovementHandler : BaseEventCallback {
         else if (!hex2.HexCoordinates.HasPiece())
         {
             Textt.GameLocal(pieceScript.Owner.PlayerName + " starts moving twice!");
-            pieceMovement.GoToDestination(hex, duration: 1f, callbackOnFinished: () => GoToDestinationAndRotateBack(hex2));
+            pieceMovement.GoToDestination(hex, duration: 0.65f, callbackOnFinished: () =>
+                pieceMovement.GoToDestination(hex2, duration: 0.65f, callbackOnFinished: RotateToOriginalPosAndEnd)
+            );
+            
         }
         else
         {
             Textt.GameLocal(pieceScript.Owner.PlayerName + " starts moving and attack!");
             pieceMovement.GoToDestination(hex, duration: 1f, callbackOnFinished: () => AttackPieceOnHex(hex2));
         }
-    }
-
-    private void GoToDestinationAndRotateBack(Hex hex)
-    {
-        pieceMovement.GoToDestination(hex, duration: 1f, callbackOnFinished: RotateToOriginalPosAndEnd);
     }
 }

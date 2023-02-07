@@ -31,5 +31,5 @@ public static class AbilityProperties
         }
 
         return abilitiesList;
-    }
+    }    
 }

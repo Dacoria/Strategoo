@@ -31,10 +31,8 @@ public class AbilityDisplayScript : MonoBehaviour
             return;
         }
 
-        List<Vector3Int> hexesToSelect = hexId.GetHexOptions(AbilityType.GetProperties().HexAbilityOptionType);        
-        var hexPieceOwner = hexId.GetPiece().Owner;
-
-        var hexesResult = hexesToSelect.Where(x => !x.HasPiece() || x.GetPiece().Owner != hexPieceOwner).ToList();
+        var abilProps = AbilityType.GetProperties();
+        var hexesResult = Utils.GetHexOptionsForAbility(hexId, abilProps.HexAbilityOptionType1, abilProps.HexAbilityOption1Choices, hexId.GetPiece().Owner, includeSelf: false);
         AE.PieceAbilitySelected?.Invoke(hexId, AbilityType, hexesResult);
-    }
+    }    
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class AE
-{   
+{
     public static Action GridLoaded;
+    public static Action LevelSetupFinished;    
     public static Action<Piece, Hex, int> UnitAttackHit;
     public static Action<Animator> DieAnimationFinished;
     public static Action<GameObject> AttackAnimationFinished;

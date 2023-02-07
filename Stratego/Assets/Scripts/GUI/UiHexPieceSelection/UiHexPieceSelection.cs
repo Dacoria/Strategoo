@@ -91,7 +91,7 @@ public class UiHexPieceSelection : BaseEventCallback
             }
             else
             {                
-                StartFollowUpPieceSelection(hexConfirmed, abilityProperties.HexAbilityOption2CanOnlyAttack.Value);
+                StartFollowUpPieceSelection(hexConfirmed, abilityProperties.HexAbilityOption2Choices);
                 return;
             }
         }
@@ -109,7 +109,7 @@ public class UiHexPieceSelection : BaseEventCallback
         return FirstPieceSelected != null;
     }
 
-    private void StartFollowUpPieceSelection(Hex hexConfirmed, bool followUpCanOnlyAttack)
+    private void StartFollowUpPieceSelection(Hex hexConfirmed, List<ActionAbilityType> hexAbilityOptionChoices)
     {
         var originalHexId = PieceSelected.HexId;
         var abilitySelected = PieceSelected.Ability;
@@ -119,21 +119,8 @@ public class UiHexPieceSelection : BaseEventCallback
 
         PieceSelected = new PieceSelected(hexConfirmed.HexCoordinates);
 
-        var hexesToSelect = hexConfirmed.HexCoordinates.GetHexOptions(abilitySelected.GetProperties().HexAbilityOptionType2.Value);
-        var hexPieceOwner = originalHexId.GetPiece().Owner;
-
-        List<Vector3Int> hexesResult;
-        if (followUpCanOnlyAttack)
-        {
-            hexesResult = hexesToSelect.Where(x => x.HasPiece() && x.GetPiece().Owner != hexPieceOwner).ToList();
-        }
-        else
-        {
-            hexesResult = hexesToSelect.Where(x => !x.HasPiece() || 
-                                                    (x.HasPiece() && x.GetPiece().Owner != hexPieceOwner)).ToList();
-        }
-        
-        hexesResult.Add(hexConfirmed.HexCoordinates);
+        var abilProps = abilitySelected.GetProperties();
+        var hexesResult = Utils.GetHexOptionsForAbility(hexConfirmed.HexCoordinates, abilProps.HexAbilityOptionType2.Value, abilProps.HexAbilityOption2Choices, originalHexId.GetPiece().Owner, includeSelf: true);
 
         AE.PieceAbilitySelected?.Invoke(hexConfirmed.HexCoordinates, abilitySelected, hexesResult);
     }

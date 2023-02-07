@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 public static partial class Utils
@@ -36,5 +33,27 @@ public static partial class Utils
         }
 
         return hexesToSelect;
+    }
+
+    public static List<Vector3Int> GetHexOptionsForAbility(Vector3Int hexId, HexAbilityOptionType hexSelectOptionType, List<ActionAbilityType> abilChoices, PlayerScript owner, bool includeSelf)
+    {
+        var hexesToSelect = hexId.GetHexOptions(hexSelectOptionType);
+
+        List<Vector3Int> hexesResult = hexesToSelect.Where(x => !(x.HasPiece() && x.GetPiece().Owner == owner)).ToList();
+        if (!abilChoices.Any(x => x == ActionAbilityType.Attack))
+        {
+            hexesResult = hexesResult.Where(x => !x.HasPiece()).ToList();
+        }
+        if (!abilChoices.Any(x => x == ActionAbilityType.Move))
+        {
+            hexesResult = hexesResult.Where(x => x.HasPiece()).ToList();
+        }
+
+        if(includeSelf)
+        {
+            hexesResult.Add(hexId);
+        }
+
+        return hexesResult;
     }
 }
