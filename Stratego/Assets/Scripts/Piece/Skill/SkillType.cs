@@ -3,6 +3,6 @@
     Movement,
     ScoutMove,
     CavalryMove,
-    DiffuseTrap,
+    DefuseTrap,
     AttackKillsTenPiece
 }

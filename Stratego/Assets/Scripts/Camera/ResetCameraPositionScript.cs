@@ -12,11 +12,17 @@ public class ResetCameraPositionScript : BaseEventCallback
 
     private List<PlayerForLevelInitCameraPos> PlayerInitCameraPositions = new List<PlayerForLevelInitCameraPos>
     {
-        new PlayerForLevelInitCameraPos(1, 1, new Vector3(10,10,-2), new Vector3(50,0,0)),
-        new PlayerForLevelInitCameraPos(2, 1, new Vector3(10,10,18), new Vector3(50,180,0)),
+        // level1
+        new PlayerForLevelInitCameraPos(index: 1, level: 1, new Vector3(10,10,-2), new Vector3(50,0,0)),
+        new PlayerForLevelInitCameraPos(index: 2, level: 1, new Vector3(10,10,18), new Vector3(50,180,0)),
 
-        new PlayerForLevelInitCameraPos(1, 2, new Vector3(10,10,-2), new Vector3(50,0,0)),
-        new PlayerForLevelInitCameraPos(2, 2, new Vector3(10,10,21), new Vector3(50,180,0)),
+        // level 2
+        new PlayerForLevelInitCameraPos(index: 1, level: 2, new Vector3(10,10,-2), new Vector3(50,0,0)),
+        new PlayerForLevelInitCameraPos(index: 2, level: 2, new Vector3(10,10,21), new Vector3(50,180,0)),
+
+        // level3
+        new PlayerForLevelInitCameraPos(index: 1, level: 3, new Vector3(10,10,-2), new Vector3(50,0,0)),
+        new PlayerForLevelInitCameraPos(index: 2, level: 3, new Vector3(10,10,21), new Vector3(50,180,0)),
     };
 
     void Start()
@@ -72,6 +78,7 @@ public class ResetCameraPositionScript : BaseEventCallback
 
         var levelNr = SceneHandler.instance.GetCurrentSceneNr();
         var playerCameraSettings = GetPlayerCameraSettings(playerIndex, levelNr);
+
         if (playerCameraSettings != null)
         {
             targetPos = playerCameraSettings.PlayerInitCameraPos.Position;
@@ -88,7 +95,7 @@ public class ResetCameraPositionScript : BaseEventCallback
 
     private PlayerForLevelInitCameraPos GetPlayerCameraSettings(int playerIndex, int level)
     {
-        return PlayerInitCameraPositions.FirstOrDefault(x => 
+        return PlayerInitCameraPositions.Single(x => 
             x.Level == level && 
             x.PlayerInitCameraPos.Index == playerIndex);
     }

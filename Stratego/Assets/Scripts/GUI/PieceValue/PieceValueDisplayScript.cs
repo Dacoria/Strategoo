@@ -5,11 +5,15 @@ using System.Collections;
 public class PieceValueDisplayScript : BaseEventCallbackSlowUpdate
 {
     [ComponentInject] private Piece piece;
-    [ComponentInject] private TMP_Text Text;
+    [SerializeField] private TMP_Text Text;
+
+    [SerializeField] private GameObject ValueDisplay;
+    [SerializeField] private GameObject SkillOptions;
+    
 
     private void Start()
     {
-        transform.GetChild(0).gameObject.SetActive(false);
+        ValueDisplay.SetActive(false);
     }    
 
     protected override void SlowUpdate()
@@ -17,14 +21,19 @@ public class PieceValueDisplayScript : BaseEventCallbackSlowUpdate
         if (!piece.IsAlive)
         {
             gameObject.SetActive(false);
+            SkillOptions.SetActive(false);
             return;
         }
 
         if (!piece.IsKnown())
         {
-            transform.GetChild(0).gameObject.SetActive(false);
+            ValueDisplay.SetActive(false);
+            SkillOptions.SetActive(false);
             return;
         }
+
+        ValueDisplay.SetActive(true);
+        SkillOptions.SetActive(true);
 
         SetRotation();
         ShowText();
@@ -48,9 +57,7 @@ public class PieceValueDisplayScript : BaseEventCallbackSlowUpdate
 
     private void ShowText()
     {
-        transform.GetChild(0).gameObject.SetActive(true);
-
-        var value = "";
+        string value;
         switch (piece.PieceType)
         {
             case PieceType.Castle:

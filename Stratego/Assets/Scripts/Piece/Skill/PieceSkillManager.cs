@@ -21,7 +21,7 @@ public static class PieceSkillManager
                 else if (unit.Value == 2)
                 {
                     result.Add(SkillType.ScoutMove);
-                    result.Add(SkillType.DiffuseTrap);
+                    result.Add(SkillType.DefuseTrap);
                 }
                 else if (unit.Value == 6)
                 {
@@ -40,7 +40,7 @@ public static class PieceSkillManager
                 }
                 else if (unit.Value == 3)
                 {
-                    result.Add(SkillType.DiffuseTrap);
+                    result.Add(SkillType.DefuseTrap);
                 }
             }
 

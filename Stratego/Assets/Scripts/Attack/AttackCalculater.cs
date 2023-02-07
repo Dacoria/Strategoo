@@ -15,7 +15,7 @@ public static class AttackCalculater
 
         if(defender.PieceType == PieceType.Trap)
         {
-            if(attacker.Skills.Any(x => x == SkillType.DiffuseTrap))
+            if(attacker.Skills.Any(x => x == SkillType.DefuseTrap))
             {
                 return AttackResult.AttackerWins;
             }
